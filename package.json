@@ -10,6 +10,7 @@
   "author": "Nguyen Duy Khang",
   "license": "ISC",
   "devDependencies": {
+    "elm": "0.19.1",
     "snowpack": "^3.4.0",
     "snowpack-plugin-elm": "^0.4.3"
   }
