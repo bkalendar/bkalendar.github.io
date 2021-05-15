@@ -1,0 +1,5 @@
+/elm-stuff
+/node_modules
+# Local Netlify folder
+.netlify
+package-lock.json

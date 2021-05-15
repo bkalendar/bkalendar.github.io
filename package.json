@@ -1,0 +1,16 @@
+{
+  "name": "bkalendar",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "dev": "snowpack dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nguyen Duy Khang",
+  "license": "ISC",
+  "devDependencies": {
+    "snowpack": "^3.4.0",
+    "snowpack-plugin-elm": "^0.4.3"
+  }
+}
