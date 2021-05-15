@@ -7,7 +7,10 @@ module.exports = {
     "src": "/dist",
     "public": "/"
   },
-  plugins: ['snowpack-plugin-elm'],
+  plugins: [
+    'snowpack-plugin-elm',
+    '@snowpack/plugin-postcss'
+  ],
   packageOptions: {
     /* ... */
   },
