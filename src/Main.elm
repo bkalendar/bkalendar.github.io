@@ -5,10 +5,9 @@ import Html exposing (..)
 import Html.Events exposing (..)
 import Html.Attributes exposing (href, class)
 import Random exposing (generate)
-import Uuid exposing (Uuid, uuidGenerator)
+import Uuid exposing (uuidGenerator)
 import Class exposing (Class)
 import Url exposing (percentEncode)
-import Html.Attributes exposing (download)
 import Html.Attributes exposing (tabindex)
 
 type alias Model =
@@ -46,15 +45,55 @@ view model =
         [ textarea [ onInput GotInput, class textareaStyle ] []
         -- , Html.p [] [ Html.text (Debug.toString model.result )]
         , if model.readyToDownload then
-            Html.a [ href <| "data:text/calendar," ++ percentEncode (Class.toCalendar model.events)
+            div []
+                [ a [ href <| "data:text/calendar," ++ percentEncode (Class.toCalendar model.events)
                    , class downloadStyle
                    , tabindex 0
                    ]
-                [ Html.text "click here to download" ]
+                 [ text "click here to download" ]
+                , viewPreview model.result
+                ]
           else
-            Html.a [ href "#invalid-input"
+            a [ href "#invalid-input"
                    , class invalidStyle]
-                [ Html.text "please check your input" ]
+                [ text "please check your input" ]
+        ]
+
+viewPreview : List Class -> Html Msg
+viewPreview classes =
+    let
+        filterWday wday =
+            String.join ", " << List.filterMap (\class ->
+                if class.wday == wday
+                    then Just (Class.abbr class.title)
+                    else Nothing
+            )
+    in
+    
+    div []
+        [ h2 [ class "font-bold text-xl mt-4 mb-1" ]
+            [ text "Xem trước:" ]
+        , p [] [ span [ class "font-semibold"] [ text "Thứ hai: " ]
+                    , text (filterWday 2 classes)
+                    ]
+        , p [] [ span [ class "font-semibold"] [ text "Thứ ba: " ]
+                    , text (filterWday 3 classes)
+                    ]
+        , p [] [ span [ class "font-semibold"] [ text "Thứ tư: " ]
+                    , text (filterWday 4 classes)
+                    ]
+        , p [] [ span [ class "font-semibold"] [ text "Thứ năm: " ]
+                    , text (filterWday 5 classes)
+                    ]
+        , p [] [ span [ class "font-semibold"] [ text "Thứ sáu: " ]
+                    , text (filterWday 6 classes)
+                    ]
+        , p [] [ span [ class "font-semibold"] [ text "Thứ bảy: " ]
+                    , text (filterWday 7 classes)
+                    ]
+        , p [] [ span [ class "font-semibold"] [ text "Chủ nhật: " ]
+                    , text (filterWday 8 classes)
+                    ]
         ]
 
 update : Msg -> Model ->  ( Model, Cmd Msg )
