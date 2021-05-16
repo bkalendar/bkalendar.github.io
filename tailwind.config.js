@@ -1,4 +1,9 @@
 module.exports = {
+  darkMode: 'media',
   purge: ['./public/**/*.html', './src/**/*.elm'],
-  // specify other options here
+  theme: {
+    fontFamily: {
+      'sans' : ['Roboto Condensed', 'sans-serif']
+    }
+  }
 };

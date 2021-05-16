@@ -8,6 +8,8 @@ import Random exposing (generate)
 import Uuid exposing (Uuid, uuidGenerator)
 import Class exposing (Class)
 import Url exposing (percentEncode)
+import Html.Attributes exposing (download)
+import Html.Attributes exposing (tabindex)
 
 type alias Model =
     { result: List Class
@@ -34,11 +36,25 @@ init _ =
 
 view : Model -> Html Msg
 view model =
-    div []
-        [ textarea [ onInput GotInput ] []
-        , Html.p [] [ Html.text (Debug.toString model.result )]
-        , Html.a [ href <| "data:text/calendar," ++ percentEncode (Class.toCalendar model.events) ]
-            [ Html.text "click here?" ]
+    let
+        textareaStyle = "p-2 bg-gray-200 text-gray-500 w-full h-48 overflow-hidden"
+        downloadStyle = "text-green-500 border-b-4 border-green-500"
+        invalidStyle = "font-bold text-red-600"
+    in
+    
+    div [ class "w-1/3 mx-auto mt-16" ]
+        [ textarea [ onInput GotInput, class textareaStyle ] []
+        -- , Html.p [] [ Html.text (Debug.toString model.result )]
+        , if model.readyToDownload then
+            Html.a [ href <| "data:text/calendar," ++ percentEncode (Class.toCalendar model.events)
+                   , class downloadStyle
+                   , tabindex 0
+                   ]
+                [ Html.text "click here to download" ]
+          else
+            Html.a [ href "#invalid-input"
+                   , class invalidStyle]
+                [ Html.text "please check your input" ]
         ]
 
 update : Msg -> Model ->  ( Model, Cmd Msg )
@@ -57,7 +73,9 @@ update msg model =
              (List.map (\class -> generate GotEvent (eventGenerator class)) newResult) )
 
         GotEvent event ->
-            ( { model | events = event :: model.events }, Cmd.none )
+            ( { model | events = event :: model.events,
+                        readyToDownload = List.length model.result == List.length model.events + 1
+              }, Cmd.none )
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
