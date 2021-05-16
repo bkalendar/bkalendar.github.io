@@ -1,7 +1,7 @@
-module Class exposing (Class, parser, example)
+module Class exposing (Class, parser, example, toEvent)
 
-import Parser exposing ((|=), (|.), Parser, chompWhile, succeed, getChompedString, symbol, int, loop, Step(..))
-import Time exposing (Posix, millisToPosix)
+import Parser exposing (..)
+import Time exposing (..)
 import Parser exposing (oneOf)
 
 type alias Class =
@@ -11,7 +11,7 @@ type alias Class =
     , wday : Int
     , start : Int
     , end : Int
-    , exclude : List Int
+    , weeks : List Int
     }
 
 example = "CO1027	Kỹ thuật lập trình	3	--	L04	4	11-12	16:00 - 17:50	H1-304	BK-CS2	--|09|10|11|12|13|14|15|--|17|18|"
@@ -58,13 +58,13 @@ weekParser : Parser (List Int)
 weekParser =
     loop (0, []) (\(index, result) ->
         oneOf
-            [ Parser.succeed (Loop (index + 1, index::result))
+            [ Parser.succeed (Loop (index + 1, result))
                 |. symbol "--|"
-            , Parser.succeed (Loop (index + 1, result))
+            , Parser.succeed (Loop (index + 1, index::result))
                 |. symbol "0"
                 |. int
                 |. symbol "|"
-            , Parser.succeed (Loop (index + 1, result))
+            , Parser.succeed (Loop (index + 1, index::result))
                 |. int
                 |. symbol "|"
             , Parser.succeed (Done result)
@@ -73,12 +73,58 @@ weekParser =
 
 toEvent : String -> Class -> String
 toEvent uuid class =
-"""BEGIN:VEVENT
-SUMMARY: """ ++ class.title ++ """
-DESCRIPTION: """ ++ class.desp ++ """
-LOCATION: """ ++ class.room ++ """
-DTSTART:
-DTEND:
-EXDATE:
-RRULE:FREQ=WEEKLY
-END:VEVENT"""
+    case class.weeks of
+        [] -> ""
+        headWeek :: tailWeeks ->
+            let
+                firstWeek = List.foldl min headWeek tailWeeks
+            in
+            "BEGIN:VEVENT" ++
+            "\nSUMMARY: " ++ class.title ++
+            "\nDESCRIPTION: " ++ class.desp ++
+            "\nLOCATION: " ++ class.room ++
+            "\nDTSTART: " ++ toDate class.wday class.start firstWeek ++
+            "\nDTEND: " ++ toDate class.wday (class.end + 1) firstWeek ++
+            "\nRDATE;VALUE=DATE:" ++ String.join "," (List.map (toDate class.wday class.start) class.weeks) ++
+            "\nEND:VEVENT"
+
+origin : Int
+origin = 1613944800000
+
+-- "yyyyMMddThhmmssZ"
+-- Monday of week 0 is 5h 22/02/2021, 1613944800000 in posix
+toDate : Int -> Int -> Int -> String
+toDate wday start week =
+    let
+        date = origin + week * 604800000 + (wday - 2) * 86400000
+        startTime = millisToPosix <| date + start * 3600000
+        dttm = String.padLeft 2 '0' << String.fromInt
+        timestamp time =
+            (List.map (List.map (\f -> dttm <| f time) >> String.join "")
+                [ [ toYear utc
+                , toMonth utc >> monthToInt
+                , toDay utc]
+                , [ toHour utc
+                , toMinute utc
+                , toSecond utc]
+                ]
+            |> String.join "T") ++ "Z"
+    in
+        timestamp startTime
+
+
+monthToInt : Month -> Int
+monthToInt month = case month of
+    Jan -> 1
+    Feb -> 2
+    Mar -> 3
+    Apr -> 4
+    May -> 5
+    Jun -> 6
+    Jul -> 7
+    Aug -> 8
+    Sep -> 9
+    Oct -> 10
+    Nov -> 11
+    Dec -> 12
+
