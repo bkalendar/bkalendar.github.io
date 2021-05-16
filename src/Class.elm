@@ -1,4 +1,4 @@
-module Class exposing (Class, parser, example, toEvent)
+module Class exposing (Class, parse, example, toEvent, toCalendar)
 
 import Parser exposing (..)
 import Time exposing (..)
@@ -14,6 +14,9 @@ type alias Class =
     }
 
 example = "CO1027	Kỹ thuật lập trình	3	--	L04	4	11-12	16:00 - 17:50	H1-304	BK-CS2	--|09|10|11|12|13|14|15|--|17|18|"
+
+parse : String -> Maybe Class
+parse raw = run parser raw |> Result.toMaybe
 
 parser : Parser Class
 parser =
@@ -70,6 +73,14 @@ weekParser =
             ]
     )
 
+toCalendar : List String -> String
+toCalendar events =
+    """BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//bkalendar//Google Calendar v1.0/VI
+""" ++ String.join "\n" events ++ """
+END:VCALENDAR"""
+
 toEvent : String -> Class -> String
 toEvent uuid class =
     case class.weeks of
@@ -79,12 +90,14 @@ toEvent uuid class =
                 firstWeek = List.foldl min headWeek tailWeeks
             in
             "BEGIN:VEVENT" ++
-            "\nSUMMARY: " ++ class.title ++
-            "\nDESCRIPTION: " ++ class.desp ++
-            "\nLOCATION: " ++ class.room ++
-            "\nDTSTART: " ++ toDate class.wday class.start firstWeek ++
-            "\nDTEND: " ++ toDate class.wday (class.end + 1) firstWeek ++
-            "\nRDATE;VALUE=DATE:" ++ String.join "," (List.map (toDate class.wday class.start) class.weeks) ++
+            "\nUID:" ++ uuid ++
+            "\nDTSTAMP:20210516T200000" ++
+            "\nSUMMARY:" ++ class.title ++
+            "\nDESCRIPTION:" ++ class.desp ++
+            "\nLOCATION:" ++ class.room ++
+            "\nDTSTART:" ++ toDate class.wday class.start firstWeek ++
+            "\nDTEND:" ++ toDate class.wday (class.end + 1) firstWeek ++
+            "\nRDATE:" ++ String.join "," (List.map (toDate class.wday class.start) class.weeks) ++
             "\nEND:VEVENT"
 
 origin : Int
