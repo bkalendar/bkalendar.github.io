@@ -2,7 +2,6 @@ module Class exposing (Class, parser, example, toEvent)
 
 import Parser exposing (..)
 import Time exposing (..)
-import Parser exposing (oneOf)
 
 type alias Class =
     { title : String
