@@ -36,27 +36,31 @@ init _ =
 view : Model -> Html Msg
 view model =
     let
-        textareaStyle = "p-2 bg-gray-200 text-gray-500 w-full h-48 overflow-hidden"
+        textareaStyle = "h-16 flex-none p-2 bg-gray-200 text-gray-500 w-full overflow-hidden"
         downloadStyle = "text-green-500 border-b-4 border-green-500"
         invalidStyle = "font-bold text-red-600"
     in
     
-    div [ class "w-1/3 mx-auto mt-16" ]
+    div [ class "w-1/3 mx-auto pt-16 min-h-screen flex flex-col" ]
         [ textarea [ onInput GotInput, class textareaStyle ] []
         -- , Html.p [] [ Html.text (Debug.toString model.result )]
-        , if model.readyToDownload then
-            div []
+        , div [ class "flex-grow h-full" ] <|
+            if model.readyToDownload then
                 [ a [ href <| "data:text/calendar," ++ percentEncode (Class.toCalendar model.events)
-                   , class downloadStyle
-                   , tabindex 0
-                   ]
-                 [ text "click here to download" ]
+                    , class downloadStyle
+                    , tabindex 0
+                    ]
+                    [ text "click here to download" ]
                 , viewPreview model.result
                 ]
-          else
-            a [ href "#invalid-input"
+            else
+            
+                [ a [ href "#invalid-input"
                    , class invalidStyle]
                 [ text "please check your input" ]
+            ]
+        , p [ class "text-center" ] [ Html.text "made with love by NDK" ]
+        , p [ class "text-center" ] [ Html.text "facebook · github" ]
         ]
 
 viewPreview : List Class -> Html Msg

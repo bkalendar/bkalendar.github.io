@@ -4,18 +4,17 @@
   "description": "",
   "main": "index.html",
   "scripts": {
-    "dev": "snowpack dev",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev:tailwind": "cross-env NODE_ENV=development postcss ./public/tailwind.css -o ./dist/tailwind.css -w",
+    "dev:elm": "elm-live src/Main.elm --start-page=index.html -o -v -- --debug --output=./dist/elm.js"
   },
   "author": "Nguyen Duy Khang",
   "license": "ISC",
   "devDependencies": {
-    "@snowpack/plugin-postcss": "^1.2.2",
     "autoprefixer": "^10.2.5",
+    "cross-env": "^7.0.3",
     "elm": "^0.19.1-5",
+    "elm-live": "https://github.com/wking-io/elm-live#07f422fbf05f01a9b30b1a078a44bd63cb56ce1c",
     "postcss-cli": "^8.3.1",
-    "snowpack": "^3.4.0",
-    "snowpack-plugin-elm": "^0.4.3",
     "tailwindcss": "^2.1.2"
   }
 }
