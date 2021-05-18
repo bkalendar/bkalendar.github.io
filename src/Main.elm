@@ -3,7 +3,7 @@ module Main exposing (main)
 import Browser
 import Html exposing (..)
 import Html.Events exposing (..)
-import Html.Attributes exposing (href, class)
+import Html.Attributes exposing (href, class, src, target)
 import Random exposing (generate)
 import Uuid exposing (uuidGenerator)
 import Class exposing (Class)
@@ -59,8 +59,17 @@ view model =
                    , class invalidStyle]
                 [ text "please check your input" ]
             ]
-        , p [ class "text-center" ] [ Html.text "made with love by NDK" ]
-        , p [ class "text-center" ] [ Html.text "facebook · github" ]
+        , p [ class "text-center" ] [ text "made with love by NDK" ]
+        , p [ class "flex justify-center" ]
+            [ a [ class "flex items-center", target "_blank", href "https://www.facebook.com/dykhng/" ]
+                [ img [ class "h-4 mr-1", src "./public/facebook.svg" ] []
+                , text "facebook ·"
+                ]
+            , a [ class "flex items-center", target "_blank", href "https://github.com/iceghost/bkalendar" ] 
+                [ img [ class "h-4 mx-1", src "./public/github.svg" ] []
+                , text "github"
+                ]
+            ]
         ]
 
 viewPreview : List Class -> Html Msg
