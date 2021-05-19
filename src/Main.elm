@@ -59,16 +59,24 @@ view model =
                    , class invalidStyle]
                 [ text "please check your input" ]
             ]
-        , p [ class "text-center" ] [ text "made with love by NDK" ]
+        , viewFooter
+        ]
+
+viewFooter : Html Msg
+viewFooter =
+    let
+        viewLink href_ src_ text_ =
+            a [ class "flex items-center", target "_blank", href href_ ]
+                [ img [ class "h-4 mr-1", src src_ ] []
+                , text text_
+                ]
+    in
+    div [] 
+        [ p [ class "text-center" ] [ text "made with love by NDK" ]
         , p [ class "flex justify-center" ]
-            [ a [ class "flex items-center", target "_blank", href "https://www.facebook.com/dykhng/" ]
-                [ img [ class "h-4 mr-1", src "./public/facebook.svg" ] []
-                , text "facebook ·"
-                ]
-            , a [ class "flex items-center", target "_blank", href "https://github.com/iceghost/bkalendar" ] 
-                [ img [ class "h-4 mx-1", src "./public/github.svg" ] []
-                , text "github"
-                ]
+            [ viewLink "https://www.facebook.com/dykhng/" "./public/facebook.svg" "facebook"
+            , span [ class "mx-1" ] [ text "·" ]
+            , viewLink "https://github.com/iceghost/bkalendar" "./public/github.svg" "github"
             ]
         ]
 
@@ -81,32 +89,24 @@ viewPreview classes =
                     then Just (Class.abbr class.title)
                     else Nothing
             )
+        
+        viewDay text_ wday = 
+            p []
+                [ span [ class "font-semibold"] [ text text_ ]
+                , text (filterWday wday classes)
+                ]
     in
     
     div []
         [ h2 [ class "font-bold text-xl mt-4 mb-1" ]
             [ text "Xem trước:" ]
-        , p [] [ span [ class "font-semibold"] [ text "Thứ hai: " ]
-                    , text (filterWday 2 classes)
-                    ]
-        , p [] [ span [ class "font-semibold"] [ text "Thứ ba: " ]
-                    , text (filterWday 3 classes)
-                    ]
-        , p [] [ span [ class "font-semibold"] [ text "Thứ tư: " ]
-                    , text (filterWday 4 classes)
-                    ]
-        , p [] [ span [ class "font-semibold"] [ text "Thứ năm: " ]
-                    , text (filterWday 5 classes)
-                    ]
-        , p [] [ span [ class "font-semibold"] [ text "Thứ sáu: " ]
-                    , text (filterWday 6 classes)
-                    ]
-        , p [] [ span [ class "font-semibold"] [ text "Thứ bảy: " ]
-                    , text (filterWday 7 classes)
-                    ]
-        , p [] [ span [ class "font-semibold"] [ text "Chủ nhật: " ]
-                    , text (filterWday 8 classes)
-                    ]
+        , viewDay "Thứ hai: " 2
+        , viewDay "Thứ ba: " 3
+        , viewDay "Thứ tư: " 4
+        , viewDay "Thứ năm: " 5
+        , viewDay "Thứ sáu: " 6
+        , viewDay "Thứ bảy: " 7
+        , viewDay "Chủ nhật: " 8
         ]
 
 update : Msg -> Model ->  ( Model, Cmd Msg )
@@ -130,5 +130,5 @@ update msg model =
               }, Cmd.none )
 
 subscriptions : Model -> Sub Msg
-subscriptions model =
+subscriptions _ =
     Sub.none

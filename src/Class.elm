@@ -13,6 +13,7 @@ type alias Class =
     , weeks : List Int
     }
 
+example : String
 example = "CO1027	Kỹ thuật lập trình	3	--	L04	4	11-12	16:00 - 17:50	H1-304	BK-CS2	--|09|10|11|12|13|14|15|--|17|18|"
 
 abbrHelp : List Char -> Bool -> String -> String
