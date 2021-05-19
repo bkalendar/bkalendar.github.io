@@ -1,17 +1,21 @@
 module Main exposing (main)
 
 import Browser
-import Html exposing (..)
-import Html.Events exposing (..)
-import Html.Attributes exposing (href, class, src, target)
+import Html exposing (Html)
+import Element exposing (..)
+import Element.Background as Bg
+import Element.Border as Border
+import Element.Font as Font
+import Element.Input as Input
 import Random exposing (generate)
 import Uuid exposing (uuidGenerator)
 import Class exposing (Class)
 import Url exposing (percentEncode)
-import Html.Attributes exposing (tabindex)
+import Color.OneDark exposing (..)
 
 type alias Model =
-    { result: List Class
+    { raw : String
+    , result: List Class
     , events: List String
     , readyToDownload: Bool
     }
@@ -31,83 +35,90 @@ main =
 
 init : flags -> (Model, Cmd msg)
 init _ =
-    ( { result = [], events = [], readyToDownload = False }, Cmd.none)
+    ( { raw = ""
+      , result = []
+      , events = []
+      , readyToDownload = False }, Cmd.none)
 
 view : Model -> Html Msg
 view model =
-    let
-        textareaStyle = "h-16 flex-none p-2 bg-gray-200 text-gray-500 w-full overflow-hidden"
-        downloadStyle = "text-green-500 border-b-4 border-green-500"
-        invalidStyle = "font-bold text-red-600"
-    in
-    
-    div [ class "w-1/3 mx-auto pt-16 min-h-screen flex flex-col" ]
-        [ textarea [ onInput GotInput, class textareaStyle ] []
-        -- , Html.p [] [ Html.text (Debug.toString model.result )]
-        , div [ class "flex-grow h-full" ] <|
-            if model.readyToDownload then
-                [ a [ href <| "data:text/calendar," ++ percentEncode (Class.toCalendar model.events)
-                    , class downloadStyle
-                    , tabindex 0
+    layout [] <| column [ height fill, width fill
+                        , Font.family [ Font.typeface "Roboto Condensed"
+                                      , Font.sansSerif
+                                      ]
+                        ] <|
+        [ row
+            [ height (px 50), width fill
+            , spacing 10
+            , paddingXY 20 0
+            , Bg.color black
+            , Font.color white
+            ]
+            [ el [] <| text "BKalendar"
+            , el [ alignRight ] <| text "Home"
+            , el [ alignRight ] <| text "Bonus"
+            , el [ alignRight ] <| text "About"
+            ]
+        , row
+            [ height (px 250), width fill
+            , paddingXY 100 20
+            , spacing 50
+            , Bg.color gutterGrey
+            , Font.color white
+            ]
+            [ paragraph
+                [ width (fillPortion 2)
+                , Font.size 48
+                ] <|
+                [ text "Chuyển từ lịch "
+                , el [ Font.color blue ] <| text "MyBK "
+                , text "sang "
+                , el [ Font.color blue ] <| text "G"
+                , el [ Font.color darkRed ] <| text "o"
+                , el [ Font.color darkYellow ] <| text "o"
+                , el [ Font.color blue ] <| text "g"
+                , el [ Font.color green] <| text "l"
+                , el [ Font.color darkRed ] <| text "e "
+                , text " Calendar chỉ với vài thao tác!" ]
+            , column [ width (fillPortion 1), spacing 20 ]
+                [ Input.multiline
+                    [ height (px 150)
+                    , Bg.color commentGrey
+                    , Border.width 0
                     ]
-                    [ text "click here to download" ]
-                , viewPreview model.result
+                    { onChange = GotInput
+                    , text = model.raw
+                    , placeholder = Nothing
+                    , label = Input.labelAbove [] <| text "paste lịch vào đây"
+                    , spellcheck = False
+                    }
+                , if model.readyToDownload then
+                    download [ Font.color green ]
+                        { label = el [ Font.bold ] <|
+                                        text "➥ click để tải về"
+                        , url = "data:text/calendar," ++ percentEncode (Class.toCalendar model.events)
+                        }
+                  else
+                    el [ Font.color lightRed ] <| text "kiểm tra lại nhá"
                 ]
-            else
-            
-                [ a [ href "#invalid-input"
-                   , class invalidStyle]
-                [ text "please check your input" ]
             ]
-        , viewFooter
+        , row
+            [ width fill, paddingXY 0 20 ]
+            [ el [ Font.center, width (fillPortion 1)] <| text "bước 1"
+            , el [ Font.center, width (fillPortion 1)] <| text "bước 2"
+            , el [ Font.center, width (fillPortion 1)] <| text "bước 3"]
+        , paragraph
+            [ paddingXY 0 5, alignBottom, Font.center ]
+            [ image [ height (px 16) ]
+                { description = "logo facebook", src = "./public/facebook.svg" }
+            , link [] { label = text " facebook", url = "https://www.facebook.com/dykhng/" }
+            , text " · "
+            , image [ height (px 16) ]
+                { description = "logo github", src = "./public/github.svg" }
+            , link [] { label = text " github", url = "https://github.com/iceghost/bkalendar" }
+            ]
         ]
 
-viewFooter : Html Msg
-viewFooter =
-    let
-        viewLink href_ src_ text_ =
-            a [ class "flex items-center", target "_blank", href href_ ]
-                [ img [ class "h-4 mr-1", src src_ ] []
-                , text text_
-                ]
-    in
-    div [] 
-        [ p [ class "text-center" ] [ text "made with love by NDK" ]
-        , p [ class "flex justify-center" ]
-            [ viewLink "https://www.facebook.com/dykhng/" "./public/facebook.svg" "facebook"
-            , span [ class "mx-1" ] [ text "·" ]
-            , viewLink "https://github.com/iceghost/bkalendar" "./public/github.svg" "github"
-            ]
-        ]
-
-viewPreview : List Class -> Html Msg
-viewPreview classes =
-    let
-        filterWday wday =
-            String.join ", " << List.filterMap (\class ->
-                if class.wday == wday
-                    then Just (Class.abbr class.title)
-                    else Nothing
-            )
-        
-        viewDay text_ wday = 
-            p []
-                [ span [ class "font-semibold"] [ text text_ ]
-                , text (filterWday wday classes)
-                ]
-    in
-    
-    div []
-        [ h2 [ class "font-bold text-xl mt-4 mb-1" ]
-            [ text "Xem trước:" ]
-        , viewDay "Thứ hai: " 2
-        , viewDay "Thứ ba: " 3
-        , viewDay "Thứ tư: " 4
-        , viewDay "Thứ năm: " 5
-        , viewDay "Thứ sáu: " 6
-        , viewDay "Thứ bảy: " 7
-        , viewDay "Chủ nhật: " 8
-        ]
 
 update : Msg -> Model ->  ( Model, Cmd Msg )
 update msg model =
@@ -118,7 +129,8 @@ update msg model =
                     Random.map (\uuid -> Class.toEvent (Uuid.toString uuid) class) uuidGenerator
                 newResult = String.split "\n" raw |> List.filterMap Class.parse
              in
-             ( { model | result = newResult
+             ( { model | raw = raw
+                       , result = newResult
                        , events = []
                        , readyToDownload = False
                }, Cmd.batch
