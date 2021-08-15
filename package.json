@@ -5,8 +5,7 @@
   "main": "index.html",
   "scripts": {
     "dev": "elm-live src/Main.elm --start-page=index.html -o -v -- --debug --output=./dist/elm.js",
-    "build": "npm run build:tailwind && npm run build:elm",
-    "build:elm": "elm make src/Main.elm --optimize --output=./dist/elm.js"
+    "build": "elm make src/Main.elm --optimize --output=./dist/elm.js"
   },
   "author": "Nguyen Duy Khang",
   "license": "ISC",
