@@ -30,7 +30,7 @@ timetableEntryToEvent uuid entry =
     in
     { uuid = uuid
     , subject = entry.name
-    , description = "Mã môn: " ++ entry.id ++ "\nMã lớp: " ++ entry.group
+    , description = "Mã môn: " ++ entry.id ++ "\\nMã lớp: " ++ entry.group
     , location = entry.room
     , start = toPosix entry.wday entry.start firstWeek
     , end = toPosix entry.wday (entry.end + 1) firstWeek
