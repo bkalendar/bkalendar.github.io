@@ -151,7 +151,7 @@ weekParser =
                 , Parser.succeed (Loop ( index + 1, index :: result ))
                     |. int
                     |. symbol "|"
-                , Parser.succeed (Done result)
+                , Parser.succeed (Done (List.reverse result))
                 ]
         )
 
