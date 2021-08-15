@@ -1,8 +1,12 @@
 module Main exposing (main)
 
+import Array exposing (Array)
 import Browser
+import Converter exposing (timetableToEvents)
+import Event exposing (Event)
 import Html.Styled as Html exposing (Html, toUnstyled)
-import Html.Styled.Events exposing (onInput)
+import Html.Styled.Attributes exposing (download, href, target, value)
+import Html.Styled.Events exposing (onClick, onInput)
 import Random exposing (generate)
 import Timetable exposing (Timetable)
 import Url exposing (percentEncode)
@@ -12,14 +16,8 @@ import Uuid exposing (uuidGenerator)
 type alias Model =
     { raw : String
     , result : Maybe Timetable
-    , events : List String
-    , readyToDownload : Bool
+    , events : Array Event
     }
-
-
-type Msg
-    = GotInput String
-    | GotEvent String
 
 
 main : Program () Model Msg
@@ -36,8 +34,7 @@ init : flags -> ( Model, Cmd msg )
 init _ =
     ( { raw = ""
       , result = Nothing
-      , events = []
-      , readyToDownload = False
+      , events = Array.empty
       }
     , Cmd.none
     )
@@ -45,7 +42,42 @@ init _ =
 
 view : Model -> Html Msg
 view model =
-    Html.textarea [ onInput GotInput ] []
+    Html.div []
+        [ Html.textarea [ onInput GotInput, value model.raw ] []
+        , case model.result of
+            Nothing ->
+                Html.text ""
+
+            Just timetable ->
+                Html.div []
+                    [ viewTimetable timetable
+                    , if List.length timetable.entries /= Array.length model.events then
+                        Html.text ""
+
+                      else
+                        viewEvents model.events
+                    ]
+        ]
+
+
+viewEvents : Array Event -> Html Msg
+viewEvents events =
+    let
+        downloadLink =
+            "data:text/calendar," ++ percentEncode (Array.toList events |> Event.toCalendar)
+    in
+    Html.div []
+        [ Html.a [ target "_blank", href downloadLink, download "export" ] [ Html.text "Tải về" ]
+        , Html.pre [] [ Html.text (Array.toList events |> Event.toCalendar) ]
+        ]
+
+
+viewTimetable : Timetable -> Html Msg
+viewTimetable timetable =
+    Html.p []
+        [ Html.text <| "Học kỳ " ++ String.fromInt (timetable.from |> remainderBy 100 |> (*) 10 |> (+) timetable.semester)
+        , Html.button [ onClick (Convert timetable) ] [ Html.text "Convert" ]
+        ]
 
 
 
@@ -158,32 +190,34 @@ view model =
 --         ]
 
 
+type Msg
+    = GotInput String
+    | Convert Timetable
+    | GotEvent Event
+
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         GotInput raw ->
             let
-                eventGenerator class =
-                    Random.map (\uuid -> Timetable.toEvent (Uuid.toString uuid) class) uuidGenerator
-
                 newResult =
                     Timetable.parse raw
             in
             ( { model
                 | raw = raw
                 , result = newResult
-                , events = []
-                , readyToDownload = False
               }
             , Cmd.none
             )
 
-        GotEvent event ->
-            ( { model
-                | events = event :: model.events
-              }
-            , Cmd.none
+        Convert timetable ->
+            ( { model | events = Array.empty }
+            , timetableToEvents GotEvent timetable
             )
+
+        GotEvent event ->
+            ( { model | events = Array.push event model.events }, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
