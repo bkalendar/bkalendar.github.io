@@ -80,8 +80,8 @@ parse : String -> Maybe Timetable
 parse =
     Parser.run
         (Parser.succeed Timetable
-            |. Parser.chompUntil "\nHọc kỳ "
-            |. Parser.token "\nHọc kỳ "
+            |. Parser.chompUntil "Học kỳ "
+            |. Parser.token "Học kỳ "
             |= Parser.int
             |. Parser.token " Năm học "
             |= Parser.int
