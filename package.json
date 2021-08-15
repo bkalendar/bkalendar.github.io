@@ -11,6 +11,7 @@
   "author": "Nguyen Duy Khang",
   "license": "ISC",
   "devDependencies": {
+    "elm": "^0.19.1-5",
     "elm-live": "https://github.com/wking-io/elm-live#07f422fbf05f01a9b30b1a078a44bd63cb56ce1c"
   }
 }
