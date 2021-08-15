@@ -4,20 +4,13 @@
   "description": "",
   "main": "index.html",
   "scripts": {
-    "dev:tailwind": "cross-env NODE_ENV=development postcss ./public/tailwind.css -o ./dist/tailwind.css -w",
-    "dev:elm": "elm-live src/Main.elm --start-page=index.html -o -v -- --debug --output=./dist/elm.js",
+    "dev": "elm-live src/Main.elm --start-page=index.html -o -v -- --debug --output=./dist/elm.js",
     "build": "npm run build:tailwind && npm run build:elm",
-    "build:tailwind": "cross-env NODE_ENV=production postcss ./public/tailwind.css -o ./dist/tailwind.css",
     "build:elm": "elm make src/Main.elm --optimize --output=./dist/elm.js"
   },
   "author": "Nguyen Duy Khang",
   "license": "ISC",
   "devDependencies": {
-    "autoprefixer": "^10.2.5",
-    "cross-env": "^7.0.3",
-    "elm": "^0.19.1-5",
-    "elm-live": "https://github.com/wking-io/elm-live#07f422fbf05f01a9b30b1a078a44bd63cb56ce1c",
-    "postcss-cli": "^8.3.1",
-    "tailwindcss": "^2.1.2"
+    "elm-live": "https://github.com/wking-io/elm-live#07f422fbf05f01a9b30b1a078a44bd63cb56ce1c"
   }
 }
