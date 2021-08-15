@@ -1,0 +1,16 @@
+{
+  "name": "bkalendar",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "dev": "elm-live src/Main.elm --start-page=index.html -o -v -- --debug --output=./dist/elm.js",
+    "build": "elm make src/Main.elm --optimize --output=./build/elm.js"
+  },
+  "author": "Nguyen Duy Khang",
+  "license": "ISC",
+  "devDependencies": {
+    "elm": "^0.19.1-5",
+    "elm-live": "https://github.com/wking-io/elm-live#07f422fbf05f01a9b30b1a078a44bd63cb56ce1c"
+  }
+}
