@@ -8684,7 +8684,7 @@ var $author$project$Converter$timetableEntryToEvent = F2(
 			0,
 			$elm$core$List$head(entry.b7));
 		return {
-			cl: 'Mã môn: ' + (entry.cu + ('\nMã lớp: ' + entry.cr)),
+			cl: 'Mã môn: ' + (entry.cu + ('\\nMã lớp: ' + entry.cr)),
 			br: A3(toPosix, entry.ba, entry.br + 1, firstWeek),
 			cA: entry.cM,
 			cK: A2(
