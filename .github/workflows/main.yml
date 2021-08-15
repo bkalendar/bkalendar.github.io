@@ -29,9 +29,8 @@ jobs:
         with:
           node-version: 14.17.0
           
-      - run: npm i -g npm
-      - run: npm ci
-      - run: npm run build:elm
+      - run: yarn install
+      - run: yarn build:elm
       
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
