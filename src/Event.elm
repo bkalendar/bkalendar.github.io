@@ -1,7 +1,5 @@
 module Event exposing (Event, toCalendar)
 
-import Array exposing (Array)
-import Iso8601
 import Time exposing (Month(..), Posix)
 import Uuid exposing (Uuid)
 

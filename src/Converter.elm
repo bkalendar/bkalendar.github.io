@@ -2,8 +2,8 @@ module Converter exposing (timetableToEvents)
 
 import Event exposing (Event)
 import Random
-import Time exposing (Posix)
-import Timetable exposing (Timetable, TimetableEntry)
+import Time
+import Timetable exposing (Timetable, Entry)
 import Uuid exposing (Uuid)
 
 
@@ -19,7 +19,7 @@ timetableToEvents toMsg { entries } =
         |> Cmd.batch
 
 
-timetableEntryToEvent : Uuid -> TimetableEntry -> Event
+timetableEntryToEvent : Uuid -> Entry -> Event
 timetableEntryToEvent uuid entry =
     let
         toPosix wday period week =

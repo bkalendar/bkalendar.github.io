@@ -7,10 +7,8 @@ import Event exposing (Event)
 import Html.Styled as Html exposing (Html, toUnstyled)
 import Html.Styled.Attributes exposing (download, href, target, value)
 import Html.Styled.Events exposing (onClick, onInput)
-import Random exposing (generate)
 import Timetable exposing (Timetable)
 import Url exposing (percentEncode)
-import Uuid exposing (uuidGenerator)
 
 
 type alias Model =
