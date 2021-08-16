@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "dev": "parcel serve src/index.html",
-    "build": "parcel build src/index.html"
+    "build": "parcel build src/index.html --public-url ."
   },
   "author": "Nguyen Duy Khang",
   "license": "ISC",
