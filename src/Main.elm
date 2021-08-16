@@ -3,10 +3,10 @@ module Main exposing (main)
 import Array exposing (Array)
 import Browser
 import Converter exposing (timetableToEvents)
-import Css
+import Css exposing (hex, pct, px, rem, vh)
 import Event exposing (Event)
 import Html.Styled as Html exposing (Html, toUnstyled)
-import Html.Styled.Attributes exposing (css, download, for, href, id, name, target, value)
+import Html.Styled.Attributes exposing (css, download, for, href, id, name, src, target, value)
 import Html.Styled.Events exposing (onClick, onInput)
 import Markdown
 import Timetable exposing (Timetable)
@@ -42,23 +42,50 @@ init _ =
 
 view : Model -> Html Msg
 view model =
-    Html.div [ css [ Css.maxWidth (Css.px 500), Css.margin Css.auto]]
-        [ Html.h1 [] [ Html.text "BKalendar" ]
-        , Html.label [ for "timetable-input" ]
-            [ Html.text "Copy thời khóa biểu vào đây" ]
-        , Html.textarea
-            [ css [ Css.display Css.block ]
-            , id "timetable-input"
-            , name "timetable-input"
-            , onInput GotInput
-            , value model.raw
+    Html.div [ css [ Css.maxWidth (px 520), Css.margin Css.auto ] ]
+        [ Html.div
+            [ css
+                [ Css.minHeight (vh 100)
+                , Css.displayFlex
+                , Css.flexDirection Css.column
+                , Css.alignItems Css.center
+                , Css.paddingTop (pct 20)
+                ]
             ]
-            []
-        , if not model.readyToDownload then
-            Html.text ""
+            [ Html.h1 [ css [ Css.color darkBlue ] ] [ Html.text "BKalendar" ]
+            , Html.label
+                [ for "timetable-input"
+                , css
+                    [ Css.display Css.block
+                    , Css.marginBottom (rem 0.5)
+                    ]
+                ]
+                [ Html.text "Copy rồi dán thời khóa biểu vào đây" ]
+            , Html.textarea
+                [ css
+                    [ Css.width (pct 100)
+                    , Css.height (px 100)
+                    , Css.borderWidth (px 2)
+                    , Css.borderRadius (px 5)
+                    , Css.borderStyle Css.solid
+                    , Css.borderColor lightGray
+                    ]
+                , id "timetable-input"
+                , name "timetable-input"
+                , onInput GotInput
+                , value model.raw
+                ]
+                []
+            , if not model.readyToDownload then
+                Html.p []
+                    [ Html.text "Copy từ dòng \""
+                    , Html.span [ css [ Css.fontStyle Css.italic ] ] [ Html.text "Học kỳ 1..." ]
+                    , Html.text "\" đến cuối cái bảng nhé."
+                    ]
 
-          else
-            viewDownload model.events
+              else
+                viewDownload model.events
+            ]
         , viewGuide
         ]
 
@@ -66,7 +93,10 @@ view model =
 viewGuide : Html Msg
 viewGuide =
     Html.div []
-        [ Html.fromUnstyled <| Markdown.toHtml [] """
+        [ Html.fromUnstyled <| Markdown.toHtml [] """---
+
+Dưới đây là các bước sử dụng file mới tải.
+
 ## Tạo lịch mới trên Google Calendar
 
 1. Mở Google Calendar trên máy tính.
@@ -83,7 +113,7 @@ Sau khi tạo lịch:
 3. Chọn lịch mà bạn vừa tạo ở bước trên.
 4. Nhấp vào **Nhập**.
 
-Vậy là xong rồi á!
+Vậy là xong rồi á! 😁
 
 ___
 
@@ -108,27 +138,28 @@ Còn không, các bạn thêm link Meet vào ô địa điểm hay mô tả cũn
 
 ___
 
-Made with love by NDK ❤️
+Made with love by [NDK](https://www.facebook.com/dykhng) ❤️
 """ ]
 
 
+darkBlue : Css.Color
+darkBlue =
+    hex "032b91"
 
--- Html.div []
---     [ Html.h2 [] [ Html.text "Tạo lịch mới trên Google Calendar" ]
---     , Html.p []
---         [ Html.text "Đọc hướng dẫn tại đây: "
---         , Html.a [ href "https://support.google.com/calendar/answer/37095" ] [ Html.text "Tạo lịch mới" ]
---         ]
---     , Html.p [] [ Html.text "Bạn hãy tạo một cái lịch tên là HK211, chẳng hạn." ]
---     , Html.h2 [] [ Html.text "Nhập file .ics vào lịch mới tạo" ]
---     , Html.p []
---         [ Html.text "Đọc hướng dẫn tại đây (bước 2): "
---         , Html.a [ href "https://support.google.com/calendar/answer/37118" ] [ Html.text "Nhập các sự kiện vào Lịch Google" ]
---         ]
---     , Html.p [] [ Html.text "Bạn hãy nhập file vừa tải về vào lịch mới tạo nhé." ]
---     , Html.h2 [] [ Html.text "Bonus: Bật thông báo cho lịch" ]
---     , Html.p [] [ Html.text ""]
---     ]
+
+blue : Css.Color
+blue =
+    hex "1488db"
+
+
+white : Css.Color
+white =
+    hex "ffffff"
+
+
+lightGray : Css.Color
+lightGray =
+    hex "D1D5DB"
 
 
 viewDownload : Array Event -> Html Msg
@@ -138,8 +169,22 @@ viewDownload events =
             "data:text/calendar," ++ percentEncode (Array.toList events |> Event.toCalendar)
     in
     Html.div []
-        [ Html.p [] [ Html.a [ target "_blank", href downloadLink, download "export" ] [ Html.text "Tải về" ] ]
-        , Html.p [] [ Html.text "Nếu bạn chưa rõ tải về rồi làm gì, đọc tiếp hướng dẫn bên dưới." ]
+        [ Html.p [ css [ Css.textAlign Css.center ] ]
+            [ Html.a
+                [ target "_blank"
+                , href downloadLink
+                , download "export"
+                , css
+                    [ Css.backgroundColor blue
+                    , Css.color white
+                    , Css.textDecoration Css.none
+                    , Css.padding2 (rem 0.25) (rem 0.5)
+                    , Css.borderRadius (rem 0.25)
+                    ]
+                ]
+                [ Html.text "Tải về" ]
+            ]
+        , Html.p [] [ Html.text "Nếu bạn chưa rõ tải về rồi làm gì, đọc tiếp hướng dẫn bên dưới 👇" ]
         ]
 
 

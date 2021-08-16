@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,700;1,400&display=swap');
+
+:root {
+  font-family: 'Crimson Pro', serif;
+  font-weight: 400;
+  font-size: 1.25rem;
+  color: #1F2937;
+  background-color: #F9FAFB;
+}
+
+h1, h2, h3 {
+  color: #032b91;
+}
+
+strong, a {
+  color: #1488db;
+}
