@@ -40,38 +40,47 @@ type alias Entry =
 
 parse : String -> Maybe Timetable
 parse =
-    Parser.run
-        (Parser.succeed Timetable
-            |. Parser.chompUntil "Học kỳ "
-            |. Parser.token "Học kỳ "
-            |= Parser.int
-            |. Parser.token " Năm học "
-            |= Parser.int
-            |. Parser.token " - "
-            |= Parser.int
-            |. Parser.spaces
-            |. Parser.chompUntil "\n"
-            |. Parser.spaces
-            |. Parser.chompUntil "\n"
-            |. Parser.spaces
-            |= Parser.loop []
-                (\entries ->
-                    Parser.oneOf
-                        [ Parser.succeed (Loop entries)
-                            |. Parser.symbol "\n"
-                        , entryParser |> Parser.map (\entry -> Loop (entry :: entries))
-                        , Parser.succeed (Done entries)
-                        ]
-                )
-        )
+    Parser.run parser
+        -- >> Result.mapError (Debug.log "gg")
         >> Result.toMaybe
+
+
+parser : Parser Timetable
+parser =
+    Parser.succeed Timetable
+        |. Parser.chompUntil "Học kỳ "
+        |. Parser.token "Học kỳ "
+        |= Parser.int
+        |. Parser.token " Năm học "
+        |= Parser.int
+        |. Parser.token " - "
+        |= Parser.int
+        |. Parser.spaces
+        |. Parser.chompUntil "\n"
+        |. Parser.spaces
+        |. Parser.chompUntil "\n"
+        |. Parser.spaces
+        |= Parser.loop []
+            (\entries ->
+                Parser.oneOf
+                    [ Parser.backtrackable entryParser |> Parser.map (\entry -> Loop (entry :: entries))
+                    , Parser.succeed (Done entries)
+                        |. Parser.oneOf
+                            [ Parser.token "Tổng số tín chỉ đăng ký"
+                            , Parser.end
+                            ]
+                    , Parser.succeed (Loop entries)
+                        |. Parser.chompUntilEndOr "\n"
+                        |. Parser.chompWhile (\c -> c == '\n')
+                    ]
+            )
 
 
 entryParser : Parser Entry
 entryParser =
     let
         cellChomper =
-            chompWhile (\c -> c /= '\t')
+            chompWhile (\c -> c /= '\t' && c /= '\n')
     in
     succeed Entry
         |= getChompedString cellChomper
@@ -97,6 +106,7 @@ entryParser =
         |. cellChomper
         |. symbol "\t"
         |= weekParser
+        |. Parser.commit ()
 
 
 weekParser : Parser (List Int)
