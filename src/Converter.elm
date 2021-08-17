@@ -2,31 +2,26 @@ module Converter exposing (timetableToEvents)
 
 import Event exposing (Event)
 import Random
-import Time
-import Timetable exposing (Timetable, Entry)
+import Time exposing (Posix)
+import Timetable exposing (Entry, Timetable)
 import Uuid exposing (Uuid)
 
 
-week33Local : Int
-week33Local =
-    1629046800000
-
-
 timetableToEvents : (Event -> msg) -> Timetable -> Cmd msg
-timetableToEvents toMsg { entries } =
-    List.map (\entry -> Random.generate toMsg (Random.map (\uuid -> timetableEntryToEvent uuid entry) Uuid.uuidGenerator))
-        entries
+timetableToEvents toMsg timetable =
+    List.map (\entry -> Random.generate toMsg (Random.map (\uuid -> timetableEntryToEvent timetable uuid entry) Uuid.uuidGenerator))
+        timetable.entries
         |> Cmd.batch
 
 
-timetableEntryToEvent : Uuid -> Entry -> Event
-timetableEntryToEvent uuid entry =
+timetableEntryToEvent : Timetable -> Uuid -> Entry -> Event
+timetableEntryToEvent timetable uuid entry =
     let
         toPosix wday period week =
-            Time.millisToPosix (week33Local + week * 604800000 + (wday - 2) * 86400000 + (period + 5) * 3600000)
+            Time.millisToPosix (Time.posixToMillis (Timetable.getDate week timetable) + (wday - 2) * 86400000 + (period + 5 - 7) * 3600000)
 
-        firstWeek =
-            List.head entry.weeks |> Maybe.withDefault 0
+        ( firstWeek, weeks ) =
+            entry.weeks
     in
     { uuid = uuid
     , subject = entry.name
@@ -34,5 +29,5 @@ timetableEntryToEvent uuid entry =
     , location = entry.room
     , start = toPosix entry.wday entry.start firstWeek
     , end = toPosix entry.wday (entry.end + 1) firstWeek
-    , repeats = List.map (toPosix entry.wday entry.start) entry.weeks
+    , repeats = List.map (toPosix entry.wday entry.start) weeks
     }

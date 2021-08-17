@@ -1,5 +1,6 @@
-module Timetable exposing (Entry, Timetable, entryParser, parse)
+module Timetable exposing (Entry, Timetable, entryParser, parse, getDate)
 
+import Date exposing (Date, Weekday)
 import Parser exposing (..)
 import Time exposing (..)
 
@@ -28,7 +29,7 @@ type alias Entry =
     , start : Int
     , end : Int
     , room : String
-    , weeks : List Int
+    , weeks : ( Int, List Int )
     }
 
 
@@ -109,20 +110,51 @@ entryParser =
         |. Parser.commit ()
 
 
-weekParser : Parser (List Int)
+weekParser : Parser ( Int, List Int )
 weekParser =
-    loop ( 0, [] )
-        (\( index, result ) ->
+    loop []
+        (\result ->
             oneOf
-                [ Parser.succeed (Loop ( index + 1, result ))
+                [ Parser.succeed (Loop result)
                     |. symbol "--|"
-                , Parser.succeed (Loop ( index + 1, index :: result ))
+                , Parser.succeed (\week -> Loop (week :: result))
                     |. symbol "0"
-                    |. int
+                    |= int
                     |. symbol "|"
-                , Parser.succeed (Loop ( index + 1, index :: result ))
-                    |. int
+                , Parser.succeed (\week -> Loop (week :: result))
+                    |= int
                     |. symbol "|"
                 , Parser.succeed (Done (List.reverse result))
                 ]
         )
+        |> Parser.andThen
+            (\weeks ->
+                case weeks of
+                    week :: theRest ->
+                        Parser.succeed ( week, theRest )
+
+                    [] ->
+                        Parser.problem "First week not found"
+            )
+
+
+dateToPosixTime : Date -> Posix
+dateToPosixTime date =
+    Time.millisToPosix ((Date.toRataDie date - 719162) * (1000 * 60 * 60 * 24) - (1000 * 60 * 60 * 24))
+
+
+getDate : Int -> Timetable -> Posix
+getDate week { semester, from, to } =
+    let
+        year =
+            if 53 - week < week - 0 then
+                from
+
+            else
+                to
+    in
+    if semester == 3 then
+        Date.fromWeekDate to week Mon |> dateToPosixTime
+
+    else
+        Date.fromWeekDate year week Mon |> dateToPosixTime
