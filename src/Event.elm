@@ -18,31 +18,29 @@ type alias Event =
 toVEvent : Event -> String
 toVEvent event =
     "BEGIN:VEVENT"
-        ++ "\nUID:"
+        ++ "\u{000D}\nUID:"
         ++ Uuid.toString event.uuid
-        ++ "\nDTSTAMP:20210815T200000"
-        ++ "\nSUMMARY:"
+        ++ "\u{000D}\nDTSTAMP:20210815T200000"
+        ++ "\u{000D}\nSUMMARY:"
         ++ event.subject
-        ++ "\nDESCRIPTION:"
+        ++ "\u{000D}\nDESCRIPTION:"
         ++ event.description
-        ++ "\nLOCATION:"
+        ++ "\u{000D}\nLOCATION:"
         ++ event.location
-        ++ "\nDTSTART:"
+        ++ "\u{000D}\nDTSTART:"
         ++ toDate event.start
-        ++ "\nDTEND:"
+        ++ "\u{000D}\nDTEND:"
         ++ toDate event.end
-        ++ "\nRDATE:"
+        ++ "\u{000D}\nRDATE:"
         ++ String.join "," (List.map toDate event.repeats)
-        ++ "\nEND:VEVENT"
+        ++ "\u{000D}\nEND:VEVENT"
 
 
 toCalendar : List Event -> String
 toCalendar events =
-    """BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//bkalendar//Google Calendar v1.0/VI
-""" ++ String.join "\n" (List.map toVEvent events) ++ """
-END:VCALENDAR"""
+    "BEGIN:VCALENDAR\u{000D}\nVERSION:2.0\u{000D}\nPRODID:-//bkalendar//Google Calendar v1.0/VI\u{000D}\n"
+        ++ String.join "\u{000D}\n" (List.map toVEvent events)
+        ++ "\u{000D}\nEND:VCALENDAR"
 
 
 toDate : Posix -> String
