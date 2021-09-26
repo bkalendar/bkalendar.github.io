@@ -25,8 +25,13 @@ toVEvent event =
         ++ event.subject
         ++ "\u{000D}\nDESCRIPTION:"
         ++ event.description
-        ++ "\u{000D}\nLOCATION:"
-        ++ event.location
+        ++ (if event.location == "HANGOUT_TUONGTAC" then
+                ""
+
+            else
+                "\u{000D}\nLOCATION:"
+                    ++ event.location
+           )
         ++ "\u{000D}\nDTSTART:"
         ++ toDate event.start
         ++ "\u{000D}\nDTEND:"
