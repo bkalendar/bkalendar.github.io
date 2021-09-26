@@ -29,5 +29,5 @@ timetableEntryToEvent timetable uuid entry =
     , location = entry.room
     , start = toPosix entry.wday entry.start firstWeek
     , end = toPosix entry.wday (entry.end + 1) firstWeek
-    , repeats = List.map (toPosix entry.wday entry.start) weeks
+    , repeats = List.map (toPosix entry.wday entry.start) (firstWeek :: weeks)
     }
