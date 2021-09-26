@@ -1,16 +1,21 @@
 {
-  "name": "bkalendar",
-  "version": "1.0.0",
-  "description": "",
-  "scripts": {
-    "dev": "parcel serve src/index.html",
-    "build": "parcel build src/index.html --public-url ."
-  },
-  "author": "Nguyen Duy Khang",
-  "license": "ISC",
-  "devDependencies": {
-    "@parcel/transformer-elm": "2.0.0-rc.0",
-    "elm": "^0.19.1-5",
-    "parcel": "^2.0.0-rc.0"
-  }
+	"name": "bkalendar",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "svelte-kit dev",
+		"build": "svelte-kit build",
+		"preview": "svelte-kit preview"
+	},
+	"devDependencies": {
+		"@sveltejs/kit": "next",
+		"elm": "^0.19.1-5",
+		"svelte": "^3.42.6",
+		"postcss": "^8.3.6",
+		"postcss-load-config": "^3.1.0",
+		"svelte-preprocess": "^4.9.4",
+		"autoprefixer": "^10.3.4",
+		"cssnano": "^5.0.8",
+		"tailwindcss": "^2.2.15"
+	},
+	"type": "module"
 }
