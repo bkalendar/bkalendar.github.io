@@ -4,18 +4,23 @@
 	"scripts": {
 		"dev": "svelte-kit dev",
 		"build": "svelte-kit build",
-		"preview": "svelte-kit preview"
+		"preview": "svelte-kit preview",
+		"test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --watchAll --verbose"
 	},
 	"devDependencies": {
 		"@sveltejs/kit": "next",
+		"@types/jest": "^27.0.2",
+		"autoprefixer": "^10.3.4",
+		"cross-env": "^7.0.3",
+		"cssnano": "^5.0.8",
 		"elm": "^0.19.1-5",
-		"svelte": "^3.42.6",
+		"jest": "^27.2.2",
 		"postcss": "^8.3.6",
 		"postcss-load-config": "^3.1.0",
+		"svelte": "^3.42.6",
 		"svelte-preprocess": "^4.9.4",
-		"autoprefixer": "^10.3.4",
-		"cssnano": "^5.0.8",
 		"tailwindcss": "^2.2.15"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {}
 }
