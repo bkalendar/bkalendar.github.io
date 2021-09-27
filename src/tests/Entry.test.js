@@ -35,17 +35,17 @@ describe('Entry', () => {
 
   it('throws on invalid format', () => {
     expect(() => {
-      const entry = new Entry('');
+      new Entry('');
     }).toThrow();
 
     expect(() => {
-      const entry = new Entry(
+      new Entry(
         'MI1003	Giáo dục quốc phòng 	--	1	L02	--	0-0	0:00 - 0:00	------	BK-CS1	--|--|--|--|--|--|45|46|47|48|'
       );
     }).toThrow();
 
     expect(() => {
-      const entry = new Entry(
+      new Entry(
         'CH1004	Hóa đại cương (thí nghiệm) 	--	--	L56	4	2-5	7:00 - 10:50	H1-504	BK-CS2	--|'
       );
     }).toThrow();
