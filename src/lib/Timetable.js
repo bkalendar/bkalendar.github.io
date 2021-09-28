@@ -11,6 +11,8 @@ export class Timetable {
       /Học kỳ (?<semester>\d) Năm học (?<yearFrom>\d+) - (?<yearTo>\d+)\n[^\n]*\n[^\n]*\n(?<entries>(?:[^](?!\nTổng số tín chỉ đăng ký))*)/;
     const match = raw.match(pattern);
 
+    if (!match) throw new Error('Invalid input');
+
     /** @type {number} */
     this.semester = Number(match.groups.semester);
 
@@ -38,7 +40,13 @@ export class Timetable {
       'PRODID:-//bkalendar//Google Calendar v1.0/VI',
     ];
     for (const entry of this.entries) {
-      arr.push(Event.fromEntry(entry).toVEvent());
+      arr.push(
+        Event.fromEntry(entry, {
+          semester: this.semester,
+          yearFrom: this.year.from,
+          yearTo: this.year.to,
+        }).toVEvent()
+      );
     }
     arr.push('END:VCALENDAR');
     return arr.join('\r\n');

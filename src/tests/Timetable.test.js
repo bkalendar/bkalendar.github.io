@@ -22,7 +22,7 @@ describe('Timetable', () => {
     expect(timetable.entries[1].weeks.others).toEqual([
       10, 11, 12, 13, 14, 15, 16, 17, 19,
     ]);
-  }); 
+  });
 
   it('excludes falsy entries', () => {
     const raw = `Học kỳ 1 Năm học 2020 - 2021
@@ -35,4 +35,8 @@ describe('Timetable', () => {
 
     expect(timetable.entries).toHaveLength(0);
   });
+
+  it('should convert correctly to VCALENDAR', () => {
+    expect(timetable.toVCalendar()).toContain()
+  })
 });
