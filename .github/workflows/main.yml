@@ -14,14 +14,27 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Setup yarn
-        run: yarn
+      - name: Cache pnpm modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.0.2
+
+      - name: Setup pnpm
+        run: pnpm install
 
       - name: Run tests
-        run: yarn test
+        run: pnpm run test
 
       - name: Build with adapter static
-        run: yarn build
+        run: pnpm run build
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4

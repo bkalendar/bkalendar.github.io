@@ -2,15 +2,15 @@
 	"name": "bkalendar",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "svelte-kit dev",
-		"build": "svelte-kit build",
+		"dev": "cross-env NODE_ENV=DEVELOPMENT svelte-kit dev",
+		"build": "cross-env NODE_ENV=PRODUCTION svelte-kit build",
 		"preview": "svelte-kit preview",
 		"test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --verbose"
 	},
 	"devDependencies": {
 		"@js-temporal/polyfill": "^0.2.0",
 		"@sveltejs/adapter-static": "^1.0.0-next.20",
-		"@sveltejs/kit": "next",
+		"@sveltejs/kit": "^1.0.0-next.169",
 		"@types/jest": "^27.0.2",
 		"autoprefixer": "^10.3.4",
 		"cross-env": "^7.0.3",
