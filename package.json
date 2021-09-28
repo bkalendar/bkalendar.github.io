@@ -9,6 +9,7 @@
 	},
 	"devDependencies": {
 		"@js-temporal/polyfill": "^0.2.0",
+		"@sveltejs/adapter-static": "^1.0.0-next.20",
 		"@sveltejs/kit": "next",
 		"@types/jest": "^27.0.2",
 		"autoprefixer": "^10.3.4",

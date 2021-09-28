@@ -37,6 +37,6 @@ describe('Timetable', () => {
   });
 
   it('should convert correctly to VCALENDAR', () => {
-    expect(timetable.toVCalendar()).toContain()
+    expect(timetable.toVCalendar()).toContain('20210412T030000Z')
   })
 });
