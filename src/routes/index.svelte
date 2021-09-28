@@ -47,7 +47,7 @@
       transition:slide
       href={downloadLink}
       download="bkalendar"
-      class="mx-auto flex items-center justify-center transition duration-200 bg-blue w-28 px-2 py-1 rounded-md mt-2 border-2 border-blue text-white hover:text-currentColor hover:bg-white group shadow-md hover:shadow-none"
+      class="mx-auto flex items-center justify-center transition duration-200 bg-blue w-28 px-2 py-1 rounded-md mt-2 border-2 border-blue text-white hover:text-currentColor hover:bg-white group shadow-md hover:shadow-none dark:hover:bg-transparent"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

@@ -8,7 +8,7 @@ const config = {
     target: '#svelte',
     adapter: adapter(),
     paths: {
-        base: '/bkalendar',
+      base: process.env.NODE_ENV === 'PRODUCTION' ? '/bkalendar' : '',
     },
   },
 
