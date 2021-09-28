@@ -1,4 +1,5 @@
 import { Entry } from './Entry.js';
+import { Event } from './Event.js';
 
 export class Timetable {
   /**
@@ -28,5 +29,18 @@ export class Timetable {
         this.entries.push(entry);
       } catch {}
     }
+  }
+
+  toVCalendar() {
+    let arr = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//bkalendar//Google Calendar v1.0/VI',
+    ];
+    for (const entry of this.entries) {
+      arr.push(Event.fromEntry(entry).toVEvent());
+    }
+    arr.push('END:VCALENDAR');
+    return arr.join('\r\n');
   }
 }

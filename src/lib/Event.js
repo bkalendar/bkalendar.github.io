@@ -5,6 +5,8 @@ import { Temporal } from '@js-temporal/polyfill';
 import { v4 as uuid } from 'uuid';
 
 export class Event {
+  #uid;
+
   /**
    * Intermediate class for exporting to ical
    * @param {Object}     info             Event info
@@ -36,6 +38,34 @@ export class Event {
 
     /** @type {DateTime[]} */
     this.repeats = info.repeats;
+  }
+
+  /**
+   * Turn into VEVENT format (ical specification)
+   * @returns {string}
+   */
+  toVEvent() {
+    /**
+     * @param {DateTime} dt
+     * @returns {string}
+     */
+    function toIcalDateTime(dt) {
+      return dt.toInstant().toString().replace(/[-:]/g, '');
+    }
+
+    return [
+      'BEGIN:VEVENT',
+      `UID:${this.#uid}`,
+      'DTSTAMP:20210928T200000',
+      `SUMMARY:${this.subject}`,
+      `DESCRIPTION:${this.description}${
+        this.location ? `\r\nLOCATION:${this.location}` : ''
+      }`,
+      `DTSTART:${toIcalDateTime(this.start)}`,
+      `DTEND:${toIcalDateTime(this.end)}`,
+      `RDATE:${this.repeats.map(toIcalDateTime).join(',')}`,
+      'END:VEVENT',
+    ].join('\r\n');
   }
 
   /**
@@ -79,7 +109,7 @@ export class Event {
 
     return new Event({
       subject: entry.name,
-      description: `Mã môn: ${entry.id}\nMã lớp: ${entry.group}`,
+      description: `Mã môn: ${entry.id}\\nMã lớp: ${entry.group}`,
       location: entry.room === 'HANGOUT_TUONGTAC' ? undefined : entry.room,
       start: toDateTime(entry.start, entry.wday, entry.weeks.first),
       end: toDateTime(entry.end + 1, entry.wday, entry.weeks.first),
