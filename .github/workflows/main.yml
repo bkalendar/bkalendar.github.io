@@ -21,7 +21,7 @@ jobs:
         run: yarn test
 
       - name: Build with adapter static
-      - run: yarn build
+        run: yarn build
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
