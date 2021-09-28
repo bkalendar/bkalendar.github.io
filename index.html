@@ -1,1 +1,73 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon shortcut" href="favicon.661ba4fd.svg" type="image/svg"><link rel="stylesheet" href="index.6f4e8a6c.css"><title>BKalendar</title><meta name="description" content="Chuyển lịch trường Đại học Bách Khoa sang định dạng .ics để nhập vào ứng dụng"><meta name="author" content="Nguyễn Duy Khang"><meta name="keywords" content="BKalendar, HCMUT, lịch, Bách Khoa"><meta property="og:url" content="https://iceghost.github.io/bkalendar"><meta property="og:title" content="Xuất lịch HCMUT qua Google Calendar"><meta property="og:description" content="Mỗi lần xem lịch là phải vào stinfo? Đã có BKalendar!"></head><body> <div id="app"></div> <script type="module" src="index.55afdb52.js"></script> </body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="/favicon.svg" type="image/svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BKalendar</title>
+    <meta
+      name="description"
+      content="Chuyển lịch trường Đại học Bách Khoa sang định dạng .ics để nhập vào ứng dụng"
+    />
+    <meta name="author" content="Nguyễn Duy Khang" />
+    <meta name="keywords" content="BKalendar, HCMUT, lịch, Bách Khoa" />
+    <meta property="og:url" content="https://iceghost.github.io/bkalendar" />
+    <meta property="og:title" content="Xuất lịch HCMUT qua Google Calendar" />
+    <meta
+      property="og:description"
+      content="Mỗi lần xem lịch là phải vào stinfo? Đã có BKalendar!"
+    />
+    
+
+		
+
+		<link rel="modulepreload" href="/_app/start-3ab37e34.js">
+		<link rel="modulepreload" href="/_app/chunks/vendor-0ab6765c.js">
+		<link rel="modulepreload" href="/_app/pages/__layout.svelte-a6519f2b.js">
+		<link rel="modulepreload" href="/_app/pages/index.svelte-2b949bb6.js">
+		<link rel="stylesheet" href="/_app/assets/start-464e9d0a.css">
+		<link rel="stylesheet" href="/_app/assets/pages/__layout.svelte-5e7b219f.css">
+
+		<script type="module">
+			import { start } from "/_app/start-3ab37e34.js";
+			start({
+				target: document.querySelector("#svelte"),
+				paths: {"base":"","assets":""},
+				session: {},
+				host: location.host,
+				route: true,
+				spa: false,
+				trailing_slash: "never",
+				hydrate: {
+					status: 200,
+					error: null,
+					nodes: [
+						import("/_app/pages/__layout.svelte-a6519f2b.js"),
+						import("/_app/pages/index.svelte-2b949bb6.js")
+					],
+					page: {
+						host: location.host, // TODO this is redundant
+						path: "/",
+						query: new URLSearchParams(""),
+						params: {}
+					}
+				}
+			});
+		</script>
+  </head>
+  <body>
+    <div id="svelte">
+
+
+<div class="min-h-screen bg-gray-50 dark:bg-blue-deep text-gray-800 dark:text-gray-300"><div class="min-h-screen w-full max-w-xl mx-auto flex flex-col justify-center text-xl dark:text-shadow-md"><h1 class="text-5xl font-sans text-center font-bold text-blue-500 mb-7"><span class="text-blue-deep dark:text-blue">BK</span><span class="text-blue dark:text-white">alendar</span></h1>
+  <label for="timetable-input"><p class="text-center">Copy rồi dán thời khóa biểu vào đây</p>
+    <textarea id="timetable-input" class="mt-2 rounded w-full h-32 p-2 dark:bg-transparent border-2 font-mono"></textarea></label>
+  <p class="font-thin italic mt-2 py-1 border-2 border-transparent text-center">Copy từ dòng &quot;Học kỳ 1...&quot; đến cuối cái bảng nhé.
+    </p></div></div>
+
+
+
+			
+		</div>
+  </body>
+</html>
