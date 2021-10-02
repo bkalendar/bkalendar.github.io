@@ -10,7 +10,7 @@ Do lịch trường mình lâu lâu sẽ có vài sự thay đổi (shift tuần
 
 Bạn có biết là mình có thể chèn lịch chứa các deadline trên BKeL vào Google Calendar không?
 
-1. Truy cập vào link: [e-learning.hcmut.edu.vn/calendar/export.php](e-learning.hcmut.edu.vn/calendar/export.php)
+1. Truy cập vào link: [e-learning.hcmut.edu.vn/calendar/export.php](https://e-learning.hcmut.edu.vn/calendar/export.php)
 2. Chọn *All events* và *Recent and next 60 days* như hình bên dưới.
 3. **Quan trọng**: Bấm *Get Calendar URL* và copy link xuất hiện bên dưới.  
 Lưu ý, nếu không làm như thế này mà bấm xuất file thì file nhận được sẽ không thay đổi theo thời gian.
