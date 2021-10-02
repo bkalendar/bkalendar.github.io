@@ -1,4 +1,4 @@
-<div class="prose mx-auto px-2 px-0">
+<div class="prose mx-auto px-2 sm:px-0">
 
 ## Mẹo 1: Tạo một cái lịch riêng để chứa thời khóa biểu
 
