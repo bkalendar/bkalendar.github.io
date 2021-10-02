@@ -41,4 +41,8 @@
   svg {
     @apply hover:text-blue;
   }
+
+  :global(body) {
+    @apply overflow-y-scroll;
+  }
 </style>
