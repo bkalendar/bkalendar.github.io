@@ -1,5 +1,6 @@
 <script>
   import '../app.postcss';
+  import { base } from '$app/paths';
 </script>
 
 <div
@@ -7,11 +8,11 @@
 >
   <nav class="h-16 flex items-center justify-end mr-5 sm:mb-16">
     <ul class="flex space-x-5">
-      <li><a href="/">Trang chủ</a></li>
+      <li><a href="{base}/">Trang chủ</a></li>
       <li
         class="after:content-['new'] after:text-xs after:bg-blue after:text-white after:px-1 after:rounded-sm after:relative after:bottom-2 after:left-0.5"
       >
-        <a href="/useful-tips">Mẹo hữu ích</a>
+        <a href="{base}/useful-tips">Mẹo hữu ích</a>
       </li>
       <li>
         <a href="https://www.facebook.com/dykhng/">
