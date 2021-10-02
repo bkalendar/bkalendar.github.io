@@ -19,7 +19,7 @@
 </script>
 
 <div
-  class="min-h-screen w-full max-w-xl mx-auto flex flex-col justify-center text-xl dark:text-shadow-md"
+  class="h-full w-full max-w-xl mx-auto flex flex-col justify-center text-xl dark:text-shadow-md"
 >
   <h1 class="text-5xl font-sans text-center font-bold text-blue-500 mb-7">
     <span class="text-blue-deep dark:text-blue">BK</span><span
@@ -37,7 +37,7 @@
   {#if !downloadLink}
     <p
       class="font-thin italic mt-2 py-1 border-2 border-transparent text-center"
-      transition:slide
+      transition:slide|local
       bind:this={notice}
     >
       Copy từ dòng "Học kỳ 1..." đến cuối cái bảng nhé.
