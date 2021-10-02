@@ -4,6 +4,12 @@
 
 <div class="prose dark:prose-light mx-auto px-2 sm:px-0">
 
+Trước khi chia sẻ những cái mẹo bên dưới, nếu bạn chưa biết làm gì tiếp theo thì mình chia sẻ hai đường link:
+- [Cách tạo lịch mới](https://support.google.com/calendar/answer/37095)
+- [Cách thêm vào lịch vừa tạo](https://support.google.com/calendar/answer/37118)
+
+Các bạn làm theo các hướng dẫn bên trên nhé.
+
 ## Mẹo 1: Tạo một cái lịch riêng để chứa thời khóa biểu
 
 Do lịch trường mình lâu lâu sẽ có vài sự thay đổi (shift tuần, nghỉ lễ,...) nên bạn nên tạo một cái lịch riêng để lưu thời khóa biểu. Mục đích: khi có sự thay đổi, bạn chỉ cần xóa cả cái lịch cũ rồi tạo thêm lịch mới cho thời khóa biểu mới.
