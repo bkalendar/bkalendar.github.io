@@ -6,7 +6,7 @@
 <div
   class="h-full min-h-screen pb-10 bg-gray-50 dark:bg-blue-deep text-gray-800 dark:text-gray-300"
 >
-  <nav class="h-16 flex items-center justify-end mr-5 sm:mb-16">
+  <nav class="h-20 flex flex-col sm:flex-row items-end sm:items-center pt-2 sm:pt-0 space-y-2 sm:justify-end sm:space-x-5 mr-5 sm:mb-16">
     <ul class="flex space-x-5">
       <li><a href="{base}/">Trang chủ</a></li>
       <li
@@ -14,6 +14,8 @@
       >
         <a href="{base}/useful-tips">Mẹo hữu ích</a>
       </li>
+    </ul>
+    <ul class="flex space-x-5 relative right-8 sm:right-0">
       <li>
         <a href="https://www.facebook.com/dykhng/">
           <!-- prettier-ignore -->
