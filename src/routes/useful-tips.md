@@ -2,7 +2,7 @@
   import { base } from '$app/paths';
 </script>
 
-<div class="prose mx-auto px-2 sm:px-0">
+<div class="prose dark:prose-light mx-auto px-2 sm:px-0">
 
 ## Mẹo 1: Tạo một cái lịch riêng để chứa thời khóa biểu
 

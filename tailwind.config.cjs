@@ -1,9 +1,10 @@
 const colors = require('tailwindcss/colors');
+const typography = require('@tailwindcss/typography');
 
 const config = {
   mode: 'jit',
   darkMode: 'media',
-  purge: ['./src/**/*.{html,js,svelte,ts}'],
+  purge: ['./src/**/*.{html,js,svelte,md,ts}'],
   theme: {
     colors: {
       transparent: 'transparent',
@@ -31,9 +32,44 @@ const config = {
       animation: {
         shake: 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both',
       },
+      typography: (theme) => ({
+        light: {
+          css: [
+            {
+              color: theme('colors.gray.300'),
+              a: {
+                color: theme('colors.white'),
+              },
+              strong: {
+                color: theme('colors.white'),
+              },
+              'ol > li::before': {
+                color: theme('colors.gray.400'),
+              },
+              'ul > li::before': {
+                backgroundColor: theme('colors.gray.600'),
+              },
+              h1: {
+                color: theme('colors.white'),
+              },
+              h2: {
+                color: theme('colors.white'),
+              },
+              'a': {
+                color: theme('colors.white'),
+              },
+            },
+          ],
+        },
+      }),
     },
   },
-  plugins: [require('@tailwindcss/typography')],
+  variants: {
+    extend: {
+      typography: ['dark'],
+    },
+  },
+  plugins: [typography],
 };
 
 module.exports = config;
