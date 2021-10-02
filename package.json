@@ -2,8 +2,8 @@
 	"name": "bkalendar",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "cross-env NODE_ENV=DEVELOPMENT svelte-kit dev",
-		"build": "cross-env NODE_ENV=PRODUCTION svelte-kit build",
+		"dev": "cross-env svelte-kit dev",
+		"build": "cross-env svelte-kit build",
 		"preview": "svelte-kit preview",
 		"test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --verbose"
 	},

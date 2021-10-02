@@ -12,7 +12,7 @@ const config = {
     target: '#svelte',
     adapter: adapter(),
     paths: {
-      base: process.env.NODE_ENV === 'PRODUCTION' ? '/bkalendar' : '',
+      base: process.env.NODE_ENV == 'development' ? undefined : '/bkalendar',
     },
   },
 
