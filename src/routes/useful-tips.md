@@ -38,8 +38,16 @@ Bạn có thể mò thử nhé :D
 
 ![Chèn link meet]({base}/meet-link.png)
 
+## Mẹo 4: Thêm thông báo vào lịch Google
+
+Bạn có thể bật thông báo cho lịch bạn vừa thêm để trước giờ học, Google Calendar sẽ thông báo cho điện thoại của bạn.
+
+Bạn có thể xem hướng dẫn tại [https://support.google.com/calendar/answer/37242](https://support.google.com/calendar/answer/37242) nhé. (Phần áp dụng cho lịch cụ thể)
+
+---
+
 Chúc các bạn một năm học mới nhiều niềm vui và thành công nhé!
 
-From NDK, with 💖.
+From NDK, with 💖
 
 </div>
