@@ -3,7 +3,7 @@
 </script>
 
 <div
-  class="h-full min-h-screen bg-gray-50 dark:bg-blue-deep text-gray-800 dark:text-gray-300"
+  class="h-full min-h-screen pb-10 bg-gray-50 dark:bg-blue-deep text-gray-800 dark:text-gray-300"
 >
   <nav class="h-16 flex items-center justify-end mr-5 sm:mb-16">
     <ul class="flex space-x-5">
