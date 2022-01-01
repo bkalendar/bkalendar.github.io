@@ -21,21 +21,20 @@
 
 		
 
-		<link rel="modulepreload" href="/bkalendar/_app/start-28a6acc4.js">
-		<link rel="modulepreload" href="/bkalendar/_app/chunks/vendor-566596f8.js">
-		<link rel="modulepreload" href="/bkalendar/_app/chunks/paths-28a87002.js">
-		<link rel="modulepreload" href="/bkalendar/_app/pages/__layout.svelte-cf739b12.js">
-		<link rel="modulepreload" href="/bkalendar/_app/pages/index.svelte-b35cabf4.js">
 		<link rel="stylesheet" href="/bkalendar/_app/assets/start-464e9d0a.css">
-		<link rel="stylesheet" href="/bkalendar/_app/assets/pages/__layout.svelte-c000bb9c.css">
+		<link rel="stylesheet" href="/bkalendar/_app/assets/pages/__layout.svelte-7cc2a606.css">
+		<link rel="modulepreload" href="/bkalendar/_app/start-de37208b.js">
+		<link rel="modulepreload" href="/bkalendar/_app/chunks/vendor-2b56b59d.js">
+		<link rel="modulepreload" href="/bkalendar/_app/chunks/paths-28a87002.js">
+		<link rel="modulepreload" href="/bkalendar/_app/pages/__layout.svelte-9e3962df.js">
+		<link rel="modulepreload" href="/bkalendar/_app/pages/index.svelte-ed80cc79.js">
 
 		<script type="module">
-			import { start } from "/bkalendar/_app/start-28a6acc4.js";
+			import { start } from "/bkalendar/_app/start-de37208b.js";
 			start({
 				target: document.querySelector("#svelte"),
-				paths: {"base":"/bkalendar","assets":""},
+				paths: {"base":"/bkalendar","assets":"/bkalendar"},
 				session: {},
-				host: location.host,
 				route: true,
 				spa: false,
 				trailing_slash: "never",
@@ -43,17 +42,17 @@
 					status: 200,
 					error: null,
 					nodes: [
-						import("/bkalendar/_app/pages/__layout.svelte-cf739b12.js"),
-						import("/bkalendar/_app/pages/index.svelte-b35cabf4.js")
+						import("/bkalendar/_app/pages/__layout.svelte-9e3962df.js"),
+						import("/bkalendar/_app/pages/index.svelte-ed80cc79.js")
 					],
-					page: {
-						host: location.host, // TODO this is redundant
-						path: "/",
-						query: new URLSearchParams(""),
-						params: {}
-					}
+					url: new URL("sveltekit://prerender/"),
+					params: {}
 				}
 			});
+		</script><script>
+			if ('serviceWorker' in navigator) {
+				navigator.serviceWorker.register('/service-worker.js');
+			}
 		</script>
   </head>
   <body>
@@ -74,9 +73,6 @@
   </div>
 </div>
 
-
-
-			
-		</div>
+</div>
   </body>
 </html>
