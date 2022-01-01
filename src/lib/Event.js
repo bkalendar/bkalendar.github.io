@@ -78,12 +78,18 @@ export class Event {
    */
   static fromEntry(entry, metadata) {
     /**
-     * Resolve week to year
+     * Resolve week to year.
+     * - If it's summer semester, it's definitely yearTo
+     * - Else, get the closest year
      * @param {number} week
      * @returns {number}
      */
     const yearOfWeek = (week) =>
-      53 - week < week - 0 ? metadata.yearFrom : metadata.yearTo;
+      metadata.semester == 3
+        ? metadata.yearTo
+        : 53 - week < week - 0
+        ? metadata.yearFrom
+        : metadata.yearTo;
 
     /**
      *

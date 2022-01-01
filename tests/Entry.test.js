@@ -1,4 +1,4 @@
-import { Entry } from '../lib/Entry.js';
+import { Entry } from '../src/lib/Entry.js';
 
 describe('Entry', () => {
   it('can construct normal entry', () => {

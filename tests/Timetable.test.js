@@ -1,4 +1,4 @@
-import { Timetable } from '../lib/Timetable';
+import { Timetable } from '../src/lib/Timetable';
 
 describe('Timetable', () => {
   const raw = `Học kỳ 2 Năm học 2020 - 2021

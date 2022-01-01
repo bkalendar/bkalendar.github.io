@@ -1,5 +1,5 @@
-import { Event } from '../lib/Event';
-import { Entry } from '../lib/Entry';
+import { Event } from '../src/lib/Event';
+import { Entry } from '../src/lib/Entry';
 
 describe('Event', () => {
   let entry = new Entry(
