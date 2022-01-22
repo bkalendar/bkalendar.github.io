@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import { Event } from '../src/lib/Event';
 import { Entry } from '../src/lib/Entry';
 

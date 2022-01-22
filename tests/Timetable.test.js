@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import { Timetable } from '../src/lib/Timetable';
 
 describe('Timetable', () => {

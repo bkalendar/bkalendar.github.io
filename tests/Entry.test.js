@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { Entry } from '../src/lib/Entry.js';
 
 describe('Entry', () => {
