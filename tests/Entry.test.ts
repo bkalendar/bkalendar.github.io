@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { Entry } from '../src/lib/Entry.js';
+import { Entry } from '../src/lib/Entry';
 
 describe('Entry', () => {
   it('can construct normal entry', () => {

@@ -14,6 +14,8 @@ specifiers:
   svelte: ^3.44.3
   svelte-preprocess: ^4.10.1
   tailwindcss: ^2.2.19
+  tslib: ^2.3.1
+  typescript: ^4.5.5
   uuid: ^8.3.2
   vitest: ^0.1.27
 
@@ -29,8 +31,10 @@ devDependencies:
   postcss: 8.4.5
   postcss-load-config: 3.1.0
   svelte: 3.44.3
-  svelte-preprocess: 4.10.1_780263383bd82c24c3a39ba88c8c2aa6
+  svelte-preprocess: 4.10.1_feff1c64cfa2e37b03d168b21febdb7d
   tailwindcss: 2.2.19_cefe482e8d38053bbf3d5815e0c551b3
+  tslib: 2.3.1
+  typescript: 4.5.5
   uuid: 8.3.2
   vitest: 0.1.27
 
@@ -1843,7 +1847,7 @@ packages:
       svelte: 3.44.3
     dev: true
 
-  /svelte-preprocess/4.10.1_780263383bd82c24c3a39ba88c8c2aa6:
+  /svelte-preprocess/4.10.1_feff1c64cfa2e37b03d168b21febdb7d:
     resolution: {integrity: sha512-NSNloaylf+o9UeyUR2KvpdxrAyMdHl3U7rMnoP06/sG0iwJvlUM4TpMno13RaNqovh4AAoGsx1jeYcIyuGUXMw==}
     engines: {node: '>= 9.11.2'}
     requiresBuild: true
@@ -1893,6 +1897,7 @@ packages:
       sorcery: 0.10.0
       strip-indent: 3.0.0
       svelte: 3.44.3
+      typescript: 4.5.5
     dev: true
 
   /svelte/3.44.3:
@@ -2002,6 +2007,12 @@ packages:
   /type-detect/4.0.8:
     resolution: {integrity: sha512-0fr/mIH1dlO+x7TlcMy+bIDqKPsw/70tVyeHW787goQjhmqaZe10uwLujubK9q9Lg6Fiho1KUKDYz0Z7k7g5/g==}
     engines: {node: '>=4'}
+    dev: true
+
+  /typescript/4.5.5:
+    resolution: {integrity: sha512-TCTIul70LyWe6IJWT8QSYeA54WQe8EjQFU4wY52Fasj5UKx88LNYKCgBEHcOMOrFF1rKGbD8v/xcNWVUq9SymA==}
+    engines: {node: '>=4.2.0'}
+    hasBin: true
     dev: true
 
   /unist-util-stringify-position/2.0.3:

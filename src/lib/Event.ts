@@ -1,55 +1,41 @@
-/// <reference types="@js-temporal/polyfill" />
-/** @typedef {Temporal.ZonedDateTime} DateTime*/
+type DateTime = Temporal.ZonedDateTime;
 
 import { Temporal } from '@js-temporal/polyfill';
 import { v4 as uuid } from 'uuid';
 
+interface Info {
+  subject: string;
+  description: string;
+  location: string | undefined;
+  start: DateTime;
+  end: DateTime;
+  repeats: DateTime[];
+}
+
 export class Event {
-  #uid;
+  #uid: string;
+  subject: string;
+  description: string;
+  location: string | undefined;
+  start: DateTime;
+  end: DateTime;
+  repeats: DateTime[];
 
-  /**
-   * Intermediate class for exporting to ical
-   * @param {Object}     info             Event info
-   * @param {string}     info.subject     Event name
-   * @param {string}     info.description Specific description/notes
-   * @param {string}     [info.location]  Location
-   * @param {DateTime}   info.start       Datetime start
-   * @param {DateTime}   info.end         Datetime end
-   * @param {DateTime[]} info.repeats     Date repeats
-   */
-  constructor(info) {
-    /** @type {string} */
+  constructor(info: Info) {
     this.subject = info.subject;
-
-    /** @type {string} */
     this.#uid = uuid();
-
-    /** @type {string} */
     this.description = info.description;
-
-    /** @type {string|undefined} */
     this.location = info.location;
-
-    /** @type {DateTime} */
     this.start = info.start;
-
-    /** @type {DateTime} */
     this.end = info.end;
-
-    /** @type {DateTime[]} */
     this.repeats = info.repeats;
   }
 
   /**
    * Turn into VEVENT format (ical specification)
-   * @returns {string}
    */
-  toVEvent() {
-    /**
-     * @param {DateTime} dt
-     * @returns {string}
-     */
-    function toIcalDateTime(dt) {
+  toVEvent(): string {
+    function toIcalDateTime(dt: DateTime): string {
       return dt.toInstant().toString().replace(/[-:]/g, '');
     }
 

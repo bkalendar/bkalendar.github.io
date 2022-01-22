@@ -1,28 +1,26 @@
-import { Entry } from './Entry.js';
-import { Event } from './Event.js';
+import { Entry } from './Entry';
+import { Event } from './Event';
 
 export class Timetable {
+  semester: number;
+  year: { from: number, to: number };
+  entries: Entry[];
+
   /**
    * Full timetable with entries and metadata
-   * @param {string} raw
    */
-  constructor(raw) {
+  constructor(raw: string) {
     const pattern =
       /Học kỳ (?<semester>\d) Năm học (?<yearFrom>\d+) - (?<yearTo>\d+)\n[^\n]*\n[^\n]*\n(?<entries>(?:[^](?!\nTổng số tín chỉ đăng ký))*)/;
     const match = raw.match(pattern);
 
     if (!match) throw new Error('Invalid input');
 
-    /** @type {number} */
     this.semester = Number(match.groups.semester);
-
-    /** @type {{ from: number, to: number }} */
     this.year = {
       from: Number(match.groups.yearFrom),
       to: Number(match.groups.yearTo),
     };
-
-    /** @type {Entry[]} */
     this.entries = [];
 
     for (const rawEntry of match.groups.entries.split('\n')) {
