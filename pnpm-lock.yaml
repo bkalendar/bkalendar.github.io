@@ -5,6 +5,9 @@ specifiers:
   '@sveltejs/adapter-static': ^1.0.0-next.24
   '@sveltejs/kit': ^1.0.0-next.211
   '@tailwindcss/typography': ^0.4.1
+  '@types/gapi': ^0.0.41
+  '@types/gapi.auth2': ^0.0.56
+  '@types/gapi.calendar': ^3.0.6
   autoprefixer: ^10.4.1
   cross-env: ^7.0.3
   cssnano: ^5.0.14
@@ -24,6 +27,9 @@ devDependencies:
   '@sveltejs/adapter-static': 1.0.0-next.24
   '@sveltejs/kit': 1.0.0-next.211_svelte@3.44.3
   '@tailwindcss/typography': 0.4.1_tailwindcss@2.2.19
+  '@types/gapi': 0.0.41
+  '@types/gapi.auth2': 0.0.56
+  '@types/gapi.calendar': 3.0.6
   autoprefixer: 10.4.1_postcss@8.4.5
   cross-env: 7.0.3
   cssnano: 5.0.14_postcss@8.4.5
@@ -171,6 +177,22 @@ packages:
 
   /@types/chai/4.3.0:
     resolution: {integrity: sha512-/ceqdqeRraGolFTcfoXNiqjyQhZzbINDngeoAq9GoHa8PPK1yNzTaxWjA6BFWp5Ua9JpXEMSS4s5i9tS0hOJtw==}
+    dev: true
+
+  /@types/gapi.auth2/0.0.56:
+    resolution: {integrity: sha512-kGaBtGVCqGS3Y05L56dGVlBpJflxLfwA0zpMQnQgGRFk1tsMPbQnogG51UQjt1vCuYfRO0Jd9/K5KDtzjAbMkA==}
+    dependencies:
+      '@types/gapi': 0.0.41
+    dev: true
+
+  /@types/gapi.calendar/3.0.6:
+    resolution: {integrity: sha512-5POp+QFcJh7yHHOaOc3pkvEZq99u8EzaHuAL+0XcrNKQpN6EM9T6guQ2Q2O39KWkxGvAKdshDv2ZwB7I+v+t3A==}
+    dependencies:
+      '@types/gapi': 0.0.41
+    dev: true
+
+  /@types/gapi/0.0.41:
+    resolution: {integrity: sha512-tmHO66z/f91JZCDqinj/nNvQEszsz/hBT4+MvCSKT5sDzl5Ld/oXZ8WaecCBjRLw2uWKUInUHM9MhEXWkOiNjw==}
     dev: true
 
   /@types/node/17.0.5:
