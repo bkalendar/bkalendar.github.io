@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { Timetable } from '$lib/Timetable';
   import Settings from '$lib/Settings.svelte';
   import { fly, slide } from 'svelte/transition';

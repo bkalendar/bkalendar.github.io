@@ -84,6 +84,7 @@ export class Event {
      * @returns {DateTime}
      */
     const toDateTime = (period, wday, week) => {
+      Temporal.PlainDate;
       const week1 = Temporal.PlainDate.from({
         year: yearOfWeek(week),
         month: 1,
