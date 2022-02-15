@@ -1,8 +1,8 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect } from "vitest";
 
-import { Timetable } from '../src/lib/Timetable';
+import { Timetable } from "../src/lib/Timetable";
 
-describe('Timetable', () => {
+describe("Timetable", () => {
   const raw = `Học kỳ 2 Năm học 2020 - 2021
   Ngày cập nhật:2021-07-07 12:38:43.0
   Mã MH	Tên môn học	Tín chỉ	Tc học phí	Nhóm-Tổ	Thứ	Tiết	Giờ học	Phòng	Cơ sở	Tuần học
@@ -11,14 +11,14 @@ describe('Timetable', () => {
 
   const timetable = new Timetable(raw);
 
-  it('can read metadata', () => {
+  it("can read metadata", () => {
     expect(timetable.semester).toBe(2);
     expect(timetable.year.from).toBe(2020);
     expect(timetable.year.to).toBe(2021);
   });
 
-  it('can read entries', () => {
-    expect(timetable.entries[0].id).toBe('CO1007');
+  it("can read entries", () => {
+    expect(timetable.entries[0].id).toBe("CO1007");
     expect(timetable.entries).toHaveLength(2);
     expect(timetable.entries[1].weeks.first).toBe(9);
     expect(timetable.entries[1].weeks.others).toEqual([
@@ -26,7 +26,7 @@ describe('Timetable', () => {
     ]);
   });
 
-  it('excludes falsy entries', () => {
+  it("excludes falsy entries", () => {
     const raw = `Học kỳ 1 Năm học 2020 - 2021
     Ngày cập nhật:2021-01-14 13:44:46.0
     Mã MH	Tên môn học	Tín chỉ	Tc học phí	Nhóm-Tổ	Thứ	Tiết	Giờ học	Phòng	Cơ sở	Tuần học
@@ -38,7 +38,7 @@ describe('Timetable', () => {
     expect(timetable.entries).toHaveLength(0);
   });
 
-  it('should convert correctly to VCALENDAR', () => {
-    expect(timetable.toVCalendar()).toContain('20210412T030000Z')
-  })
+  it("should convert correctly to VCALENDAR", () => {
+    expect(timetable.toVCalendar()).toContain("20210412T030000Z");
+  });
 });

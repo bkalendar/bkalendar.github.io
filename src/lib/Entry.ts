@@ -17,7 +17,7 @@ export class Entry {
 
     const match = raw.match(pattern);
 
-    if (!match) throw new Error('Incorrect format');
+    if (!match) throw new Error("Incorrect format");
 
     this.id = match.groups.id;
     this.name = match.groups.name.trim();
@@ -28,7 +28,7 @@ export class Entry {
     this.room = match.groups.room;
     this.weeks = {
       first: Number(match.groups.firstWeek),
-      others: match.groups.otherWeeks.split('|').map(Number).filter(Boolean),
+      others: match.groups.otherWeeks.split("|").map(Number).filter(Boolean),
     };
   }
 }

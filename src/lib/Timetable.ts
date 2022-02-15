@@ -1,9 +1,9 @@
-import { Entry } from './Entry';
-import { Event } from './Event';
+import { Entry } from "./Entry";
+import { Event } from "./Event";
 
 export class Timetable {
   semester: number;
-  year: { from: number, to: number };
+  year: { from: number; to: number };
   entries: Entry[];
 
   /**
@@ -14,7 +14,7 @@ export class Timetable {
       /Học kỳ (?<semester>\d) Năm học (?<yearFrom>\d+) - (?<yearTo>\d+)\n[^\n]*\n[^\n]*\n(?<entries>(?:[^](?!\nTổng số tín chỉ đăng ký))*)/;
     const match = raw.match(pattern);
 
-    if (!match) throw new Error('Invalid input');
+    if (!match) throw new Error("Invalid input");
 
     this.semester = Number(match.groups.semester);
     this.year = {
@@ -23,7 +23,7 @@ export class Timetable {
     };
     this.entries = [];
 
-    for (const rawEntry of match.groups.entries.split('\n')) {
+    for (const rawEntry of match.groups.entries.split("\n")) {
       try {
         const entry = new Entry(rawEntry.trim());
         this.entries.push(entry);
@@ -33,9 +33,9 @@ export class Timetable {
 
   toVCalendar() {
     let arr = [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'PRODID:-//bkalendar//Google Calendar v1.0/VI',
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//bkalendar//Google Calendar v1.0/VI",
     ];
     for (const entry of this.entries) {
       arr.push(
@@ -46,7 +46,7 @@ export class Timetable {
         }).toVEvent()
       );
     }
-    arr.push('END:VCALENDAR');
-    return arr.join('\r\n');
+    arr.push("END:VCALENDAR");
+    return arr.join("\r\n");
   }
 }

@@ -5,6 +5,7 @@
 <div class="prose dark:prose-light mx-auto px-2 sm:px-0">
 
 Trước khi chia sẻ những cái mẹo bên dưới, nếu bạn chưa biết làm gì tiếp theo thì mình chia sẻ hai đường link:
+
 - [Cách tạo lịch mới](https://support.google.com/calendar/answer/37095)
 - [Cách thêm vào lịch vừa tạo](https://support.google.com/calendar/answer/37118)
 
@@ -21,9 +22,9 @@ Do lịch trường mình lâu lâu sẽ có vài sự thay đổi (shift tuần
 Bạn có biết là mình có thể chèn lịch chứa các deadline trên BKeL vào Google Calendar không?
 
 1. Truy cập vào link: [e-learning.hcmut.edu.vn/calendar/export.php](https://e-learning.hcmut.edu.vn/calendar/export.php)
-2. Chọn *All events* và *Recent and next 60 days* như hình bên dưới.
-3. **Quan trọng**: Bấm *Get Calendar URL* và copy link xuất hiện bên dưới.  
-Lưu ý, nếu không làm như thế này mà bấm xuất file thì file nhận được sẽ không thay đổi theo thời gian.
+2. Chọn _All events_ và _Recent and next 60 days_ như hình bên dưới.
+3. **Quan trọng**: Bấm _Get Calendar URL_ và copy link xuất hiện bên dưới.  
+   Lưu ý, nếu không làm như thế này mà bấm xuất file thì file nhận được sẽ không thay đổi theo thời gian.
 4. Sử dụng link vừa nhận được và chèn vào Google Calendar
 
 **Lưu ý rằng, sẽ mất một khoảng thời gian để những thay đổi trên BKeL xuất hiện trên Google Calendar, và có một số hoạt động sẽ không hiển thị trên lịch luôn. Do đó, hãy thường xuyên sử dụng BKeL và chỉ dùng chức năng này để phòng một số trường hợp quên deadline nhé!**

@@ -1,15 +1,12 @@
-type DateTime = Temporal.ZonedDateTime;
-
-import { Temporal } from '@js-temporal/polyfill';
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid } from "uuid";
 
 interface Info {
   subject: string;
   description: string;
   location: string | undefined;
-  start: DateTime;
-  end: DateTime;
-  repeats: DateTime[];
+  start: Date;
+  end: Date;
+  repeats: Date[];
 }
 
 export class Event {
@@ -17,9 +14,9 @@ export class Event {
   subject: string;
   description: string;
   location: string | undefined;
-  start: DateTime;
-  end: DateTime;
-  repeats: DateTime[];
+  start: Date;
+  end: Date;
+  repeats: Date[];
 
   constructor(info: Info) {
     this.subject = info.subject;
@@ -35,23 +32,23 @@ export class Event {
    * Turn into VEVENT format (ical specification)
    */
   toVEvent(): string {
-    function toIcalDateTime(dt: DateTime): string {
-      return dt.toInstant().toString().replace(/[-:]/g, '');
+    function toIcalDateTime(dt: Date): string {
+      return dt.toString().replace(/[-:]/g, "");
     }
 
     return [
-      'BEGIN:VEVENT',
+      "BEGIN:VEVENT",
       `UID:${this.#uid}`,
-      'DTSTAMP:20210928T200000',
+      "DTSTAMP:20210928T200000",
       `SUMMARY:${this.subject}`,
       `DESCRIPTION:${this.description}${
-        this.location ? `\r\nLOCATION:${this.location}` : ''
+        this.location ? `\r\nLOCATION:${this.location}` : ""
       }`,
       `DTSTART:${toIcalDateTime(this.start)}`,
       `DTEND:${toIcalDateTime(this.end)}`,
-      `RDATE:${this.repeats.map(toIcalDateTime).join(',')}`,
-      'END:VEVENT',
-    ].join('\r\n');
+      `RDATE:${this.repeats.map(toIcalDateTime).join(",")}`,
+      "END:VEVENT",
+    ].join("\r\n");
   }
 
   /**
@@ -81,7 +78,7 @@ export class Event {
      *
      * @param {number} period
      * @param {number} week
-     * @returns {DateTime}
+     * @returns {Date}
      */
     const toDateTime = (period, wday, week) => {
       Temporal.PlainDate;
@@ -95,7 +92,7 @@ export class Event {
         .add({ days: wday - 1 - week1.dayOfWeek });
 
       return today.toZonedDateTime({
-        timeZone: Temporal.TimeZone.from('Asia/Saigon'),
+        timeZone: Temporal.TimeZone.from("Asia/Saigon"),
         plainTime: Temporal.PlainTime.from({ hour: period + 5 }),
       });
     };
@@ -103,7 +100,7 @@ export class Event {
     return new Event({
       subject: entry.name,
       description: `Mã môn: ${entry.id}\\nMã lớp: ${entry.group}`,
-      location: entry.room === 'HANGOUT_TUONGTAC' ? undefined : entry.room,
+      location: entry.room === "HANGOUT_TUONGTAC" ? undefined : entry.room,
       start: toDateTime(entry.start, entry.wday, entry.weeks.first),
       end: toDateTime(entry.end + 1, entry.wday, entry.weeks.first),
       repeats: [entry.weeks.first]
