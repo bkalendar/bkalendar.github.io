@@ -3,18 +3,18 @@
   import { onMount, setContext } from 'svelte';
   import { Readable } from 'svelte/store';
 
-  let manager: Readable<GapiManager>;
-  $: setContext('manager', manager);
+  let user: Readable<User>;
+  $: setContext('user', user);
 
   onMount(async () => {
-    manager = await GapiManager.getInstance();
+    user = await GapiManager.user();
   });
 </script>
 
-{#if !manager}
+{#if !user}
   Loading
-{:else if $manager.user.isSignedIn()}
+{:else if $user.isSignedIn()}
   <slot />
 {:else}
-  Please <button on:click={$manager.signIn}>login</button>
+  Please <button on:click={GapiManager.signIn}>login</button>
 {/if}

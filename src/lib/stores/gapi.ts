@@ -28,41 +28,47 @@ async function loadGapi() {
   });
 }
 
+
 // Singleton class for managing global `gapi`
 export class GapiManager {
-  private static manager: Readable<GapiManager>;
-  private constructor() {}
-  static async getInstance() {
-    if (!this.manager) {
-      await loadGapi();
-      let manager = new GapiManager();
-      manager.user = gapi.auth2.getAuthInstance().currentUser.get();
-      this.manager = readable<GapiManager>(manager, (set) => {
-        gapi.auth2.getAuthInstance().currentUser.listen((user) => {
-          manager.user = user;
-          set(manager);
-        });
+  private static loadPromise: Promise<void> | null = null;
+
+  private constructor() { }
+
+  static async load() {
+    if (!GapiManager.loadPromise) {
+      GapiManager.loadPromise = loadGapi().then(() => {
+        GapiManager._user = readable<User>(
+          gapi.auth2.getAuthInstance().currentUser.get(),
+          (set) => {
+            gapi.auth2.getAuthInstance().currentUser.listen(set);
+          }
+        );
       });
     }
-    return this.manager;
+    return GapiManager.loadPromise;
   }
 
-  user: gapi.auth2.GoogleUser;
+  static _user: Readable<User>;
 
-  // use this if you are confident
-  static getInstanceUnchecked() {
-    return this.manager;
+  static async user() {
+    await GapiManager.load();
+    return GapiManager._user;
   }
 
-  signIn() {
-    gapi.auth2.getAuthInstance().signIn();
+  static async signIn() {
+    await GapiManager.load();
+    await gapi.auth2.getAuthInstance().signIn();
+    return await GapiManager.user();
   }
 
-  signOut() {
+  static async signOut() {
+    await GapiManager.load();
     gapi.auth2.getAuthInstance().signOut();
   }
 
-  async getCalendarList() {
+  static async getCalendarList() {
+    await GapiManager.load();
     return new Promise<gapi.client.calendar.CalendarList>((resolve, reject) => {
       gapi.client.calendar.calendarList.list().execute((list, resp) => {
         resolve(list);
