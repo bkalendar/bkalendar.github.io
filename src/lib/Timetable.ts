@@ -24,3 +24,12 @@ export function parseTimetable(raw: string): Timetable | null {
             .filter(Boolean),
     };
 }
+
+export function saveTimetable(timetable: Timetable) {
+    localStorage.setItem("bkalendar-timetable", JSON.stringify(timetable));
+}
+
+export function loadTimetable(): Timetable | null {
+    const raw: string | null = localStorage.getItem("bkalendar-timetable");
+    return raw && JSON.parse(raw);
+}

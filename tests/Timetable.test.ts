@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { Ical } from "../src/lib/ical";
+import { toVCalendar } from "../src/lib/ical";
 
 import { parseTimetable } from "../src/lib/Timetable";
 
@@ -40,6 +40,7 @@ describe("Timetable", () => {
     });
 
     it("should convert correctly to VCALENDAR", () => {
-        expect(Ical.toVCalendar(timetable)).toContain("20210412T030000Z");
+        // console.log(toVCalendar(timetable))
+        expect(toVCalendar(timetable)).toContain("20210412T030000Z");
     });
 });
