@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { GapiManager } from '$lib/stores/gapi';
+  import * as Gapi from '$lib/stores/gapi';
 </script>
 
-{#await GapiManager.getCalendarList() then list}
+{#await Gapi.getCalendarList() then list}
   {#each list.items as item}
     <div class="mt-4 space-y-2">
       <p>Summary: {item.summary}</p>

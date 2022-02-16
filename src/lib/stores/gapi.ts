@@ -6,7 +6,7 @@ const CLIENT_ID: string =
 
 // script loader helper
 async function loadGapi() {
-    await new Promise<void>((resolve) => {
+    return new Promise<void>((resolve) => {
         const script = document.createElement("script");
         script.src = "https://apis.google.com/js/api.js";
         script.onload = async () => {
@@ -27,54 +27,46 @@ async function loadGapi() {
     });
 }
 
-// Singleton class for managing global `gapi`
-export class GapiManager {
-    private static loadPromise: Promise<void> | null = null;
+// Singleton promise for managing global `gapi`
+let loadPromise: Promise<void> | null = null;
 
-    private constructor() {}
-
-    static async load() {
-        if (!GapiManager.loadPromise) {
-            GapiManager.loadPromise = loadGapi().then(() => {
-                GapiManager._user = readable<User>(
-                    gapi.auth2.getAuthInstance().currentUser.get(),
-                    (set) => {
-                        gapi.auth2.getAuthInstance().currentUser.listen(set);
-                    }
-                );
-            });
-        }
-        return GapiManager.loadPromise;
+async function load() {
+    if (!loadPromise) {
+        loadPromise = loadGapi().then(() => {
+            _user = readable<User>(
+                gapi.auth2.getAuthInstance().currentUser.get(),
+                (set) => {
+                    gapi.auth2.getAuthInstance().currentUser.listen(set);
+                }
+            );
+        });
     }
+    return loadPromise;
+}
 
-    static _user: Readable<User>;
+let _user: Readable<User>;
 
-    static async user() {
-        await GapiManager.load();
-        return GapiManager._user;
-    }
+export async function user() {
+    await load();
+    return _user;
+}
 
-    static async signIn() {
-        await GapiManager.load();
-        await gapi.auth2.getAuthInstance().signIn();
-        return await GapiManager.user();
-    }
+export async function signIn() {
+    await load();
+    await gapi.auth2.getAuthInstance().signIn();
+    return await user();
+}
 
-    static async signOut() {
-        await GapiManager.load();
-        gapi.auth2.getAuthInstance().signOut();
-    }
+export async function signOut() {
+    await load();
+    gapi.auth2.getAuthInstance().signOut();
+}
 
-    static async getCalendarList() {
-        await GapiManager.load();
-        return new Promise<gapi.client.calendar.CalendarList>(
-            (resolve, reject) => {
-                gapi.client.calendar.calendarList
-                    .list()
-                    .execute((list, resp) => {
-                        resolve(list);
-                    });
-            }
-        );
-    }
+export async function getCalendarList() {
+    await load();
+    return new Promise<gapi.client.calendar.CalendarList>((resolve, reject) => {
+        gapi.client.calendar.calendarList.list().execute((list, resp) => {
+            resolve(list);
+        });
+    });
 }

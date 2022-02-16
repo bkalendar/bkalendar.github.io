@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { GapiManager } from '$lib/stores/gapi';
+  import * as Gapi from '$lib/stores/gapi';
   import { Readable } from 'svelte/store';
 
   let user: Readable<User>;
   let src;
 
   async function init() {
-    user = await GapiManager.user();
+    user = await Gapi.user();
   }
 
   $: console.log($user);
@@ -16,9 +16,9 @@
   Loading
 {:then}
   {#if !$user.isSignedIn()}
-    <button on:click={GapiManager.signIn}>đăng nhập</button>
+    <button on:click={Gapi.signIn}>đăng nhập</button>
   {:else}
     <img src={$user.getBasicProfile().getImageUrl()} />
-    <button on:click={GapiManager.signOut}>đăng xuất</button>
+    <button on:click={Gapi.signOut}>đăng xuất</button>
   {/if}
 {/await}

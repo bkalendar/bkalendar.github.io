@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { GapiManager } from '$lib/stores/gapi';
+  import * as Gapi from '$lib/stores/gapi';
   import { onMount, setContext } from 'svelte';
   import { Readable } from 'svelte/store';
 
@@ -7,7 +7,7 @@
   $: setContext('user', user);
 
   onMount(async () => {
-    user = await GapiManager.user();
+    user = await Gapi.user();
   });
 </script>
 
@@ -16,5 +16,5 @@
 {:else if $user.isSignedIn()}
   <slot />
 {:else}
-  Please <button on:click={GapiManager.signIn}>login</button>
+  Please <button on:click={Gapi.signIn}>login</button>
 {/if}

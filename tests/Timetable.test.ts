@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { Ical } from '../src/lib/ical';
+import { Ical } from "../src/lib/ical";
 
 import { parseTimetable } from "../src/lib/Timetable";
 
