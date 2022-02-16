@@ -6,8 +6,8 @@
 
 Trước khi chia sẻ những cái mẹo bên dưới, nếu bạn chưa biết làm gì tiếp theo thì mình chia sẻ hai đường link:
 
-- [Cách tạo lịch mới](https://support.google.com/calendar/answer/37095)
-- [Cách thêm vào lịch vừa tạo](https://support.google.com/calendar/answer/37118)
+-   [Cách tạo lịch mới](https://support.google.com/calendar/answer/37095)
+-   [Cách thêm vào lịch vừa tạo](https://support.google.com/calendar/answer/37118)
 
 Các bạn làm theo các hướng dẫn bên trên nhé.
 

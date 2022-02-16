@@ -5,25 +5,28 @@ import adapter from "@sveltejs/adapter-static";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-  extensions: [".svelte", ...mdsvexConfig.extensions],
+    extensions: [".svelte", ...mdsvexConfig.extensions],
 
-  kit: {
-    adapter: adapter(),
-    paths: {
-      base: process.env.NODE_ENV == "development" ? undefined : "/bkalendar",
+    kit: {
+        adapter: adapter(),
+        paths: {
+            base:
+                process.env.NODE_ENV == "development"
+                    ? undefined
+                    : "/bkalendar",
+        },
     },
-  },
 
-  preprocess: [
-    preprocess({
-      postcss: true,
-    }),
-    mdsvex(mdsvexConfig),
-  ],
+    preprocess: [
+        preprocess({
+            postcss: true,
+        }),
+        mdsvex(mdsvexConfig),
+    ],
 
-  test: {
-    // ...
-  },
+    test: {
+        // ...
+    },
 };
 
 export default config;
