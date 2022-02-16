@@ -39,7 +39,7 @@ describe("Timetable", () => {
         expect(timetable.entries).toHaveLength(0);
     });
 
-    it.skip("should convert correctly to VCALENDAR", () => {
+    it("should convert correctly to VCALENDAR", () => {
         expect(Ical.toVCalendar(timetable)).toContain("20210412T030000Z");
     });
 });

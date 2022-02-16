@@ -1,6 +1,6 @@
 import { Entry } from "./Entry";
 import { Timetable } from "./Timetable";
-import { addWeeks, addDays } from "date-fns";
+import { addWeeks, addDays, format } from "date-fns";
 
 export class Ical {
     static toVEvent(entry: Entry) {}
@@ -60,7 +60,7 @@ export class Event {
      */
     toVEvent(): string {
         function toIcalDateTime(dt: Date): string {
-            return dt.toISOString().replace(/[-:]/g, "");
+            return dt.toISOString().replace(/[-:]/g, "").slice(0, -5) + "Z";
         }
 
         return [
@@ -96,12 +96,11 @@ export class Event {
 
         const toDateTime = (period, wday, week) => {
             const week1 = new Date(
-                Date.UTC(yearOfWeek(week), 1, 4, period - 2)
+                Date.UTC(yearOfWeek(week), 0, 4, period - 2)
             );
-            const today = addDays(
-                addWeeks(week1, week - 1),
-                wday - 1 - week1.getUTCDay()
-            );
+            let week1Wday = ((week1.getUTCDay() + 6) % 7) + 2;
+            const today = addDays(addWeeks(week1, week - 1), wday - week1Wday);
+            // console.log(today);
 
             return today;
         };
