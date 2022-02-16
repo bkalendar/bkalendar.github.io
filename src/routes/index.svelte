@@ -1,7 +1,8 @@
 <script lang="ts">
-  import { Timetable } from '$lib/Timetable';
+  import { parseTimetable } from '$lib/Timetable';
   import Settings from '$lib/Settings.svelte';
   import { fly, slide } from 'svelte/transition';
+import { Ical } from '$lib/ical';
 
   let rawTimetable;
   let timetable;
@@ -9,7 +10,7 @@
   let openSettings = false;
   let notice;
   $: try {
-    if (rawTimetable) timetable = new Timetable(rawTimetable);
+    if (rawTimetable) timetable = parseTimetable(rawTimetable);
     else timetable = undefined;
   } catch {
     timetable = undefined;
@@ -19,7 +20,7 @@
 
   $: downloadLink =
     timetable &&
-    `data:text/calendar,${encodeURIComponent(timetable.toVCalendar())}`;
+    `data:text/calendar,${encodeURIComponent(Ical.toVCalendar(timetable))}`;
 </script>
 
 <div
