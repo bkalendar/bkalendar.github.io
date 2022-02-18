@@ -1,4 +1,4 @@
-import { Entry, parseEntry } from "./Entry";
+import { Entry, parseEntry } from "./entry";
 
 export interface Timetable {
     semester: number;

@@ -1,5 +1,5 @@
-import { Entry } from "./Entry";
-import { Timetable } from "./Timetable";
+import { Entry } from "./entry";
+import { Timetable } from "./timetable";
 import { addWeeks, addDays, format } from "date-fns";
 import { v4 as uuid } from "uuid";
 
