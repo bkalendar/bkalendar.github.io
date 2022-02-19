@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { parseTimetables, resolveTimetables, TimetableResolved } from "$lib/timetable";
+    import type { TimetableResolved } from '$lib/timetable';
+    import { parseTimetables, resolveTimetables } from "$lib/timetable";
     import Settings from "$lib/Settings.svelte";
     import { fly, slide } from "svelte/transition";
     import { toVCalendar } from "$lib/ical";

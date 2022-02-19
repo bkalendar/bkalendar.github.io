@@ -1,10 +1,7 @@
-import { SemesterContext, resolveFirstDate } from "./date_utils";
-import {
-    EntryRaw,
-    EntryResolved,
-    mergeEntriesResolved,
-    parseEntry,
-} from "./entry";
+import type { SemesterContext } from "./date_utils";
+import type { EntryRaw, EntryResolved } from "./entry";
+import { resolveFirstDate } from "./date_utils";
+import { mergeEntriesResolved, parseEntry } from "./entry";
 
 export interface TimetableRaw extends SemesterContext {
     entries: EntryRaw[];

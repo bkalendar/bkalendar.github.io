@@ -1,4 +1,5 @@
 import hash from "object-hash";
+import idToName from "../../static/id_name.json";
 
 interface Common {
     /** hash id from (id, room, wday, start, end) */
@@ -43,7 +44,7 @@ export function parseEntry(raw: string): EntryRaw | null {
     return {
         ...required,
         hash: hash(required, { algorithm: "md5" }),
-        name: match.groups.name.trim(),
+        name: idToName[required.id] || match.groups.name.trim(),
         group: match.groups.group,
         weeks: match.groups.weeks.split("|").map(Number),
     };

@@ -1,5 +1,5 @@
 <script lang="ts">
-import { TimetableResolved } from './timetable';
+  import type { TimetableResolved } from './timetable';
 
   export let timetable: TimetableResolved;
 </script>

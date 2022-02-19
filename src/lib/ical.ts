@@ -1,5 +1,5 @@
-import { EntryResolved } from "./entry";
-import { TimetableResolved } from "./timetable";
+import type { EntryResolved } from "./entry";
+import type { TimetableResolved } from "./timetable";
 import { resolveDate } from "./date_utils";
 import * as ics from "ics";
 import { addHours } from "date-fns";
