@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { TimetableResolved } from '$lib/timetable';
-    import { parseTimetables, resolveTimetables } from "$lib/timetable";
+    import { parseAndResolveTimetables } from "$lib/timetable";
     import Settings from "$lib/Settings.svelte";
     import { fly, slide } from "svelte/transition";
     import { toVCalendar } from "$lib/ical";
@@ -12,7 +12,7 @@
     let notice;
     $: try {
         if (rawTimetable) {
-            timetable = resolveTimetables(parseTimetables(rawTimetable))[0];
+            timetable = parseAndResolveTimetables(rawTimetable)[0];
         }
         else timetable = undefined;
     } catch {
