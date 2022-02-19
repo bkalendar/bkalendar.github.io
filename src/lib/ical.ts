@@ -1,13 +1,12 @@
 import { EntryResolved } from "./entry";
 import { TimetableResolved } from "./timetable";
 import { resolveDate } from "./date_utils";
-import "rrule";
-import { createEvents, EventAttributes } from "ics";
-import RRule, { RRuleSet } from "rrule";
+import * as ics from "ics";
 import { addHours } from "date-fns";
+import * as rrule from "rrule";
 
 export function toVCalendar(timetable: TimetableResolved): string {
-    let calendar = createEvents(
+    let calendar = ics.createEvents(
         timetable.entries.map((entry) => entryToEvent(entry, timetable.start))
     );
     return calendar.value!!.replaceAll(
@@ -29,11 +28,11 @@ export function decomposeDate(
     ];
 }
 
-function entryToEvent(entry: EntryResolved, start: Date): EventAttributes {
-    const rruleSet = new RRuleSet();
+function entryToEvent(entry: EntryResolved, start: Date): ics.EventAttributes {
+    const rruleSet = new rrule.RRuleSet();
     rruleSet.rrule(
-        new RRule({
-            freq: RRule.WEEKLY,
+        new rrule.RRule({
+            freq: rrule.RRule.WEEKLY,
             byweekday: entry.wday - 2,
             until: resolveDate(start, entry.lastWeek, entry.wday, entry.start),
         })

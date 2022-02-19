@@ -1,16 +1,18 @@
 <script lang="ts">
-    import { parseTimetable } from "$lib/Timetable";
+    import { parseTimetables, resolveTimetables, TimetableResolved } from "$lib/timetable";
     import Settings from "$lib/Settings.svelte";
     import { fly, slide } from "svelte/transition";
     import { toVCalendar } from "$lib/ical";
 
     let rawTimetable;
-    let timetable;
+    let timetable: TimetableResolved;
     let downloadLink;
     let openSettings = false;
     let notice;
     $: try {
-        if (rawTimetable) timetable = parseTimetable(rawTimetable);
+        if (rawTimetable) {
+            timetable = resolveTimetables(parseTimetables(rawTimetable))[0];
+        }
         else timetable = undefined;
     } catch {
         timetable = undefined;

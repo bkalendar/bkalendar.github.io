@@ -1,16 +1,15 @@
-<script>
-  /** @type {import('$lib/Timetable').Timetable}  */
-  export let timetable;
+<script lang="ts">
+import { TimetableResolved } from './timetable';
+
+  export let timetable: TimetableResolved;
 </script>
 
 <div class="space-y-6">
   {#each timetable.entries as entry}
     <label class="block">
-      <span class="text-sm"
-        >{entry.id}, thứ {entry.wday}, tuần {[entry.weeks.first]
-          .concat(entry.weeks.others)
-          .join(', ')}</span
-      >
+      <span class="text-sm">
+        {entry.id}, thứ {entry.wday}
+      </span>
       <input
         type="text"
         bind:value={entry.name}
