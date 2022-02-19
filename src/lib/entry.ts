@@ -1,4 +1,4 @@
-import { hash } from "object-hash";
+import hash from "object-hash";
 
 interface Common {
     /** hash id from (id, room, wday, start, end) */
@@ -27,7 +27,7 @@ export interface EntryResolved extends Common {
 
 export function parseEntry(raw: string): EntryRaw | null {
     const pattern =
-        /^(?<id>[^\t]*)\t(?<name>[^\t]*)\t[^\t]*\t[^\t]*\t(?<group>[^\t]*)\t(?<wday>\d)\t(?<start>\d+)-(?<end>\d+)\t[^\t]*\t(?<room>[^\t]*)\t[^\t]*\t(?<weeks>.*)$/;
+        /^(?<id>[^\t]*)\t(?<name>[^\t]*)\t[^\t]*\t[^\t]*\t(?<group>[^\t]*)\t(?<wday>\d)\t(?<start>\d+)-(?<end>\d+)\t[^\t]*\t(?<room>[^\t]*)\t[^\t]*\t(?<weeks>.*)\|$/;
     const match = raw.match(pattern);
 
     if (!match) return null;
@@ -42,7 +42,7 @@ export function parseEntry(raw: string): EntryRaw | null {
 
     return {
         ...required,
-        hash: hash(required),
+        hash: hash(required, { algorithm: 'md5' }),
         name: match.groups.name.trim(),
         group: match.groups.group,
         weeks: match.groups.weeks.split("|").map(Number),

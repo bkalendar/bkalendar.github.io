@@ -13,8 +13,7 @@ export interface TimetableResolved extends SemesterContext {
 
 export function parseTimetables(raw: string): TimetableRaw[] {
     const pattern =
-        /Học kỳ (?<semester>\d) Năm học (?<yearFrom>\d+) - (?<yearTo>\d+)\n[^\n]*\n[^\n]*\n(?<entries>(?:[^](?!\nTổng số tín chỉ đăng ký))*)/;
-
+        /Học kỳ (?<semester>\d) Năm học (?<yearFrom>\d+) - (?<yearTo>\d+)\n[^\n]*\n[^\n]*\n(?<entries>(?:[^](?!Tổng số tín chỉ đăng ký))*)/g;
     return [...raw.matchAll(pattern)].map((match) => ({
         semester: Number(match.groups.semester),
         yearFrom: Number(match.groups.yearFrom),
