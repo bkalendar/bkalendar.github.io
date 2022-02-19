@@ -42,7 +42,7 @@ export function parseEntry(raw: string): EntryRaw | null {
 
     return {
         ...required,
-        hash: hash(required, { algorithm: 'md5' }),
+        hash: hash(required, { algorithm: "md5" }),
         name: match.groups.name.trim(),
         group: match.groups.group,
         weeks: match.groups.weeks.split("|").map(Number),
@@ -53,28 +53,48 @@ export function parseEntry(raw: string): EntryRaw | null {
  * Merge two entries. Throw if unidentical, so remember to check the hash before merging.
  * @returns Merged entry
  */
-function mergeEntryRaw(entry1: EntryRaw, entry2: EntryRaw): EntryRaw {
+function mergeEntryResolved(
+    entry1: EntryResolved,
+    entry2: EntryResolved
+): EntryResolved {
     if (entry1.hash != entry2.hash)
         throw new Error("Cannot merge two different entries");
 
-    const newLength = Math.max(entry1.weeks.length, entry2.weeks.length);
-    const newWeeks = new Array(newLength);
-    for (const i in newWeeks) {
-        // keep the truthy values
-        newWeeks[i] = entry1.weeks[i] || entry2.weeks[i];
+    let exclude1 = [...entry1.excludeWeeks, false];
+    let exclude2 = [...entry2.excludeWeeks, false];
+    for (let i = exclude1.length; i < exclude2.length; i += 1) {
+        exclude1.push(i);
+    }
+    for (let i = exclude2.length; i < exclude1.length; i += 1) {
+        exclude2.push(i);
+    }
+    // console.log(exclude1, exclude2);
+
+    let sortedWeeks = [];
+    for (
+        let i = 0;
+        i < Math.max(entry1.excludeWeeks.length, entry2.excludeWeeks.length);
+        i += 1
+    ) {
+        if (exclude1[i] !== false && exclude2[i] !== false) sortedWeeks.push(i);
     }
 
     return {
         ...entry2,
-        weeks: newWeeks,
+        firstWeek: Math.min(entry1.firstWeek, entry2.firstWeek),
+        lastWeek: Math.max(entry1.lastWeek, entry2.lastWeek),
+        excludeWeeks: sortedWeeks,
     };
 }
 
-export function mergeEntriesRaw(entries: EntryRaw[]) {
-    for (let i = 0; i < entries.length - 1; i += 1) {
-        if (entries[i].hash == entries[i + 1].hash) {
-            entries[i] = mergeEntryRaw(entries[i], entries[i + 1]);
+export function mergeEntriesResolved(entries: EntryResolved[]) {
+    for (let i = 0; i < entries.length; i += 1) {
+        if (entries[i].hash == entries[i + 1]?.hash) {
+            entries[i] = mergeEntryResolved(entries[i], entries[i + 1]);
             entries.splice(i + 1, 1);
         }
+        entries[i].excludeWeeks = entries[i].excludeWeeks.filter(
+            (x: number | false) => x !== false
+        );
     }
 }

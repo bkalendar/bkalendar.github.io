@@ -1,4 +1,4 @@
-import { addDays, addWeeks } from "date-fns/fp";
+import { addDays, addHours, addWeeks } from "date-fns";
 
 export interface SemesterContext {
     semester: number;
@@ -36,7 +36,10 @@ function yearOfStartWeek(firstWeek: number, context: SemesterContext): number {
  * @param context semester, school years context
  * @returns first date of `weeks` param
  */
-export function resolveFirstDate(weeks: number[], context: SemesterContext): Date {
+export function resolveFirstDate(
+    weeks: number[],
+    context: SemesterContext
+): Date {
     let i = weeks.findIndex(Boolean);
     if (i == -1) throw new Error("Empty weeks");
 
@@ -55,9 +58,28 @@ export function resolveFirstDate(weeks: number[], context: SemesterContext): Dat
     // shift Sun..Sar to Mon..Sun (0..6 to 2..8)
     const wday = ((week1.getUTCDay() + 6) % 7) + 2;
 
-    const firstWeekShift = addWeeks(week - i - 1);
-    const mondayShift = addDays(2 - wday);
+    let date = week1;
+    // correct week shift
+    date = addWeeks(date, week - i - 1);
+    // monday shift
+    date = addDays(date, 2 - wday);
 
-    // apply shifts to get correct first date
-    return mondayShift(firstWeekShift(week1));
+    return date;
+}
+
+/**
+ * Generate correct date based on start date and offsets
+ * @returns date and time object for `ics` package in UTC
+ */
+export function resolveDate(
+    start: Date,
+    weekOffset: number,
+    weekday: number,
+    period: number
+): Date {
+    let date = start;
+    date = addWeeks(date, weekOffset);
+    date = addDays(date, weekday - 2);
+    date = addHours(date, period - 2);
+    return date;
 }

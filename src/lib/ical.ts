@@ -1,93 +1,61 @@
-import { Entry } from "./entry";
-import { Timetable } from "./timetable";
-import { addWeeks, addDays, format } from "date-fns";
-import { v4 as uuid } from "uuid";
+import { EntryResolved } from "./entry";
+import { TimetableResolved } from "./timetable";
+import { resolveDate } from "./date_utils";
+import "rrule";
+import { createEvents, EventAttributes } from "ics";
+import RRule, { RRuleSet } from "rrule";
+import { addHours } from "date-fns";
 
-export function toVCalendar(timetable: Timetable) {
-    let arr = [
-        "BEGIN:VCALENDAR",
-        "VERSION:2.0",
-        "PRODID:-//bkalendar//Google Calendar v1.0/VI",
-    ];
-    for (const entry of timetable.entries) {
-        arr.push(
-            toVEvent(
-                entryToEvent(entry, {
-                    semester: timetable.semester,
-                    yearFrom: timetable.year.from,
-                    yearTo: timetable.year.to,
-                })
-            )
-        );
-    }
-    arr.push("END:VCALENDAR");
-    return arr.join("\r\n");
+export function toVCalendar(timetable: TimetableResolved): string {
+    let calendar = createEvents(
+        timetable.entries.map((entry) => entryToEvent(entry, timetable.start))
+    );
+    return calendar.value!!.replaceAll(
+        /DTSTART:([^Z]+)Z/g,
+        "DTSTART;TZID=Asia/Ho_Chi_Minh:$1"
+    );
 }
 
-export function toVEvent(event: Event): string {
-    function toIcalDateTime(dt: Date): string {
-        return dt.toISOString().replace(/[-:]/g, "").slice(0, -5) + "Z";
-    }
-
+export function decomposeDate(
+    date: Date
+): [number, number, number, number, number] {
+    date = addHours(date, 7);
     return [
-        "BEGIN:VEVENT",
-        `UID:${event.uid}`,
-        "DTSTAMP:20210928T200000",
-        `SUMMARY:${event.subject}`,
-        `DESCRIPTION:${event.description}${
-            event.location ? `\r\nLOCATION:${event.location}` : ""
-        }`,
-        `DTSTART:${toIcalDateTime(event.start)}`,
-        `DTEND:${toIcalDateTime(event.end)}`,
-        `RDATE:${event.repeats.map(toIcalDateTime).join(",")}`,
-        "END:VEVENT",
-    ].join("\r\n");
+        date.getUTCFullYear(),
+        date.getUTCMonth() + 1,
+        date.getUTCDate(),
+        date.getUTCHours(),
+        0,
+    ];
 }
 
-export interface Event {
-    uid: string;
-    subject: string;
-    description: string;
-    location: string | undefined;
-    start: Date;
-    end: Date;
-    repeats: Date[];
-}
-
-export function entryToEvent(
-    entry: Entry,
-    metadata: { semester: number; yearFrom: number; yearTo: number }
-): Event {
-    /**
-     * Resolve week to year.
-     * - If it's summer semester, it's definitely yearTo
-     * - Else, get the closest year
-     */
-    const yearOfWeek = (week: number) =>
-        metadata.semester == 3
-            ? metadata.yearTo
-            : 53 - week < week - 0
-            ? metadata.yearFrom
-            : metadata.yearTo;
-
-    const toDateTime = (period, wday, week) => {
-        const week1 = new Date(Date.UTC(yearOfWeek(week), 0, 4, period - 2));
-        let week1Wday = ((week1.getUTCDay() + 6) % 7) + 2;
-        const today = addDays(addWeeks(week1, week - 1), wday - week1Wday);
-        // console.log(today);
-
-        return today;
-    };
+function entryToEvent(entry: EntryResolved, start: Date): EventAttributes {
+    const rruleSet = new RRuleSet();
+    rruleSet.rrule(
+        new RRule({
+            freq: RRule.WEEKLY,
+            byweekday: entry.wday - 2,
+            until: resolveDate(start, entry.lastWeek, entry.wday, entry.start),
+        })
+    );
+    entry.excludeWeeks.forEach((week) =>
+        rruleSet.exdate(resolveDate(start, week, entry.wday, entry.start))
+    );
 
     return {
-        uid: uuid(),
-        subject: entry.name,
+        productId: "iceghost/bkalendar",
+        uid: entry.hash + "@bkalendar",
+        title: entry.name,
         description: `Mã môn: ${entry.id}\\nMã lớp: ${entry.group}`,
         location: entry.room === "HANGOUT_TUONGTAC" ? undefined : entry.room,
-        start: toDateTime(entry.start, entry.wday, entry.weeks.first),
-        end: toDateTime(entry.end + 1, entry.wday, entry.weeks.first),
-        repeats: [entry.weeks.first]
-            .concat(entry.weeks.others)
-            .map((week) => toDateTime(entry.start, entry.wday, week)),
+        start: decomposeDate(
+            resolveDate(start, entry.firstWeek, entry.wday, entry.start)
+        ),
+        duration: {
+            hours: entry.end - entry.start + 1,
+        },
+        startInputType: "utc",
+        startOutputType: "utc",
+        recurrenceRule: rruleSet.valueOf().join("\r\n").slice(6),
     };
 }

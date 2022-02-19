@@ -18,8 +18,8 @@ it("works with 53-year", () => {
         semester: 1,
         yearFrom: 2020,
         yearTo: 2021,
-    }
+    };
     const firstDate = resolveFirstDate([NaN, NaN, NaN, NaN, NaN, 3], context);
     expect(getISOWeek(firstDate)).toBe(51);
     expect(firstDate.getUTCDay()).toBe(1);
-})
+});

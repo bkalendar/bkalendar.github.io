@@ -48,7 +48,7 @@ describe("Entry", () => {
             "CO2004	CTRUC DULIEU &G/THUAT(TH	--	--	L02	8	7-11	12:00 - 16:50	HANGOUT_TUONGTAC	BK-CS1	--|--|--|36|--|38|--|40|--|42|--|44|--|46|"
         );
         expect(entry).not.toBeNull();
-    })
+    });
 
     it("throws on invalid format", () => {
         let entry = parseEntry("");
@@ -110,8 +110,9 @@ describe("Timetable", () => {
     });
 
     it("can read multiple timetables", () => {
-        const FULL_PAGE = fs
-            .readFileSync("./tests/fixtures/full_page.txt", { encoding: "utf8" })
+        const FULL_PAGE = fs.readFileSync("./tests/fixtures/full_page.txt", {
+            encoding: "utf8",
+        });
         const timetables = parseTimetables(FULL_PAGE);
         expect(timetables).toHaveLength(3);
         expect(timetables[1].entries).toHaveLength(22);

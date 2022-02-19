@@ -1,5 +1,10 @@
 import { SemesterContext, resolveFirstDate } from "./date_utils";
-import { EntryRaw, EntryResolved, mergeEntriesRaw, parseEntry } from "./entry";
+import {
+    EntryRaw,
+    EntryResolved,
+    mergeEntriesResolved,
+    parseEntry,
+} from "./entry";
 
 export interface TimetableRaw extends SemesterContext {
     entries: EntryRaw[];
@@ -29,10 +34,9 @@ export function resolveTimetables(
     timetableRaws: TimetableRaw[]
 ): TimetableResolved[] {
     const newTimetables: TimetableResolved[] = [];
-    let allOrphans: Record<number, EntryResolved[]> = {};
+    let allOrphans: EntryRaw[] = [];
 
     for (const timetable of timetableRaws) {
-        mergeEntriesRaw(timetable.entries);
         let firstDate = commonFirstDate(timetable);
         const { resolved, orphans } = resolveEntries(timetable, firstDate);
         newTimetables.push({
@@ -40,16 +44,25 @@ export function resolveTimetables(
             entries: resolved,
             start: firstDate,
         });
-        allOrphans = { ...allOrphans, ...orphans };
+        allOrphans.push(...orphans);
     }
-
     for (const timetable of newTimetables) {
-        let orphans = allOrphans[+timetable.start] || [];
-        timetable.entries.push(...orphans);
-        delete allOrphans[+timetable.start];
+        let rawTimetable: TimetableRaw = { ...timetable, entries: allOrphans };
+        const { resolved, orphans } = resolveEntries(
+            rawTimetable,
+            timetable.start
+        );
+        allOrphans = orphans;
+        timetable.entries.push(...resolved);
+        timetable.entries.sort((a, b) => {
+            let diff = a.wday - b.wday;
+            if (diff === 0) diff = a.start - b.start;
+            return diff;
+        });
+        mergeEntriesResolved(timetable.entries);
     }
 
-    if (Object.keys(allOrphans).length != 0) {
+    if (allOrphans.length != 0) {
         console.warn("Found orphan(s):", allOrphans);
     }
 
@@ -79,37 +92,35 @@ function resolveEntries(
     start: Date
 ): {
     resolved: EntryResolved[];
-    orphans: Record<number, EntryResolved[]>;
+    orphans: EntryRaw[];
 } {
-    const resolved = [];
-    const orphans: Record<number, EntryResolved[]> = [];
+    const resolved: EntryResolved[] = [];
+    const orphans: EntryRaw[] = [];
     for (const entry of timetable.entries) {
         // empty weeks, huh?
         if (entry.weeks.find(Boolean) === undefined) {
             console.warn("Discard entry without weeks", entry);
             continue;
         }
-        const firstWeek = entry.weeks.findIndex(Boolean);
-        const lastWeek = entry.weeks.length - 1;
-        const entryResolved: EntryResolved = {
-            ...entry,
-            firstWeek,
-            lastWeek,
-            excludeWeeks: entry.weeks
-                // get indices of only falsy weeks
-                .map((n, i) => !Boolean(n) && i)
-                // slice to make firstWeek first element
-                .slice(firstWeek)
-                // filter out truthy weeks
-                .filter(Boolean),
-        };
-
         const firstDate = resolveFirstDate(entry.weeks, timetable);
         if (+start === +firstDate) {
-            resolved.push(entryResolved);
+            const firstWeek = entry.weeks.findIndex(Boolean);
+            const lastWeek = entry.weeks.length - 1;
+            resolved.push({
+                ...entry,
+                firstWeek,
+                lastWeek,
+                excludeWeeks: entry.weeks
+                    // get indices of only falsy weeks
+                    .map((n, i) => isNaN(n) && i),
+                // slice to make firstWeek first element
+                // .slice(firstWeek)
+                // filter out truthy weeks
+                // .filter(Boolean),
+                // NOTE: above logic moved to entry merging process
+            });
         } else {
-            let current = orphans[+firstDate] || [];
-            orphans[+firstDate] = [...current, entryResolved];
+            orphans.push(entry);
         }
     }
     return { resolved, orphans };
