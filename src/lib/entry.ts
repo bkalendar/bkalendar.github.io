@@ -14,16 +14,18 @@ interface Common {
 }
 
 export interface EntryRaw extends Common {
-    weeks: number[];
+    readonly weeks: number[];
 }
 
 export interface EntryResolved extends Common {
     /** offset of week (inclusive) from the first week of semester */
-    firstWeek: number;
+    readonly firstWeek: number;
     /** offset of week (inclusive) fom the first week of semester */
-    lastWeek: number;
+    readonly lastWeek: number;
     /** offset of weeks from the first week of semester */
-    excludeWeeks: number[];
+    readonly excludeWeeks: number[];
+    color?: string;
+    meetLink?: string;
 }
 
 export function parseEntry(raw: string): EntryRaw | null {

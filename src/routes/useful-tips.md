@@ -2,7 +2,7 @@
   import { base } from '$app/paths';
 </script>
 
-<div class="prose dark:prose-light mx-auto px-2 sm:px-0">
+<div class="prose dark:prose-invert mx-auto px-2 sm:px-0">
 
 Trước khi chia sẻ những cái mẹo bên dưới, nếu bạn chưa biết làm gì tiếp theo thì mình chia sẻ hai đường link:
 

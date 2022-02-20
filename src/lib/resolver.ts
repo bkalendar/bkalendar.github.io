@@ -1,6 +1,6 @@
-import { resolveFirstDate } from './date_utils';
-import type { EntryRaw, EntryResolved } from './entry';
-import type { TimetableRaw, TimetableResolved } from './timetable';
+import { resolveFirstDate } from "./date_utils";
+import type { EntryRaw, EntryResolved } from "./entry";
+import type { TimetableRaw, TimetableResolved } from "./timetable";
 
 export function resolveTimetables(
     timetableRaws: TimetableRaw[]
@@ -142,8 +142,11 @@ function mergeEntriesResolved(entries: EntryResolved[]) {
             entries[i] = mergeEntryResolved(entries[i], entries[i + 1]);
             entries.splice(i + 1, 1);
         }
-        entries[i].excludeWeeks = entries[i].excludeWeeks.filter(
-            (x: number | false) => x !== false
-        );
+        entries[i] = {
+            ...entries[i],
+            excludeWeeks: entries[i].excludeWeeks.filter(
+                (x: number | false) => x !== false
+            ),
+        };
     }
 }
