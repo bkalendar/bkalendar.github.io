@@ -3,7 +3,7 @@ const typography = require("@tailwindcss/typography");
 
 const config = {
     darkMode: "media",
-    purge: ["./src/**/*.{html,js,svelte,md,ts}"],
+    content: ["./src/**/*.{html,js,svelte,md,ts}"],
     theme: {
         colors: {
             transparent: "transparent",
@@ -14,11 +14,14 @@ const config = {
                 DEFAULT: "#1488db",
                 deep: "#032b91",
             },
+            green: colors.emerald,
+            red: colors.rose,
+            yellow: colors.amber,
         },
         extend: {
             fontFamily: {
-                serif: ["Crimson Pro", "serif"],
-                sans: ["Be Vietnam Pro", "sans-serif"],
+                display: ["Be Vietnam Pro", "sans-serif"],
+                body: ["Quicksand", "sans-serif"],
             },
             keyframes: {
                 shake: {
