@@ -10,7 +10,7 @@ export function patchResolvedEntries(
         ...newEntry,
         name: oldEntry.name,
         meetLink: oldEntry.meetLink,
-        color: oldEntry.color,
+        colorId: oldEntry.colorId,
     };
 }
 

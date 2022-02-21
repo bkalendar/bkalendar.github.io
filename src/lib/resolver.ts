@@ -15,6 +15,7 @@ export function resolveTimetables(
             ...timetable,
             entries: resolved,
             start: firstDate,
+            colorId: `${Math.round(Math.random() * 23) + 1}`,
         });
         allOrphans.push(...orphans);
     }
@@ -80,6 +81,7 @@ function resolveEntries(
             const lastWeek = entry.weeks.length - 1;
             resolved.push({
                 ...entry,
+                colorId: `${Math.round(Math.random() * 10) + 1}`,
                 firstWeek,
                 lastWeek,
                 excludeWeeks: entry.weeks

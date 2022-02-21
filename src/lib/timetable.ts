@@ -11,6 +11,7 @@ export interface TimetableResolved extends SemesterContext {
     entries: EntryResolved[];
     /** 00:00 UTC Monday of the first week */
     start: Date;
+    colorId: string;
 }
 
 export function parseTimetables(raw: string): TimetableRaw[] {

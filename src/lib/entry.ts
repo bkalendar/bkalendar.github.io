@@ -24,7 +24,7 @@ export interface EntryResolved extends Common {
     readonly lastWeek: number;
     /** offset of weeks from the first week of semester */
     readonly excludeWeeks: number[];
-    color?: string;
+    colorId?: string;
     meetLink?: string;
 }
 

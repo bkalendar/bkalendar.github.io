@@ -1,15 +1,15 @@
 <script lang="ts">
     import type { EntryResolved } from "./entry";
-    import { getColorsList } from "$lib/stores/gapi";
+    import { getEventColorsList } from "$lib/stores/colors";
 
     export let entry: EntryResolved;
 
     let name = entry.name;
     $: entry.name = name;
 
-    const colors = getColorsList();
+    const colors = getEventColorsList();
 
-    const color = colors[Math.trunc(Math.random() * 10) + 1];
+    $: color = colors[entry.colorId];
 </script>
 
 <div class="flex items-stretch">
