@@ -1,22 +1,41 @@
 <script lang="ts">
+    import EntryDiffPreview from "../lib/EntryDiffPreview.svelte";
+
     import EntryEdit from "$lib/EntryEdit.svelte";
 
     import Select from "svelte-select";
     import CalendarIcon from "$lib/CalendarIcon.svelte";
     import type { EntryResolved } from "$lib/entry";
-    import { parseAndResolveTimetables } from "$lib/timetable";
+    import {
+        loadTimetable,
+        parseAndResolveTimetables,
+        saveTimetable,
+    } from "$lib/timetable";
+    import { browser } from "$app/env";
+    import { diffResolvedEntries } from "$lib/differ";
 
     const items = ["KHANG NGUYEN DUY", "HK211"];
 
     let value = items[0];
 
-    const raw = `Học kỳ 2 Năm học 2020 - 2021
+    let raw = `Học kỳ 2 Năm học 2020 - 2021
   Ngày cập nhật:2021-07-07 12:38:43.0
   Mã MH	Tên môn học	Tín chỉ	Tc học phí	Nhóm-Tổ	Thứ	Tiết	Giờ học	Phòng	Cơ sở	Tuần học
   CO1007	Cấu trúc rời rạc cho khoa học máy tính 	4	4	L01	2	2-3	7:00 - 8:50	H1-401	BK-CS2	--|09|10|11|12|13|14|15|16|17|
   MT1006	Giải tích 2 (bài tập) 	--	--	L04	2	5-6	10:00 - 11:50	H1-703	BK-CS2	--|09|10|11|12|13|14|15|16|17|--|19|`;
 
-    const entries = parseAndResolveTimetables(raw)[0].entries;
+    $: timetables = parseAndResolveTimetables(raw);
+
+    let i = 0;
+
+    $: timetable = timetables[i];
+
+    const oldTimetable = browser ? loadTimetable() : undefined;
+
+    $: diff =
+        oldTimetable && timetable
+            ? diffResolvedEntries(oldTimetable.entries, timetable.entries)
+            : diffResolvedEntries([], timetable.entries);
 </script>
 
 <div class="mx-auto w-full max-w-xl">
@@ -26,6 +45,7 @@
 
     <textarea
         class="mt-6 h-56 w-full max-w-xl rounded-md border-2 border-dashed bg-white outline-none focus:border-blue"
+        bind:value={raw}
     />
     <p class="mt-6 text-center text-gray-300">— hoặc —</p>
     <p class="mt-4 text-center font-semibold text-gray-400">
@@ -35,47 +55,38 @@
 
 <div class="mx-auto mt-10 w-full max-w-xl">
     <h1 class="text-center">Chọn thời khóa biểu</h1>
-    <div class="flex items-center justify-center space-x-2">
-        <span class="font-display text-2xl">Học kỳ 211</span>
-        <!-- prettier-ignore -->
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-        </svg>
+    <div class="flex items-center justify-center space-x-4">
+        <button
+            class="hover:bg-white hover:shadow-sm rounded-sm disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:shadow-none disabled:text-gray-200"
+            on:click={() => i++}
+            disabled={i >= timetables.length - 1}
+        >
+            <!-- prettier-ignore -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+        </button>
+        <span class="font-display text-2xl w-40 text-center">Học kỳ {timetable.yearFrom % 100}{timetable.semester}</span>
+        <button
+            class="hover:bg-white hover:shadow-sm rounded-sm disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:shadow-none disabled:text-gray-200"
+            on:click={() => i--}
+            disabled={i <= 0}
+        >
+            <!-- prettier-ignore -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+        </button>
     </div>
     <div
-        class="mt-4 h-96 space-y-2 rounded-md bg-white p-8 shadow-md shadow-gray-200"
+        class="mt-4 min-h-96 space-y-2 rounded-md bg-white p-8 shadow-md shadow-gray-200"
     >
-        <p class="bg-green-50 p-2 text-green-900">
-            📗 Xác suất thống kê, thứ 4, tiết 5 - 6
-        </p>
-        <p class="bg-red-50 p-2 text-red-900">
-            📕 Mô hình hóa Toán học, thứ 5, tiết 4 - 6
-        </p>
-        <div>
-            <p class="bg-yellow-50 p-2 text-yellow-900">
-                ⚠️ Quản lý dự án cho kỹ sư, thứ 6, tiết 1 - 2
-            </p>
-            <div class="ml-4 -space-y-1 border-l-2 border-gray-200 pl-4 pt-4">
-                <p>
-                    👉
-                    <span class="relative">
-                        <span
-                            class="absolute -top-3 text-xs text-gray-400 line-through"
-                            >Học tuần 52, 1, 2, 4</span
-                        >
-                        Học tuần 52, 1, 2, 3, 4
-                    </span>
-                </p>
-            </div>
-        </div>
-        <p class="p-2">📖 Cấu trúc giải thuật và dữ liệu, thứ 5, tiết 4 - 6</p>
+        {#each diff as { old: oldEntry, new: newEntry }}
+            <EntryDiffPreview {newEntry} {oldEntry} />
+        {/each}
     </div>
     <button
         class="mx-auto mt-4 flex items-center space-x-1 rounded-md bg-blue px-2 py-1 font-bold text-white shadow-md shadow-blue/20"
     >
         <!-- prettier-ignore -->
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
-        <span>Tiếp tục</span>
+        <span on:click={() => saveTimetable(timetable)}>Tiếp tục</span>
     </button>
 </div>
 
@@ -83,7 +94,7 @@
     <div
         class="min-h-96 mt-4 mb-10 space-y-6 rounded-md bg-white p-8 shadow-md shadow-gray-200"
     >
-        {#each entries as entry}
+        {#each timetable.entries as entry}
             <EntryEdit {entry} />
         {/each}
     </div>
@@ -115,3 +126,10 @@
         </button>
     </div>
 </div>
+
+<style lang="postcss">
+    :root {
+        --itemIsActiveBG: theme("colors.blue.DEFAULT");
+        --borderFocusColor: theme("colors.blue.DEFAULT");
+    }
+</style>
