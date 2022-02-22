@@ -57,16 +57,18 @@
     <h1 class="text-center">Chọn thời khóa biểu</h1>
     <div class="flex items-center justify-center space-x-4">
         <button
-            class="hover:bg-white hover:shadow-sm rounded-sm disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:shadow-none disabled:text-gray-200"
+            class="rounded-sm hover:bg-white hover:shadow-sm disabled:cursor-not-allowed disabled:text-gray-200 disabled:hover:bg-transparent disabled:hover:shadow-none"
             on:click={() => i++}
             disabled={i >= timetables.length - 1}
         >
             <!-- prettier-ignore -->
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
         </button>
-        <span class="font-display text-2xl w-40 text-center">Học kỳ {timetable.yearFrom % 100}{timetable.semester}</span>
+        <span class="w-40 text-center font-display text-2xl"
+            >Học kỳ {timetable.yearFrom % 100}{timetable.semester}</span
+        >
         <button
-            class="hover:bg-white hover:shadow-sm rounded-sm disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:shadow-none disabled:text-gray-200"
+            class="rounded-sm hover:bg-white hover:shadow-sm disabled:cursor-not-allowed disabled:text-gray-200 disabled:hover:bg-transparent disabled:hover:shadow-none"
             on:click={() => i--}
             disabled={i <= 0}
         >
@@ -75,7 +77,7 @@
         </button>
     </div>
     <div
-        class="mt-4 min-h-96 space-y-2 rounded-md bg-white p-8 shadow-md shadow-gray-200"
+        class="min-h-96 mt-4 space-y-2 rounded-md bg-white p-8 shadow-md shadow-gray-200"
     >
         {#each diff as { old: oldEntry, new: newEntry }}
             <EntryDiffPreview {newEntry} {oldEntry} />

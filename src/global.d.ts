@@ -1,13 +1,14 @@
 /// <reference types="@sveltejs/kit" />
 
 type User = gapi.auth2.GoogleUser;
+type CalendarList = gapi.client.calendar.CalendarList;
 
 declare namespace Intl {
     /**
-  * The locale matching algorithm to use.
-  *
-  * [MDN](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl#Locale_negotiation).
-  */
+     * The locale matching algorithm to use.
+     *
+     * [MDN](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl#Locale_negotiation).
+     */
     type ListFormatLocaleMatcher = "lookup" | "best fit";
 
     /**
@@ -63,7 +64,9 @@ declare namespace Intl {
          *
          * [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat/formatToParts).
          */
-        formatToParts(list: Iterable<string>): { type: "element" | "literal", value: string; }[];
+        formatToParts(
+            list: Iterable<string>
+        ): { type: "element" | "literal"; value: string }[];
     }
 
     const ListFormat: {
@@ -84,7 +87,10 @@ declare namespace Intl {
          *
          * [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat).
          */
-        new(locales?: BCP47LanguageTag | BCP47LanguageTag[], options?: ListFormatOptions): ListFormat;
+        new (
+            locales?: BCP47LanguageTag | BCP47LanguageTag[],
+            options?: ListFormatOptions
+        ): ListFormat;
 
         /**
          * Returns an array containing those of the provided locales that are
@@ -102,6 +108,9 @@ declare namespace Intl {
          *
          * [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat/supportedLocalesOf).
          */
-        supportedLocalesOf(locales: BCP47LanguageTag | BCP47LanguageTag[], options?: Pick<ListFormatOptions, "localeMatcher">): BCP47LanguageTag[];
+        supportedLocalesOf(
+            locales: BCP47LanguageTag | BCP47LanguageTag[],
+            options?: Pick<ListFormatOptions, "localeMatcher">
+        ): BCP47LanguageTag[];
     };
 }

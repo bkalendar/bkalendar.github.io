@@ -20,7 +20,7 @@ async function loadGapi() {
                         "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
                     ],
                 });
-                script.onload = undefined;
+                script.onload = function () {};
                 resolve();
             });
         };
@@ -31,23 +31,16 @@ async function loadGapi() {
 // Singleton promise for managing global `gapi`
 let loadPromise: Promise<void> | null = null;
 
-async function load() {
+export async function load() {
     if (!loadPromise) {
-        loadPromise = loadGapi().then(() => {
-            _user = readable<User>(
-                gapi.auth2.getAuthInstance().currentUser.get(),
-                (set) => {
-                    gapi.auth2.getAuthInstance().currentUser.listen(set);
-                }
-            );
-        });
+        loadPromise = loadGapi();
     }
     return loadPromise;
 }
 
 let _user: Readable<User>;
 
-export async function user() {
+export async function getUser() {
     await load();
     return _user;
 }
@@ -55,7 +48,7 @@ export async function user() {
 export async function signIn() {
     await load();
     await gapi.auth2.getAuthInstance().signIn();
-    return await user();
+    return await getUser();
 }
 
 export async function signOut() {
