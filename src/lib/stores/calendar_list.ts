@@ -8,14 +8,15 @@ import {
 } from "svelte/store";
 import { userPromise } from "./user";
 
-interface Calendar {
+export interface Calendar {
     id: string;
     summary: string;
     colorId?: string;
 }
 
-export const selectedCalendarPromise: Promise<Writable<Calendar | null>> =
-    new Promise((resolve) => {
+export type CalendarStore = Writable<Calendar | null>;
+export const selectedCalendarPromise: Promise<CalendarStore> = new Promise(
+    (resolve) => {
         if (!browser) return;
         const KEY = "bkalendar-calendar";
         const raw = localStorage.getItem(KEY);
@@ -25,14 +26,15 @@ export const selectedCalendarPromise: Promise<Writable<Calendar | null>> =
             localStorage.setItem(KEY, raw);
         });
         resolve(store);
-    });
+    }
+);
 
 export const calendarsPromise: Readable<Promise<Calendar[]>> = readable(
     new Promise(() => {}),
     (set) => {
         userPromise.then((user) => {
             user.subscribe(async ($user) => {
-                if (!$user.isSignedIn()) return Promise.resolve([]);
+                if (!$user.isSignedIn()) return set(Promise.resolve([]));
 
                 const promise = new Promise<Calendar[]>((resolve) => {
                     gapi.client.calendar.calendarList.list().execute((list) => {

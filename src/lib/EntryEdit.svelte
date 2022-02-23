@@ -9,7 +9,7 @@
 
     const colors = getEventColorsList();
 
-    $: color = colors[entry.colorId];
+    $: color = colors[entry.colorId || "1"];
 </script>
 
 <div class="flex items-stretch">

@@ -2,8 +2,10 @@ import { browser } from "$app/env";
 import type { TimetableResolved } from "$lib/timetable";
 import { writable, type Writable } from "svelte/store";
 
-export const timetablePromise: Promise<Writable<TimetableResolved | null>> =
-    new Promise((resolve) => {
+export type TimetableStore = Writable<TimetableResolved | null>;
+
+export const timetablePromise: Promise<TimetableStore> = new Promise(
+    (resolve) => {
         if (!browser) return;
         const KEY = "bkalendar-timetable";
         const raw = localStorage.getItem(KEY);
@@ -15,4 +17,5 @@ export const timetablePromise: Promise<Writable<TimetableResolved | null>> =
             localStorage.setItem(KEY, raw);
         });
         resolve(store);
-    });
+    }
+);

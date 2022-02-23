@@ -12,7 +12,7 @@ export const userPromise: Promise<UserStore> = gapiPromise.then(() => {
         gapi.auth2.getAuthInstance().currentUser.listen(set);
     });
     return {
-        ...store,
+        subscribe: store.subscribe,
         signIn: () => gapi.auth2.getAuthInstance().signIn(),
         signOut: () => gapi.auth2.getAuthInstance().signOut(),
     };
