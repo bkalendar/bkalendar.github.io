@@ -29,18 +29,7 @@ export function decomposeDate(
 }
 
 function entryToEvent(entry: EntryResolved, start: Date): ics.EventAttributes {
-    const rruleSet = new rrule.RRuleSet();
-    rruleSet.rrule(
-        new rrule.RRule({
-            freq: rrule.RRule.WEEKLY,
-            byweekday: entry.wday - 2,
-            until: resolveDate(start, entry.lastWeek, entry.wday, entry.start),
-        })
-    );
-    entry.excludeWeeks.forEach((week) =>
-        rruleSet.exdate(resolveDate(start, week, entry.wday, entry.start))
-    );
-
+    const rruleSet = getRRule(entry, start);
     return {
         productId: "iceghost/bkalendar",
         uid: entry.hash + "@bkalendar",
@@ -57,4 +46,19 @@ function entryToEvent(entry: EntryResolved, start: Date): ics.EventAttributes {
         startOutputType: "utc",
         recurrenceRule: rruleSet.valueOf().join("\r\n").slice(6),
     };
+}
+
+export function getRRule(entry: EntryResolved, start: Date): rrule.RRuleSet {
+    const rruleSet = new rrule.RRuleSet();
+    rruleSet.rrule(
+        new rrule.RRule({
+            freq: rrule.RRule.WEEKLY,
+            byweekday: entry.wday - 2,
+            until: resolveDate(start, entry.lastWeek, entry.wday, entry.start),
+        })
+    );
+    entry.excludeWeeks.forEach((week) =>
+        rruleSet.exdate(resolveDate(start, week, entry.wday, entry.start))
+    );
+    return rruleSet;
 }
