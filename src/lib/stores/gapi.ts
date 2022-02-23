@@ -1,4 +1,4 @@
-import { browser } from '$app/env';
+import { browser } from "$app/env";
 import type { Readable } from "svelte/store";
 import { readable } from "svelte/store";
 
@@ -7,7 +7,7 @@ const CLIENT_ID: string =
     "1003739652458-kgklao4co5lrtffceqeq8ng2m7m1pde6.apps.googleusercontent.com";
 
 // script loader helper
-export const gapiPromise: Promise<void> = new Promise(resolve => {
+export const gapiPromise: Promise<void> = new Promise((resolve) => {
     if (!browser) return;
     const script = document.createElement("script");
     script.src = "https://apis.google.com/js/api.js";
@@ -21,12 +21,12 @@ export const gapiPromise: Promise<void> = new Promise(resolve => {
                     "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
                 ],
             });
-            script.onload = function () { };
+            script.onload = function () {};
             resolve();
         });
     };
     document.head.appendChild(script);
-})
+});
 
 export async function load() {
     return gapiPromise;

@@ -36,18 +36,20 @@ export function parseEntry(raw: string): EntryRaw | null {
     if (!match) return null;
 
     const required = {
-        id: match.groups.id,
-        wday: Number(match.groups.wday),
-        start: Number(match.groups.start),
-        end: Number(match.groups.end),
-        room: match.groups.room,
+        id: match.groups!!.id,
+        wday: Number(match.groups!!.wday),
+        start: Number(match.groups!!.start),
+        end: Number(match.groups!!.end),
+        room: match.groups!!.room,
     };
 
     return {
         ...required,
         hash: hash(required, { algorithm: "md5" }),
-        name: idToName[required.id] || match.groups.name.trim(),
-        group: match.groups.group,
-        weeks: match.groups.weeks.split("|").map(Number),
+        name:
+            idToName[required.id as keyof typeof idToName] ||
+            match.groups!!.name.trim(),
+        group: match.groups!!.group,
+        weeks: match.groups!!.weeks.split("|").map(Number),
     };
 }

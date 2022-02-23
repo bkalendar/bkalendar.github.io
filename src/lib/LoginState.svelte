@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { UserStore } from './stores/user';
+    import type { UserStore } from "./stores/user";
 
     export let user: UserStore;
 </script>

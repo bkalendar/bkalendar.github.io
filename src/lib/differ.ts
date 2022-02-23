@@ -1,23 +1,13 @@
 import type { EntryResolved } from "./entry";
-import type { TimetableResolved } from "./timetable";
 
-type Pair<T> =
-    | {
-          old: T;
-          new: T;
-      }
-    | {
-          old: null;
-          new: T;
-      }
-    | {
-          old: T;
-          new: null;
-      };
+type Pair<T> = {
+    old?: T;
+    new?: T;
+};
 
 function extract<T>(pair: Pair<T>): T {
-    if (!pair.new) return pair.old;
-    return pair.new;
+    if (pair.old !== undefined) return pair.old;
+    return pair.new!!;
 }
 
 export function diffResolvedEntries(
@@ -28,13 +18,11 @@ export function diffResolvedEntries(
     for (const entry of oldEntries) {
         result[entry.hash] = {
             old: entry,
-            new: null,
         };
     }
     for (const entry of newEntries) {
         if (result[entry.hash] === undefined) {
             result[entry.hash] = {
-                old: null,
                 new: entry,
             };
         } else {

@@ -7,6 +7,7 @@ specifiers:
     "@types/gapi": ^0.0.41
     "@types/gapi.auth2": ^0.0.56
     "@types/gapi.calendar": ^3.0.6
+    "@types/object-hash": ^2.2.1
     autoprefixer: ^10.4.2
     cross-env: ^7.0.3
     cssnano: ^5.0.17
@@ -35,6 +36,7 @@ devDependencies:
     "@types/gapi": 0.0.41
     "@types/gapi.auth2": 0.0.56
     "@types/gapi.calendar": 3.0.6
+    "@types/object-hash": 2.2.1
     autoprefixer: 10.4.2_postcss@8.4.6
     cross-env: 7.0.3
     cssnano: 5.0.17_postcss@8.4.6
@@ -268,6 +270,13 @@ packages:
         resolution:
             {
                 integrity: sha512-eKj4f/BsN/qcculZiRSujogjvp5O/k4lOW5m35NopjZM/QwLOR075a8pJW5hD+Rtdm2DaCVPENS6KtSQnUD6BA==,
+            }
+        dev: true
+
+    /@types/object-hash/2.2.1:
+        resolution:
+            {
+                integrity: sha512-i/rtaJFCsPljrZvP/akBqEwUP2y5cZLOmvO+JaYnz01aPknrQ+hB5MRcO7iqCUsFaYfTG8kGfKUyboA07xeDHQ==,
             }
         dev: true
 

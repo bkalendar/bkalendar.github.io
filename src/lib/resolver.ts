@@ -56,7 +56,7 @@ function commonFirstDate(timetable: TimetableRaw): Date {
     const maxCount = Math.max(...Object.values(multiset));
     const maxKey = Object.entries(multiset).find(
         ([_, count]) => count == maxCount
-    )[0];
+    )!![0];
     return new Date(Number(maxKey));
 }
 
@@ -82,12 +82,12 @@ function resolveEntries(
             const lastWeek = entry.weeks.length - 1;
             resolved.push({
                 ...entry,
-                colorId: `${Number(key) % 10 + 1}`,
+                colorId: `${(Number(key) % 10) + 1}`,
                 firstWeek,
                 lastWeek,
                 excludeWeeks: entry.weeks
                     // get indices of only falsy weeks
-                    .map((n, i) => isNaN(n) && i),
+                    .map((n, i) => (isNaN(n) ? i : NaN)),
                 // slice to make firstWeek first element
                 // .slice(firstWeek)
                 // filter out truthy weeks
@@ -112,8 +112,8 @@ function mergeEntryResolved(
     if (entry1.hash != entry2.hash)
         throw new Error("Cannot merge two different entries");
 
-    let exclude1 = [...entry1.excludeWeeks, false];
-    let exclude2 = [...entry2.excludeWeeks, false];
+    let exclude1 = [...entry1.excludeWeeks, NaN];
+    let exclude2 = [...entry2.excludeWeeks, NaN];
     for (let i = exclude1.length; i < exclude2.length; i += 1) {
         exclude1.push(i);
     }
@@ -128,7 +128,7 @@ function mergeEntryResolved(
         i < Math.max(entry1.excludeWeeks.length, entry2.excludeWeeks.length);
         i += 1
     ) {
-        if (exclude1[i] !== false && exclude2[i] !== false) sortedWeeks.push(i);
+        if (exclude1[i] == exclude2[i]) sortedWeeks.push(i);
     }
 
     return {
@@ -147,9 +147,7 @@ function mergeEntriesResolved(entries: EntryResolved[]) {
         }
         entries[i] = {
             ...entries[i],
-            excludeWeeks: entries[i].excludeWeeks.filter(
-                (x: number | false) => x !== false
-            ),
+            excludeWeeks: entries[i].excludeWeeks.filter((x) => x !== NaN),
         };
     }
 }

@@ -28,7 +28,7 @@ export function isDifferentResolvedEntries(
     )
         return true;
 
-    for (let i in oldEntry) {
+    for (let i in oldEntry.excludeWeeks) {
         if (oldEntry.excludeWeeks[i] != newEntry.excludeWeeks[i]) return true;
     }
 
