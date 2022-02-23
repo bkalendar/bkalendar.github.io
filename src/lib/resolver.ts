@@ -69,7 +69,8 @@ function resolveEntries(
 } {
     const resolved: EntryResolved[] = [];
     const orphans: EntryRaw[] = [];
-    for (const entry of timetable.entries) {
+    for (const key in timetable.entries) {
+        const entry = timetable.entries[key];
         // empty weeks, huh?
         if (entry.weeks.find(Boolean) === undefined) {
             console.warn("Discard entry without weeks", entry);
@@ -81,7 +82,7 @@ function resolveEntries(
             const lastWeek = entry.weeks.length - 1;
             resolved.push({
                 ...entry,
-                colorId: `${Math.round(Math.random() * 10) + 1}`,
+                colorId: `${Number(key) % 10 + 1}`,
                 firstWeek,
                 lastWeek,
                 excludeWeeks: entry.weeks
