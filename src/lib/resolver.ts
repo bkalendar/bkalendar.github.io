@@ -147,7 +147,7 @@ function mergeEntriesResolved(entries: EntryResolved[]) {
         }
         entries[i] = {
             ...entries[i],
-            excludeWeeks: entries[i].excludeWeeks.filter((x) => x !== NaN),
+            excludeWeeks: entries[i].excludeWeeks.filter((x) => !isNaN(x)),
         };
     }
 }
