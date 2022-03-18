@@ -4,11 +4,14 @@ specifiers:
     "@sveltejs/adapter-static": ^1.0.0-next.28
     "@sveltejs/kit": ^1.0.0-next.278
     "@tailwindcss/typography": ^0.5.2
+    "@types/cookie": ^0.4.1
     "@types/gapi": ^0.0.41
     "@types/gapi.auth2": ^0.0.56
     "@types/gapi.calendar": ^3.0.6
+    "@types/google-one-tap": ^1.1.0
     "@types/object-hash": ^2.2.1
     autoprefixer: ^10.4.2
+    cookie: ^0.4.2
     cross-env: ^7.0.3
     cssnano: ^5.0.17
     date-fns: ^2.28.0
@@ -33,11 +36,14 @@ devDependencies:
     "@sveltejs/adapter-static": 1.0.0-next.28
     "@sveltejs/kit": 1.0.0-next.278_svelte@3.46.4
     "@tailwindcss/typography": 0.5.2_tailwindcss@3.0.23
+    "@types/cookie": 0.4.1
     "@types/gapi": 0.0.41
     "@types/gapi.auth2": 0.0.56
     "@types/gapi.calendar": 3.0.6
+    "@types/google-one-tap": 1.1.0
     "@types/object-hash": 2.2.1
     autoprefixer: 10.4.2_postcss@8.4.6
+    cookie: 0.4.2
     cross-env: 7.0.3
     cssnano: 5.0.17_postcss@8.4.6
     date-fns: 2.28.0
@@ -234,6 +240,13 @@ packages:
             }
         dev: true
 
+    /@types/cookie/0.4.1:
+        resolution:
+            {
+                integrity: sha512-XW/Aa8APYr6jSVVA1y/DEIZX0/GMKLEVekNG727R8cs56ahETkRAy/3DR7+fJyh7oUgGwNQaRfXCun0+KbWY7Q==,
+            }
+        dev: true
+
     /@types/gapi.auth2/0.0.56:
         resolution:
             {
@@ -256,6 +269,13 @@ packages:
         resolution:
             {
                 integrity: sha512-tmHO66z/f91JZCDqinj/nNvQEszsz/hBT4+MvCSKT5sDzl5Ld/oXZ8WaecCBjRLw2uWKUInUHM9MhEXWkOiNjw==,
+            }
+        dev: true
+
+    /@types/google-one-tap/1.1.0:
+        resolution:
+            {
+                integrity: sha512-UZmwGJ+HhcKGAyc53mKY1Ybs7EgiO2HwYrFlf1F+KiI1vt/O60HroSM+7Vk/xYkTtutjid3WCE0kbmhNqPg1zg==,
             }
         dev: true
 
@@ -603,6 +623,14 @@ packages:
 
     /concat-map/0.0.1:
         resolution: { integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s= }
+        dev: true
+
+    /cookie/0.4.2:
+        resolution:
+            {
+                integrity: sha512-aSWTXFzaKWkvHO1Ny/s+ePFpvKsPnjc551iI41v3ny/ow6tBG5Vd+FuqGNhh1LxOmVzOlGUriIlOaokOvhaStA==,
+            }
+        engines: { node: ">= 0.6" }
         dev: true
 
     /cosmiconfig/7.0.1:
