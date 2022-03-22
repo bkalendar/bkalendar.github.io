@@ -16,7 +16,6 @@
         "@types/gapi": "^0.0.41",
         "@types/gapi.auth2": "^0.0.56",
         "@types/gapi.calendar": "^3.0.6",
-        "@types/google-one-tap": "^1.1.0",
         "@types/object-hash": "^2.2.1",
         "autoprefixer": "^10.4.2",
         "cookie": "^0.4.2",
