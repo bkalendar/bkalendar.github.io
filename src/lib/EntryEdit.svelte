@@ -4,9 +4,6 @@
 
     export let entry: EntryResolved;
 
-    let name = entry.name;
-    $: entry.name = name;
-
     const colors = getEventColorsList();
 
     $: color = colors[entry.colorId || "1"];
@@ -23,7 +20,7 @@
                 type="text"
                 class="h-8 w-full rounded-md border-2 border-dashed px-2 py-1 outline-none focus:border-blue"
                 placeholder="Tên môn"
-                bind:value={name}
+                bind:value={entry.name}
             />
         </div>
         <div class="flex items-center space-x-2">
@@ -51,7 +48,8 @@
         style:background-color={color.background}
         style:color={color.foreground}
     >
-        <p>{name}</p>
+        <p>{entry.name}</p>
         <p>{entry.start + 5}h – {entry.end + 6}h</p>
+        <p>{entry.room === "HANGOUT_TUONGTAC" ? "Online" : entry.room}</p>
     </div>
 </div>

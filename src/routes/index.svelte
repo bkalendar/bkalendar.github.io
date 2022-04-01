@@ -6,13 +6,10 @@
     import Select from "svelte-select";
     import CalendarIcon from "$lib/CalendarIcon.svelte";
     import type { EntryResolved } from "$lib/entry";
-    import {
-        loadTimetable,
-        parseAndResolveTimetables,
-        saveTimetable,
-    } from "$lib/timetable";
+    import { parseAndResolveTimetables } from "$lib/timetable";
     import { browser } from "$app/env";
     import { diffResolvedEntries } from "$lib/differ";
+    import { timetableStore } from "$lib/stores/timetable";
 
     const items = ["KHANG NGUYEN DUY", "HK211"];
 
@@ -30,12 +27,10 @@
 
     $: timetable = timetables[i];
 
-    const oldTimetable = browser ? loadTimetable() : undefined;
-
-    $: diff =
-        oldTimetable && timetable
-            ? diffResolvedEntries(oldTimetable.entries, timetable.entries)
-            : diffResolvedEntries([], timetable.entries);
+    // $: diff =
+    //     $timetableStore && timetable
+    //         ? diffResolvedEntries($timetableStore.entries, timetable.entries)
+    //         : diffResolvedEntries([], timetable.entries);
 </script>
 
 <div class="mx-auto w-full max-w-xl">
@@ -79,16 +74,16 @@
     <div
         class="min-h-96 mt-4 space-y-2 rounded-md bg-white p-8 shadow-md shadow-gray-200"
     >
-        {#each diff as { old: oldEntry, new: newEntry }}
+        <!-- {#each diff as { old: oldEntry, new: newEntry }}
             <EntryDiffPreview {newEntry} {oldEntry} />
-        {/each}
+        {/each} -->
     </div>
     <button
         class="mx-auto mt-4 flex items-center space-x-1 rounded-md bg-blue px-2 py-1 font-bold text-white shadow-md shadow-blue/20"
     >
         <!-- prettier-ignore -->
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
-        <span on:click={() => saveTimetable(timetable)}>Tiếp tục</span>
+        <span on:click={() => timetableStore.set(timetable)}>Tiếp tục</span>
     </button>
 </div>
 
