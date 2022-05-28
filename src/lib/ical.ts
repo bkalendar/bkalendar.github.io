@@ -45,7 +45,7 @@ function entryToEvent(entry: EntryResolved, start: Date): ics.EventAttributes {
         productId: "iceghost/bkalendar",
         uid: entry.hash + "@bkalendar",
         title: entry.name,
-        description: `Mã môn: ${entry.id}\\nMã lớp: ${entry.group}`,
+        description: `Mã môn: ${entry.id}\nMã lớp: ${entry.group}`,
         location: entry.room === "HANGOUT_TUONGTAC" ? undefined : entry.room,
         start: decomposeDate(
             resolveDate(start, entry.firstWeek, entry.wday, entry.start)
