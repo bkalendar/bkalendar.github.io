@@ -2,25 +2,18 @@
 	import type { PageData } from './$types.js';
 	import { parseMachine, type MachineTimetable } from '@bkalendar/core';
 	import { diff } from '@bkalendar/core';
+	import Semester from './Semester.svelte';
 
 	export let data: PageData;
 
 	let raw: string = '';
-
-	$: timetables = raw !== '' ? parseMachine(raw) : null;
+	$: timetables = raw !== '' ? parseMachine(raw).reverse() : [];
 
 	let selectedTimetable: MachineTimetable | null = null;
-
-	$: console.log(timetables);
-
-	async function add() {
-		if (!timetables) return;
-		for (const timetable of timetables) {
-			await data.db.add(timetable);
-		}
+	$: if (timetables.length != 0) {
+		selectedTimetable = timetables[0];
 	}
 
-	$: console.log(selectedTimetable);
 	$: if (selectedTimetable)
 		data.db.getPrev(selectedTimetable).then((prev) => {
 			console.log('prev', prev);
@@ -40,12 +33,24 @@
 
 <textarea class="border" bind:value={raw} />
 
-<button on:click={add}>Add</button>
+<select
+	class="disabled:cursor-not-allowed"
+	disabled={timetables.length == 0}
+	bind:value={selectedTimetable}
+>
+	{#each timetables as timetable}
+		<option value={timetable}>
+			<Semester semester={timetable.semester} />
+		</option>
+	{:else}
+		<option value={null} selected disabled>Nhập khóa biểu trước đê</option>
+	{/each}
+</select>
 
-{#if timetables}
-	<select bind:value={selectedTimetable}>
-		{#each timetables as timetable}
-			<option value={timetable}>{JSON.stringify(timetable.semester)}</option>
-		{/each}
-	</select>
-{/if}
+<button
+	class="disabled:cursor-not-allowed"
+	disabled={selectedTimetable === null}
+	on:click={() => data.db.add(selectedTimetable)}
+>
+	Add
+</button>

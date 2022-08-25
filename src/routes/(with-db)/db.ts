@@ -2,7 +2,7 @@
 // i.e, only import this module on browser
 
 import type { MachineTimetable } from '@bkalendar/core';
-import { openDB, type DBSchema } from 'idb';
+import { openDB, type DBSchema } from 'idb/with-async-ittr';
 
 export default { add, getPrev };
 
