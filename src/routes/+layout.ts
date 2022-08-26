@@ -1,7 +1,7 @@
 import { browser } from '$app/env';
 import type { Database } from '$lib/types.js';
 
-export const load: import('./$types').LayoutLoad = async () => {
+export const load: import('./$types.js').LayoutLoad = async () => {
 	// default to a no-op database
 	let db: Database = {
 		add: async () => {},
