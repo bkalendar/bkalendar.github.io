@@ -4,6 +4,8 @@ specifiers:
   '@bkalendar/core': ^0.6.1
   '@sveltejs/adapter-auto': next
   '@sveltejs/kit': next
+  '@types/gapi': ^0.0.42
+  '@types/gapi.calendar': ^3.0.6
   autoprefixer: ^10.4.8
   idb: ^7.0.2
   postcss: ^8.4.16
@@ -21,7 +23,9 @@ specifiers:
 devDependencies:
   '@bkalendar/core': 0.6.1
   '@sveltejs/adapter-auto': 1.0.0-next.66
-  '@sveltejs/kit': 1.0.0-next.439_svelte@3.49.0+vite@3.0.9
+  '@sveltejs/kit': 1.0.0-next.443_svelte@3.49.0+vite@3.0.9
+  '@types/gapi': 0.0.42
+  '@types/gapi.calendar': 3.0.6
   autoprefixer: 10.4.8_postcss@8.4.16
   idb: 7.0.2
   postcss: 8.4.16
@@ -169,8 +173,8 @@ packages:
       - supports-color
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.439_svelte@3.49.0+vite@3.0.9:
-    resolution: {integrity: sha512-KwxAuP3Hw89c//l6h98EpjIVMkHFUicSV1SJoS4KbH4XeLcH4z2nUsFbYgbC2dQf5btS0KBtCLv+pwqom5mldA==}
+  /@sveltejs/kit/1.0.0-next.443_svelte@3.49.0+vite@3.0.9:
+    resolution: {integrity: sha512-Stdjwj6iL/u40O/+20UKTWtCBYxYaKwX2nRV5devrGk5hvq6/FbAqw+azwoWKvNoz3PGtrSmHIyeLcAx8iKQcw==}
     engines: {node: '>=16.9'}
     hasBin: true
     requiresBuild: true

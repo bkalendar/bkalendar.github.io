@@ -1,8 +1,14 @@
 <script lang="ts">
 	import type { PageData } from './$types.js';
-	import { parseMachine, transformICal, type MachineTimetable } from '@bkalendar/core';
+	import {
+		parseMachine,
+		transformGAPI,
+		transformICal,
+		type MachineTimetable
+	} from '@bkalendar/core';
 	import { diff } from '@bkalendar/core';
 	import Semester from './Semester.svelte';
+	import { page } from '$app/stores';
 
 	export let data: PageData;
 
@@ -30,6 +36,19 @@
 			}
 		});
 	}
+
+	async function addHandler() {
+		data.db.add(timetables[selected!]);
+	}
+
+	async function authHandler() {
+		try {
+			await $page.data.google.auth();
+			await $page.data.google.createTimetable(timetables[selected!], { useRandomColors: true });
+		} catch (e) {
+			console.error(e);
+		}
+	}
 </script>
 
 <h1>Welcome to SvelteKit</h1>
@@ -47,11 +66,7 @@
 	{/each}
 </select>
 
-<button
-	class="disabled:cursor-not-allowed"
-	disabled={selected === null}
-	on:click={() => data.db.add(selected)}
->
+<button class="disabled:cursor-not-allowed" disabled={selected === null} on:click={addHandler}>
 	Add
 </button>
 
@@ -63,3 +78,5 @@
 		Tải về
 	</a>
 {/if}
+
+<button on:click={authHandler} disabled={selected === null}>Auth</button>
