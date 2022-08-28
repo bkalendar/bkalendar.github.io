@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { PageData } from './$types.js';
+	import type { PageData } from './$types';
 	import {
 		parseMachine,
 		transformGAPI,
@@ -8,7 +8,8 @@
 	} from '@bkalendar/core';
 	import { diff } from '@bkalendar/core';
 	import Semester from './Semester.svelte';
-	import { page } from '$app/stores';
+	import { COLORS, randomColorIds } from './colors';
+	import toasts from '$lib/toast';
 
 	export let data: PageData;
 
@@ -37,14 +38,27 @@
 		});
 	}
 
+	$: events = selected === null ? [] : transformGAPI(timetables[selected]);
+
+	let random = 1;
+	$: colorIds =
+		random == 0 || selected === null
+			? []
+			: [...randomColorIds(timetables[selected].timerows.length)];
+
 	async function addHandler() {
 		data.db.add(timetables[selected!]);
 	}
 
 	async function authHandler() {
 		try {
-			await $page.data.google.auth();
-			await $page.data.google.createTimetable(timetables[selected!], { useRandomColors: true });
+			await data.google.auth();
+			await data.google.createTimetable(timetables[selected!], { colorIds });
+			toasts.push({
+				status: 'ok',
+				message: 'thanh cong',
+				duration: 2000
+			});
 		} catch (e) {
 			console.error(e);
 		}
@@ -80,3 +94,17 @@
 {/if}
 
 <button on:click={authHandler} disabled={selected === null}>Auth</button>
+
+{#if selected !== null}
+	<div>
+		{#each events as event, i}
+			{@const colorId = colorIds[i]}
+			{@const { background } = COLORS.get(colorId) ?? { background: '#000' }}
+			<div class="rounded p-2" style:background-color={background}>
+				<p>color: {colorId}</p>
+				<p>{event.summary}</p>
+			</div>
+		{/each}
+	</div>
+	<button on:click={() => ++random}>randomize</button>
+{/if}

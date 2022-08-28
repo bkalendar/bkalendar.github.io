@@ -1,4 +1,8 @@
+// this module should be lazy-loaded (on browser)
+
 import { transformGAPI, type MachineTimetable } from '@bkalendar/core';
+import { COLORS } from './colors';
+import { startOfDay, addHours } from 'date-fns';
 
 export default { auth, createTimetable };
 
@@ -12,6 +16,7 @@ function initGapi() {
 	return new Promise<void>((resolve) => {
 		const script = document.createElement('script');
 		script.src = 'https://apis.google.com/js/api.js';
+		script.defer = true;
 		script.onload = () => {
 			gapi.load('client', async () => {
 				await gapi.client.init({
@@ -30,6 +35,7 @@ function initGsi() {
 	return new Promise<void>((resolve) => {
 		const script = document.createElement('script');
 		script.src = 'https://accounts.google.com/gsi/client';
+		script.defer = true;
 		script.onload = () => {
 			script.onload = function () {};
 			resolve();
@@ -79,36 +85,19 @@ function auth() {
 	});
 }
 
-async function createTimetable(timetable: MachineTimetable, options: { useRandomColors: boolean }) {
+async function createTimetable(timetable: MachineTimetable, options?: { colorIds?: string[] }) {
 	let { semester, year } = timetable.semester;
 	const { result: calendar } = await gapi.client.calendar.calendars.insert({
 		summary: `HK${year % 100}${semester}`
 	});
 
-	// default to undefined, i.e the same color as calendar color
-	let getColorId: (i: number) => string | undefined = () => undefined;
-
-	if (options.useRandomColors) {
-		// colorId for an event ranges from 1 to 11 (hardcoded as of 27-08-2022, FIXME daddy)
-		const COLOR_COUNT = 11;
-		const colorIds = [...new Array(COLOR_COUNT).keys()].map((i) => `${i + 1}`);
-
-		// shuffle the array
-		for (let i = colorIds.length - 1; i >= 1; i--) {
-			// 0 <= y <= i
-			const j = Math.trunc(Math.random() * (i + 1));
-			// swap
-			let temp = colorIds[i];
-			colorIds[i] = colorIds[j];
-			colorIds[j] = temp;
-		}
-
-		getColorId = (i) => colorIds[i % COLOR_COUNT];
-	}
-
 	let i = 0;
 	for (const event of transformGAPI(timetable)) {
-		const colorId = getColorId(i);
+		let colorId: string | undefined = undefined;
+		if (options?.colorIds !== undefined) {
+			colorId = options.colorIds[i % options.colorIds.length];
+			++i;
+		}
 		await gapi.client.calendar.events.insert({
 			calendarId: calendar.id,
 			resource: { ...event, colorId }

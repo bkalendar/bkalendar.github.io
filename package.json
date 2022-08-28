@@ -12,12 +12,13 @@
 		"format": "prettier --write --plugin-search-dir=. ."
 	},
 	"devDependencies": {
-		"@bkalendar/core": "^0.6.1",
+		"@bkalendar/core": "^0.7",
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
 		"@types/gapi": "^0.0.42",
 		"@types/gapi.calendar": "^3.0.6",
 		"autoprefixer": "^10.4.8",
+		"date-fns": "^2.29.2",
 		"idb": "^7.0.2",
 		"postcss": "^8.4.16",
 		"postcss-load-config": "^4.0.1",

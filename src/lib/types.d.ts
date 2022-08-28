@@ -7,8 +7,5 @@ export interface Database {
 
 export interface Gapi {
 	auth(): Promise<void>;
-	createTimetable(
-		timetable: MachineTimetable,
-		options: { useRandomColors: boolean }
-	): Promise<void>;
+	createTimetable(timetable: MachineTimetable, options?: { colorIds?: string[] }): Promise<void>;
 }
