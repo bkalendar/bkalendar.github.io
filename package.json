@@ -13,6 +13,7 @@
 	},
 	"devDependencies": {
 		"@bkalendar/core": "^0.7",
+		"@fontsource/arimo": "^4.5.9",
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
 		"@types/gapi": "^0.0.42",
@@ -23,7 +24,7 @@
 		"postcss": "^8.4.16",
 		"postcss-load-config": "^4.0.1",
 		"prettier": "^2.7.1",
-		"prettier-plugin-svelte": "^2.7.0",
+		"prettier-plugin-tailwindcss": "^0.1.13",
 		"svelte": "^3.49.0",
 		"svelte-check": "^2.8.1",
 		"svelte-preprocess": "^4.10.7",
