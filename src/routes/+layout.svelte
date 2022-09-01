@@ -4,6 +4,9 @@
 	import '@fontsource/arimo/700.css';
 
 	import toasts from '$lib/toast';
+	import { createTimetableCtx } from '$lib/timetable';
+
+	createTimetableCtx();
 </script>
 
 <main class="relative min-h-screen font-body text-sm text-slate-800">

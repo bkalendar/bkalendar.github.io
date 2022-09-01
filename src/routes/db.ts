@@ -4,7 +4,7 @@
 import type { MachineTimetable } from '@bkalendar/core';
 import { openDB, type DBSchema } from 'idb/with-async-ittr';
 
-export default { add, getPrev };
+export default { add, getPrev, getLatest };
 
 interface Schema extends DBSchema {
 	timetables: {
@@ -33,11 +33,14 @@ async function add(timetable: MachineTimetable) {
 }
 
 async function getPrev({ semester }: MachineTimetable): Promise<MachineTimetable | null> {
-	for await (const { value: timetable } of db
+	const cursor = await db
 		.transaction('timetables', 'readonly')
 		.store.index('by-semester')
-		.iterate([semester.year, semester.semester], 'prev')) {
-		return timetable;
-	}
-	return null;
+		.openCursor([semester.year, semester.semester], 'prev');
+	return cursor?.value ?? null;
+}
+
+async function getLatest(): Promise<MachineTimetable | null> {
+	const cursor = await db.transaction('timetables', 'readonly').store.openCursor(null, 'prev');
+	return cursor?.value ?? null;
 }

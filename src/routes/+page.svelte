@@ -10,10 +10,11 @@
 	} from '@bkalendar/core';
 	import { diff } from '@bkalendar/core';
 	import Semester from './Semester.svelte';
-	import { COLORS, randomColorIds } from './colors';
 	import toasts from '$lib/toast';
 	import { formatRelative } from 'date-fns';
 	import vi from 'date-fns/locale/vi';
+	import { getTimetableCtx } from '$lib/timetable';
+	import { goto } from '$app/navigation';
 
 	export let data: PageData;
 
@@ -29,27 +30,19 @@
 
 	$: current = selected === null ? null : timetables[selected];
 
+	// store in context for subsequent client-side page access
+	const timetableCtx = getTimetableCtx();
+	$: if (current !== null) {
+		timetableCtx.set(current);
+	}
+
 	$: events = selected === null ? [] : transformGAPI(timetables[selected]);
 
 	let random = 1;
-	$: colorIds = random == 0 || current === null ? [] : [...randomColorIds(current.timerows.length)];
 
 	async function addHandler() {
-		data.db.add(current!);
-	}
-
-	async function authHandler() {
-		try {
-			await data.google.auth();
-			await data.google.createTimetable(current!, { colorIds });
-			toasts.push({
-				status: 'ok',
-				message: 'thanh cong',
-				duration: 2000
-			});
-		} catch (e) {
-			console.error(e);
-		}
+		await data.db.add(current!);
+		await goto('/export');
 	}
 
 	const format = (date: Date) => formatRelative(date, new Date(), { locale: vi });
@@ -89,6 +82,7 @@
 		font-bold text-slate-50 enabled:bg-gradient-to-br disabled:cursor-not-allowed disabled:bg-slate-200
 		disabled:text-slate-500"
 			disabled={selected === null}
+			on:click={addHandler}
 		>
 			Okee
 		</button>

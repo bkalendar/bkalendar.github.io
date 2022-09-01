@@ -1,5 +1,9 @@
+export interface Color {
+	background: string;
+}
+
 // last updated: 28-08-2022
-export const COLORS: Map<string, { background: string }> = new Map(
+export const COLORS: Map<string, Color> = new Map(
 	Object.entries({
 		'1': { background: '#7986cb' }, // lavender
 		'2': { background: '#33b679' }, // sage

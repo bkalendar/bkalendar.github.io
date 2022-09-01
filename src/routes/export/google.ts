@@ -1,8 +1,6 @@
 // this module should be lazy-loaded (on browser)
 
 import { transformGAPI, type MachineTimetable } from '@bkalendar/core';
-import { COLORS } from './colors';
-import { startOfDay, addHours } from 'date-fns';
 
 export default { auth, createTimetable };
 
