@@ -5,6 +5,7 @@ specifiers:
   '@fontsource/arimo': ^4.5.9
   '@sveltejs/adapter-auto': next
   '@sveltejs/kit': next
+  '@tailwindcss/line-clamp': ^0.4.0
   '@types/d3-scale': ^4.0.2
   '@types/gapi': ^0.0.42
   '@types/gapi.calendar': ^3.0.6
@@ -27,8 +28,9 @@ specifiers:
 devDependencies:
   '@bkalendar/core': 0.7.0
   '@fontsource/arimo': 4.5.9
-  '@sveltejs/adapter-auto': 1.0.0-next.70
-  '@sveltejs/kit': 1.0.0-next.456_fhgkwirxvgjw2igda6zmhiisma
+  '@sveltejs/adapter-auto': 1.0.0-next.71
+  '@sveltejs/kit': 1.0.0-next.460_fhgkwirxvgjw2igda6zmhiisma
+  '@tailwindcss/line-clamp': 0.4.0_tailwindcss@3.1.8
   '@types/d3-scale': 4.0.2
   '@types/gapi': 0.0.42
   '@types/gapi.calendar': 3.0.6
@@ -147,11 +149,11 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@sveltejs/adapter-auto/1.0.0-next.70:
-    resolution: {integrity: sha512-FJlDO6oUqbuFJjQoguGb4gdBj3iCSM3evFXkBpQ7hvwu3y2gKbcdzsxdn9tZ5LzkHh79CeJcwiszXFQ8usKk/A==}
+  /@sveltejs/adapter-auto/1.0.0-next.71:
+    resolution: {integrity: sha512-Qsl82HcehWJbZztXgmU/nTPDeeIaB4jrOQpSvy3Pi8octs+rEf/CO87Wk06EP+M/zUzEHDNENMOx0DgWuHpj7Q==}
     dependencies:
       '@sveltejs/adapter-cloudflare': 1.0.0-next.32
-      '@sveltejs/adapter-netlify': 1.0.0-next.75
+      '@sveltejs/adapter-netlify': 1.0.0-next.76
       '@sveltejs/adapter-vercel': 1.0.0-next.72
     transitivePeerDependencies:
       - encoding
@@ -166,8 +168,8 @@ packages:
       worktop: 0.8.0-next.14
     dev: true
 
-  /@sveltejs/adapter-netlify/1.0.0-next.75:
-    resolution: {integrity: sha512-1zTR/U/ceEAyqIGJ74v54G+JbIR+fSmTN9qfqGOM0gBwVoBVRUujGm4tDFJQNYzvuGzVnC7br/rhYMLZd2JluQ==}
+  /@sveltejs/adapter-netlify/1.0.0-next.76:
+    resolution: {integrity: sha512-XC33i13N+zkDP1rKrssQ55TPzt4DkLjKux6g1xW2MB+5KxnC9PP2rIkocKxFw/pK2XU8cUIgmOJ1y5PQrHaiKg==}
     dependencies:
       '@iarna/toml': 2.2.5
       esbuild: 0.14.54
@@ -185,8 +187,8 @@ packages:
       - supports-color
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.456_fhgkwirxvgjw2igda6zmhiisma:
-    resolution: {integrity: sha512-yzYoRtRPqVTcIehfxXptZzH5bDN/19cqTrrJ1KM0Ju5BrpRsRvqLYlZBYBaDv0bx1MdfJkUJlPVchLbS6bsRXw==}
+  /@sveltejs/kit/1.0.0-next.460_fhgkwirxvgjw2igda6zmhiisma:
+    resolution: {integrity: sha512-bwDkwzEN72+1K5FXqBQGrYOwyA6V5sSSec/A6qXMTfh4uycFTiIQh/e2ki3pxfG0SwijrUo43FEbdKLyBiuDgQ==}
     engines: {node: '>=16.14'}
     hasBin: true
     requiresBuild: true
@@ -234,6 +236,14 @@ packages:
       vite: 3.1.0-beta.1
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@tailwindcss/line-clamp/0.4.0_tailwindcss@3.1.8:
+    resolution: {integrity: sha512-HQZo6gfx1D0+DU3nWlNLD5iA6Ef4JAXh0LeD8lOGrJwEDBwwJNKQza6WoXhhY1uQrxOuU8ROxV7CqiQV4CoiLw==}
+    peerDependencies:
+      tailwindcss: '>=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1'
+    dependencies:
+      tailwindcss: 3.1.8_postcss@8.4.16
     dev: true
 
   /@types/d3-scale/4.0.2:

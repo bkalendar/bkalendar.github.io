@@ -17,6 +17,7 @@ export const load: import('./$types').PageLoad = async ({ parent }) => {
 	}
 
 	return {
+		title: 'Xuất lịch | BKalendar',
 		latest
 	};
 };

@@ -16,6 +16,7 @@
 		"@fontsource/arimo": "^4.5.9",
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
+		"@tailwindcss/line-clamp": "^0.4.0",
 		"@types/d3-scale": "^4.0.2",
 		"@types/gapi": "^0.0.42",
 		"@types/gapi.calendar": "^3.0.6",
