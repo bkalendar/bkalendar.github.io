@@ -1,6 +1,8 @@
 import { browser } from '$app/environment';
 import type Database from './db';
 
+export const prerender = true;
+
 export const load: import('./$types').LayoutLoad = async () => {
 	// default to no-op functions
 	// human interactions is required to use the functions

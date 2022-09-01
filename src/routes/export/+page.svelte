@@ -75,9 +75,8 @@
 		try {
 			await data.google.auth();
 			creating = true;
-			// const calendar = await data.google.createCalendar(calendarName);
-			// await data.google.addEventsToCalendar(events, calendar.id);
-			await new Promise((resolve) => setTimeout(resolve, 5000));
+			const calendar = await data.google.createCalendar(calendarName);
+			await data.google.addEventsToCalendar(events, calendar.id);
 			toast.push({ message: 'Tạo lịch thành công 👍', status: 'ok', duration: 5000 });
 		} finally {
 			creating = false;
