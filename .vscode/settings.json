@@ -1,0 +1,6 @@
+{
+	"javascript.preferences.importModuleSpecifierEnding": "minimal",
+	"typescript.preferences.importModuleSpecifierEnding": "minimal",
+	"prettier.requireConfig": true,
+	"prettier.useEditorConfig": true
+}

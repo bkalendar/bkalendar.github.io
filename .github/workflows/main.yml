@@ -1,43 +1,43 @@
 name: CI
 
 on:
-    push:
-        branches: [master]
+  push:
+    branches: [master]
 
-    # Allows you to run this workflow manually from the Actions tab
-    workflow_dispatch:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 jobs:
-    publish:
-        runs-on: ubuntu-latest
+  publish:
+    runs-on: ubuntu-latest
 
-        steps:
-            - uses: actions/checkout@v2
+    steps:
+      - uses: actions/checkout@v2
 
-            - name: Cache pnpm modules
-              uses: actions/cache@v2
-              with:
-                  path: ~/.pnpm-store
-                  key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-                  restore-keys: |
-                      ${{ runner.os }}-
+      - name: Cache pnpm modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-
 
-            - name: Install pnpm
-              uses: pnpm/action-setup@v2.0.1
-              with:
-                  version: 6.0.2
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.0.2
 
-            - name: Setup pnpm
-              run: pnpm install
+      - name: Setup pnpm
+        run: pnpm install
 
-            - name: Run tests
-              run: pnpm run test
+      - name: Run tests
+        run: pnpm run test
 
-            - name: Build with adapter static
-              run: pnpm run build
+      - name: Build with adapter static
+        run: pnpm run build
 
-            - name: Deploy 🚀
-              uses: JamesIves/github-pages-deploy-action@4.1.4
-              with:
-                  branch: gh-pages
-                  folder: ./build
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages
+          folder: ./build
