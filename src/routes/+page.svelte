@@ -1,20 +1,13 @@
 <script lang="ts">
-	import DiffEntries from './DiffEntries.svelte';
-
-	import type { PageData } from './$types';
-	import {
-		parseMachine,
-		transformGAPI,
-		transformICal,
-		type MachineTimetable
-	} from '@bkalendar/core';
-	import { diff } from '@bkalendar/core';
-	import Semester from './Semester.svelte';
-	import toasts from '$lib/toast';
-	import { formatRelative } from 'date-fns';
-	import vi from 'date-fns/locale/vi';
-	import { getTimetableCtx } from '$lib/timetable';
 	import { goto } from '$app/navigation';
+	import { diff, parseMachine, type MachineTimetable } from '@bkalendar/core';
+
+	import OkeeButton from '$lib/OkeeButton.svelte';
+	import { getTimetableCtx } from '$lib/timetable';
+	import type { PageData } from './$types';
+
+	import DiffEntries from './DiffEntries.svelte';
+	import Semester from './Semester.svelte';
 
 	export let data: PageData;
 
@@ -36,30 +29,26 @@
 		timetableCtx.set(current);
 	}
 
-	$: events = selected === null ? [] : transformGAPI(timetables[selected]);
-
-	let random = 1;
-
 	async function addHandler() {
 		await data.db.add(current!);
 		await goto('/export');
 	}
-
-	const format = (date: Date) => formatRelative(date, new Date(), { locale: vi });
 </script>
 
 <div class="mx-auto w-full max-w-md px-5 pt-10">
-	<!-- <h1 class="text-5xl font-bold tracking-tighter">
+	<h1 class="text-5xl font-bold tracking-tighter">
 		<span class="bg-gradient-to-br from-sky-500 to-marine-300 bg-clip-text text-transparent">
 			BK</span
 		>alendar
-	</h1> -->
+	</h1>
+
+	<p class="text-right">lịch đẹp cho những người thanh lịch 🌹</p>
 
 	<textarea
 		class="mt-5 h-32 w-full rounded bg-transparent p-2
 			text-xs placeholder-slate-400
 			outline-dashed outline-[1.5px] outline-slate-200 focus:outline-slate-500"
-		placeholder="> Ctrl+A trang stinfo rồi paste vào đây"
+		placeholder="> ctrl+A trang stinfo rồi paste vào đây"
 		bind:value={raw}
 	/>
 
@@ -77,15 +66,7 @@
 				<option value={null} selected disabled>...</option>
 			{/each}
 		</select>
-		<button
-			class="disabled:bg-gradient-none rounded from-sky-500 to-marine-300 px-2 py-1
-		font-bold text-slate-50 enabled:bg-gradient-to-br disabled:cursor-not-allowed disabled:bg-slate-200
-		disabled:text-slate-500"
-			disabled={selected === null}
-			on:click={addHandler}
-		>
-			Okee
-		</button>
+		<OkeeButton disabled={selected === null} on:click={addHandler} />
 	</div>
 	<div class="mt-6">
 		{#if selected !== null}
@@ -114,33 +95,3 @@
 		{/if}
 	</div>
 </div>
-<!--
-
-					<button class="disabled:cursor-not-allowed" disabled={selected === null} on:click={addHandler}>
-						Add
-					</button>
-
-					{#if selected !== null}
-					<a
-					href="data:text/calendar,{encodeURIComponent(transformICal(timetables[selected]))}"
-					download="bkalendar"
-					>
-		Tải về
-	</a>
-{/if}
-
-<button on:click={authHandler} disabled={selected === null}>Auth</button>
-
-{#if selected !== null}
-	<div>
-		{#each events as event, i}
-			{@const colorId = colorIds[i]}
-			{@const { background } = COLORS.get(colorId) ?? { background: '#000' }}
-			<div class="rounded p-2" style:background-color={background}>
-				<p>color: {colorId}</p>
-				<p>{event.summary}</p>
-			</div>
-		{/each}
-	</div>
-	<button on:click={() => ++random}>randomize</button>
-{/if} -->

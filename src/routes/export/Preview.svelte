@@ -33,12 +33,12 @@
 
 	const col = (weekday: number) => weekday - 1;
 	const row = (hour: number) => hour - 5;
-	const color = (event: EventInput) => COLORS.get(event.colorId ?? '7')!.background;
+	const color = (event: EventInput) => COLORS.get(event.colorId ?? '8')!.background;
 </script>
 
 {#if events.length != 0}
-	<h2 class="mt-10 text-xl font-bold tracking-tighter text-marine-500">Xem trước</h2>
-	<p class="text-slate-700">Cái lịch sẽ nhìn giống giống thế này:</p>
+	<h2 class="mt-8 text-xl font-bold tracking-tighter text-slate-800">😎 xem trước</h2>
+	<p class="mt-2 text-base">cái lịch sẽ nhìn giống giống thế này:</p>
 	<div
 		class="mt-3 grid gap-x-1"
 		style:grid-template-columns="repeat({columns}, minmax(0, 1fr))"
@@ -56,7 +56,7 @@
 			{@const weekday = getWeekday(event)}
 			{@const { start, end } = getHours(event)}
 			<div
-				class="my-0.5 rounded py-0.5 px-1 text-xs text-slate-50 shadow-md"
+				class="my-0.5 rounded py-0.5 px-1 text-xs italic text-slate-50 shadow-md"
 				style:background-color={color(event)}
 				style:grid-column="{col(weekday)} / span 1"
 				style:grid-row="{row(start)} / {row(end)}"

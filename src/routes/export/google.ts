@@ -1,8 +1,9 @@
 // this module should be lazy-loaded (on browser)
 
+import type { EventInput } from '$lib/types';
 import { transformGAPI, type MachineTimetable } from '@bkalendar/core';
 
-export default { auth, createTimetable };
+export default { auth, createCalendar, addEventsToCalendar };
 
 const API_KEY: string = 'AIzaSyBB2fk24uJrAXx_Q7DVPD0XdzUZ6xaFbRI';
 const CLIENT_ID: string =
@@ -83,22 +84,18 @@ function auth() {
 	});
 }
 
-async function createTimetable(timetable: MachineTimetable, options?: { colorIds?: string[] }) {
-	let { semester, year } = timetable.semester;
+async function createCalendar(summary: string) {
 	const { result: calendar } = await gapi.client.calendar.calendars.insert({
-		summary: `HK${year % 100}${semester}`
+		summary
 	});
+	return calendar;
+}
 
-	let i = 0;
-	for (const event of transformGAPI(timetable)) {
-		let colorId: string | undefined = undefined;
-		if (options?.colorIds !== undefined) {
-			colorId = options.colorIds[i % options.colorIds.length];
-			++i;
-		}
+async function addEventsToCalendar(events: EventInput[], calendarId: string) {
+	for (const event of events) {
 		await gapi.client.calendar.events.insert({
-			calendarId: calendar.id,
-			resource: { ...event, colorId }
+			calendarId,
+			resource: event
 		});
 	}
 }

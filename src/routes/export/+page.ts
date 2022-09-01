@@ -1,14 +1,16 @@
 import { browser } from '$app/environment';
-import type { Gapi } from '$lib/types';
 import type { MachineTimetable } from '@bkalendar/core';
-import { redirect } from '@sveltejs/kit';
+import type Gapi from './google';
 
 export const load: import('./$types').PageLoad = async ({ parent }) => {
 	const { db } = await parent();
 	let latest: MachineTimetable | null = null;
-	let google: Gapi = {
+	let google: typeof Gapi = {
 		auth: async () => {},
-		createTimetable: async () => {}
+		addEventsToCalendar: async () => {},
+		createCalendar: async () => {
+			throw '';
+		}
 	};
 
 	if (browser) {
@@ -18,6 +20,7 @@ export const load: import('./$types').PageLoad = async ({ parent }) => {
 
 	return {
 		title: 'Xuất lịch | BKalendar',
-		latest
+		latest,
+		google
 	};
 };

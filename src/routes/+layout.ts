@@ -1,11 +1,11 @@
 import { browser } from '$app/environment';
-import type { Database } from '$lib/types';
+import type Database from './db';
 
 export const load: import('./$types').LayoutLoad = async () => {
 	// default to no-op functions
 	// human interactions is required to use the functions
 	// so it's ok
-	let db: Database = {
+	let db: typeof Database = {
 		add: async () => {},
 		getPrev: async () => null,
 		getLatest: async () => null
