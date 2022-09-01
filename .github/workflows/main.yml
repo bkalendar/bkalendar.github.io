@@ -30,9 +30,6 @@ jobs:
       - name: Setup pnpm
         run: pnpm install
 
-      - name: Run tests
-        run: pnpm run test
-
       - name: Build with adapter static
         run: pnpm run build
 
