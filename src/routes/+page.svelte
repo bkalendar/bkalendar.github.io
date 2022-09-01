@@ -42,7 +42,7 @@
 		>alendar
 	</h1>
 
-	<p class="text-right">vì bạn xứng đáng có lịch đẹp 🌹</p>
+	<p class="text-right">vì bạn xứng đáng có một bộ lịch đẹp 🌹</p>
 
 	<textarea
 		class="mt-5 h-32 w-full rounded bg-transparent p-2
