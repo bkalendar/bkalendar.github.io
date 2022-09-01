@@ -42,7 +42,7 @@
 		>alendar
 	</h1>
 
-	<p class="text-right">lịch đẹp cho những người thanh lịch 🌹</p>
+	<p class="text-right">lịch đẹp cho những người lịch lãm 🌹</p>
 
 	<textarea
 		class="mt-5 h-32 w-full rounded bg-transparent p-2

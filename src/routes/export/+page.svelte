@@ -139,7 +139,7 @@
 
 <Preview {events} />
 
-<div class="mt-5 flex justify-center space-x-3">
+<div class="mt-10 mb-5 flex justify-center space-x-3">
 	{#if colorMode === 'random'}
 		<button
 			class="group  rounded border-[1.5px] border-slate-200 px-2 py-1 font-bold text-slate-400"
