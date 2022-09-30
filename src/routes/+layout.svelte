@@ -17,12 +17,12 @@
 </svelte:head>
 
 <main
-	class="relative mx-auto min-h-screen max-w-sm px-2 py-10 font-body text-sm text-slate-800 accent-sky-500"
+	class="relative mx-auto min-h-screen max-w-sm px-2 pt-6 pb-10 font-body text-sm text-slate-800 accent-sky-500"
 >
 	<slot />
 
 	<footer class="absolute inset-x-0 bottom-2 flex justify-center text-slate-400">
-		<p>
+		<p class="font-mono">
 			<a
 				href="https://github.com/bkalendar/bkalendar.github.io"
 				target="_blank"

@@ -47,7 +47,7 @@
 		{#each [...new Array(rows).keys()] as row}
 			<div
 				class="-mx-2
-				{row % 2 == 1 ? 'bg-transparent' : 'bg-slate-100 border-b-[1.5px] border-dotted border-slate-200'}"
+				{row % 2 == 1 ? 'bg-transparent' : 'border-b-[1.5px] border-dotted border-slate-200 bg-slate-100'}"
 				style:grid-row="{row + 1} / span 1"
 				style:grid-column="1 / span {columns}"
 			/>

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import Key from '$lib/Key.svelte';
+
 	import { goto } from '$app/navigation';
 	import { diff, parseMachine, type MachineTimetable } from '@bkalendar/core';
 
@@ -41,7 +43,6 @@
 			BK</span
 		>alendar
 	</h1>
-
 	<p class="text-right">vì bạn xứng đáng có một bộ lịch đẹp 🌹</p>
 
 	<textarea
@@ -51,6 +52,38 @@
 		placeholder="> ctrl+A trang stinfo rồi paste vào đây"
 		bind:value={raw}
 	/>
+
+	<details open={selected === null}>
+		<summary class="my-2 rounded bg-slate-50 py-1 px-2 font-bold text-slate-600"
+			>📙 hướng dẫn chi tiết</summary
+		>
+
+		<ol class="list-inside list-decimal space-y-2">
+			<li>
+				vào <a
+					href="https://mybk.hcmut.edu.vn/stinfo/"
+					target="_blank"
+					class="font-mono text-sky-500 underline">mybk/stinfo</a
+				>;
+			</li>
+			<li>
+				bấm vào ô <span class="text-sky-500"
+					>thời khóa biểu <img
+						src="https://mybk.hcmut.edu.vn/stinfo/public/uploads/avatars/1477389315-calendar-1.png"
+						alt="thời khóa biểu"
+						class="inline h-5 w-5"
+					/></span
+				>;
+			</li>
+			<li>
+				nhấn <Key>Ctrl/⌘</Key>
+				<Key>A</Key> rồi <Key>Ctrl/⌘</Key>
+				<Key>C</Key> để copy thời khóa biểu (yes, <em>toàn bộ</em> trang luôn);
+			</li>
+			<li><Key>Ctrl/⌘</Key> <Key>V</Key> vào khung bên trên.</li>
+			<li>đến lúc <em>Okee</em> rồi</li>
+		</ol>
+	</details>
 
 	<div class="mt-2 flex justify-end space-x-2">
 		<select

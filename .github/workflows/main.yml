@@ -15,7 +15,7 @@ permissions:
 
 # Allow one concurrent deployment
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: true
 
 jobs:
@@ -46,19 +46,19 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v2
-        
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           path: 'build'
-          
+
   deploy:
-      environment:
-        name: github-pages
-        url: ${{ steps.deployment.outputs.page_url }}
-      runs-on: ubuntu-latest
-      needs: build
-      steps:
-        - name: Deploy to GitHub Pages
-          id: deployment
-          uses: actions/deploy-pages@v1
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1

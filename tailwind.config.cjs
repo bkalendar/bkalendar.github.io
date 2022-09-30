@@ -7,7 +7,8 @@ const config = {
 	theme: {
 		fontFamily: {
 			body: ['Arimo', 'sans-serif'],
-			display: ['Maitree', 'serif']
+			display: ['Maitree', 'serif'],
+			mono: ['monospace']
 		},
 		colors: {
 			marine: {
