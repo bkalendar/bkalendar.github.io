@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { EventInput } from '$lib/types';
 	import { getDay, startOfDay } from 'date-fns';
-	import { COLORS } from './colors';
+	import { COLORS } from '../lib/colors';
 
 	export let events: EventInput[];
 
@@ -36,35 +36,31 @@
 	const color = (event: EventInput) => COLORS.get(event.colorId ?? '8')!.background;
 </script>
 
-{#if events.length != 0}
-	<h2 class="mt-8 text-xl font-bold tracking-tighter text-slate-800">😎 xem trước</h2>
-	<p class="mt-2 text-base">cái lịch sẽ nhìn giống giống thế này:</p>
-	<div
-		class="mt-3 grid gap-x-1"
-		style:grid-template-columns="repeat({columns}, minmax(0, 1fr))"
-		style:grid-template-rows="repeat({rows}, minmax(0, 1fr))"
-	>
-		{#each [...new Array(rows).keys()] as row}
-			<div
-				class="-mx-2
-				{row % 2 == 1 ? 'bg-transparent' : 'border-b-[1.5px] border-dotted border-slate-200 bg-slate-100'}"
-				style:grid-row="{row + 1} / span 1"
-				style:grid-column="1 / span {columns}"
-			/>
-		{/each}
-		{#each events as event}
-			{@const weekday = getWeekday(event)}
-			{@const { start, end } = getHours(event)}
-			<div
-				class="my-0.5 rounded px-1 py-0.5 text-xs italic text-slate-50 shadow-md"
-				style:background-color={color(event)}
-				style:grid-column="{col(weekday)} / span 1"
-				style:grid-row="{row(start)} / {row(end)}"
-			>
-				<p class="line-clamp-3">
-					{event.summary}
-				</p>
-			</div>
-		{/each}
-	</div>
-{/if}
+<div
+	class="mt-3 grid gap-x-1"
+	style:grid-template-columns="repeat({columns}, minmax(0, 1fr))"
+	style:grid-template-rows="repeat({rows}, minmax(0, 1fr))"
+>
+	{#each [...new Array(rows).keys()] as row}
+		<div
+			class="-mx-2
+			{row % 2 == 1 ? 'bg-transparent' : 'border-b-[1.5px] border-dotted border-slate-200 bg-slate-100'}"
+			style:grid-row="{row + 1} / span 1"
+			style:grid-column="1 / span {columns}"
+		/>
+	{/each}
+	{#each events as event}
+		{@const weekday = getWeekday(event)}
+		{@const { start, end } = getHours(event)}
+		<div
+			class="my-0.5 rounded px-1 py-0.5 text-xs italic text-slate-50 shadow-md"
+			style:background-color={color(event)}
+			style:grid-column="{col(weekday)} / span 1"
+			style:grid-row="{row(start)} / {row(end)}"
+		>
+			<p class="line-clamp-3">
+				{event.summary}
+			</p>
+		</div>
+	{/each}
+</div>
