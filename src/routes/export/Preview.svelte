@@ -56,7 +56,7 @@
 			{@const weekday = getWeekday(event)}
 			{@const { start, end } = getHours(event)}
 			<div
-				class="my-0.5 rounded py-0.5 px-1 text-xs italic text-slate-50 shadow-md"
+				class="my-0.5 rounded px-1 py-0.5 text-xs italic text-slate-50 shadow-md"
 				style:background-color={color(event)}
 				style:grid-column="{col(weekday)} / span 1"
 				style:grid-row="{row(start)} / {row(end)}"

@@ -54,7 +54,7 @@
 	/>
 
 	<details open={selected === null}>
-		<summary class="my-2 rounded bg-slate-50 py-1 px-2 font-bold text-slate-600"
+		<summary class="my-2 rounded bg-slate-50 px-2 py-1 font-bold text-slate-600"
 			>📙 hướng dẫn chi tiết</summary
 		>
 
@@ -106,7 +106,7 @@
 			{@const current = timetables[selected]}
 			{#await data.db.getPrev(current) then prev}
 				{#if !prev}
-					<p class="text-center px-4 text-slate-300 ">
+					<p class="px-4 text-center text-slate-300">
 						Bấm ok để lưu lại thời khóa biểu. Lần sau mình sẽ so sánh xem thời khóa biểu có thay đổi
 						không.
 					</p>

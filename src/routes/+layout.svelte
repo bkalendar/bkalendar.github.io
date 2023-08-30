@@ -17,7 +17,7 @@
 </svelte:head>
 
 <main
-	class="relative mx-auto min-h-screen max-w-sm px-2 pt-6 pb-10 font-body text-sm text-slate-800 accent-sky-500"
+	class="relative mx-auto min-h-screen max-w-sm px-2 pb-10 pt-6 font-body text-sm text-slate-800 accent-sky-500"
 >
 	<slot />
 
