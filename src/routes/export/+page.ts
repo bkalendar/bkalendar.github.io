@@ -1,10 +1,10 @@
 import { browser } from '$app/environment';
-import type { MachineTimetable } from '@bkalendar/core';
+import type { Timetable } from '@bkalendar/core';
 import type Gapi from './google';
 
 export const load: import('./$types').PageLoad = async ({ parent }) => {
 	const { db } = await parent();
-	let latest: MachineTimetable | null = null;
+	let latest: Required<Timetable> | null = null;
 	let google: typeof Gapi = {
 		auth: async () => {},
 		addEventsToCalendar: async () => {},

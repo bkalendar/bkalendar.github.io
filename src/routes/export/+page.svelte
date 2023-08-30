@@ -2,7 +2,7 @@
 	import type { PageData } from './$types';
 
 	import { getTimetableCtx } from '$lib/timetable';
-	import { transformGAPI } from '@bkalendar/core';
+	import { formatGapi, type Timetable } from '@bkalendar/core';
 	import { randomColorIds } from './colors';
 	import type { EventInput } from '$lib/types';
 	import Preview from './Preview.svelte';
@@ -27,24 +27,24 @@
 	async function getEvents() {
 		console.log(lang);
 		if (lang === '') {
-			events = transformGAPI($timetableCtx!);
+			events = formatGapi($timetableCtx!);
 			return;
 		}
-		let copy = structuredClone($timetableCtx!);
-		for (const { info } of copy.timerows) {
+		let copy: Required<Timetable> = structuredClone($timetableCtx!);
+		for (const timerow of copy.rows) {
 			const res = await fetch(
-				`https://raw.githubusercontent.com/bkalendar/courses/master/courses/${info.course}.json`
+				`https://raw.githubusercontent.com/bkalendar/courses/master/courses/${timerow.extras['mã môn học']}.json`
 			);
 			if (!res.ok) continue;
 			const { monhoc, course } = await res.json();
 			console.log(monhoc, course);
 			if (lang === 'en') {
-				info.name = course;
+				timerow.name = course;
 			} else if (lang === 'vi') {
-				info.name = monhoc;
+				timerow.name = monhoc;
 			}
 		}
-		events = transformGAPI(copy);
+		events = formatGapi(copy);
 	}
 
 	let colorMode: 'random' | 'mono' = 'random';
@@ -66,8 +66,7 @@
 
 	let calendarName = '';
 	$: if ($timetableCtx) {
-		const { semester, year } = $timetableCtx.semester;
-		calendarName = `HK${year % 100}${semester}`;
+		calendarName = `HK${$timetableCtx.semester}`;
 	}
 
 	let creating = false;

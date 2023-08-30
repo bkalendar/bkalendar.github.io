@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { MachineTimerow } from '@bkalendar/core/dist/transformer/machine';
+	import type { Timerow } from '@bkalendar/core';
 	import { formatRelative } from 'date-fns';
 	import { vi } from 'date-fns/locale';
 
-	export let entries: [Date, MachineTimerow][];
+	export let entries: [Date, Timerow][];
 	export let type: 'added' | 'removed';
 
 	const format = (date: Date) => formatRelative(date, new Date(), { locale: vi });
@@ -32,10 +32,10 @@
 	{#each entries as [date, timerow]}
 		<li>
 			<span class="font-bold tracking-tight text-marine-500 marker:text-marine-500"
-				>{format(date)} @ {timerow.location.room}</span
+				>{format(date)} @ {timerow.location}</span
 			>
 			<br />
-			{timerow.info.course} - {timerow.info.name}
+			{timerow.name}
 		</li>
 	{/each}
 </ul>

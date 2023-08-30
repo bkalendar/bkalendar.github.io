@@ -6,8 +6,8 @@ settings:
 
 devDependencies:
   '@bkalendar/core':
-    specifier: ^0.7.1
-    version: 0.7.1
+    specifier: ../core/npm
+    version: link:../core/npm
   '@fontsource/arimo':
     specifier: ^5.0.9
     version: 5.0.9
@@ -89,15 +89,6 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.14.0
-    dev: true
-
-  /@bkalendar/core@0.7.1:
-    resolution: {integrity: sha512-zD/yB5dLMJDNQqKfxZ5M1Pi27DqqjyN42u/OvTSBD08PkiacC4e/1ELIpW9mmoXcf14DPDLAUfIfG0hL4siW1g==}
-    dependencies:
-      '@types/gapi.calendar': 3.0.6
-      date-fns: 2.30.0
-      nanoid: 4.0.2
-      zod: 3.22.2
     dev: true
 
   /@esbuild/android-arm64@0.18.20:
@@ -980,12 +971,6 @@ packages:
     hasBin: true
     dev: true
 
-  /nanoid@4.0.2:
-    resolution: {integrity: sha512-7ZtY5KTCNheRGfEFxnedV5zFiORN1+Y1N6zvPTnHQd8ENUvfaDBeuJDZb2bN/oXwXxu3qkTXDzy57W5vAmDTBw==}
-    engines: {node: ^14 || ^16 || >=18}
-    hasBin: true
-    dev: true
-
   /node-releases@2.0.13:
     resolution: {integrity: sha512-uYr7J37ae/ORWdZeQ1xxMJe3NtdmqMC/JZK+geofDrkLUApKRHPd18/TxtBOJ4A0/+uUIliorNrfYV6s1b02eQ==}
     dev: true
@@ -1593,8 +1578,4 @@ packages:
   /yaml@2.3.2:
     resolution: {integrity: sha512-N/lyzTPaJasoDmfV7YTrYCI0G/3ivm/9wdG0aHuheKowWQwGTsK0Eoiw6utmzAnI6pkJa0DUVygvp3spqqEKXg==}
     engines: {node: '>= 14'}
-    dev: true
-
-  /zod@3.22.2:
-    resolution: {integrity: sha512-wvWkphh5WQsJbVk1tbx1l1Ly4yg+XecD+Mq280uBGt9wa5BKSWf4Mhp6GmrkPixhMxmabYY7RbzlwVP32pbGCg==}
     dev: true

@@ -1,7 +1,6 @@
 // this module should be lazy-loaded (on browser)
 
 import type { EventInput } from '$lib/types';
-import { transformGAPI, type MachineTimetable } from '@bkalendar/core';
 
 export default { auth, createCalendar, addEventsToCalendar };
 
