@@ -6,8 +6,8 @@ settings:
 
 devDependencies:
   '@bkalendar/core':
-    specifier: ../core/npm
-    version: link:../core/npm
+    specifier: ^23.0.0
+    version: 23.0.0
   '@fontsource/arimo':
     specifier: ^5.0.9
     version: 5.0.9
@@ -89,6 +89,10 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.14.0
+    dev: true
+
+  /@bkalendar/core@23.0.0:
+    resolution: {integrity: sha512-k4A+ZMzPmqPQI6odAZKgspMElcRnqb/rr56sOniS4n89ogywLW2iKTfT3fgPmC3J/JPbwpw9X7QzKtSiLJwsrw==}
     dev: true
 
   /@esbuild/android-arm64@0.18.20:
