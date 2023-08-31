@@ -1,7 +1,5 @@
 // this module should be lazy-loaded (on browser)
 
-import type { EventInput } from '$lib/types';
-
 export default { auth, createCalendar, addEventsToCalendar };
 
 const API_KEY: string = 'AIzaSyBB2fk24uJrAXx_Q7DVPD0XdzUZ6xaFbRI';
@@ -90,7 +88,7 @@ async function createCalendar(summary: string) {
 	return calendar;
 }
 
-async function addEventsToCalendar(events: EventInput[], calendarId: string) {
+async function addEventsToCalendar(events: gapi.client.calendar.EventInput[], calendarId: string) {
 	for (const event of events) {
 		await gapi.client.calendar.events.insert({
 			calendarId,

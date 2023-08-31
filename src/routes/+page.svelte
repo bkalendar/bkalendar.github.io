@@ -8,6 +8,7 @@
 	import GapiOutputSection from './GapiOutputSection.svelte';
 	import IcalOutputSection from './IcalOutputSection.svelte';
 	import { fly } from 'svelte/transition';
+	import Key from '$lib/Key.svelte';
 
 	let raw: string;
 	let kind: 'sinh viên' | 'giảng viên' = 'sinh viên';
@@ -49,6 +50,12 @@
 <div class="h-4" />
 {#if !timetable}
 	<div out:fly={{ delay: 500, duration: 500, x: -100 }}>
+		<p>
+			hãy <Key>Ctrl</Key>
+			<Key>A</Key> rồi <Key>Ctrl</Key>
+			<Key>V</Key> thời khóa biểu của bạn vào bên dưới, mình sẽ tự trích lịch của bạn ra 🎩
+		</p>
+		<div class="h-4" />
 		<PasteArea bind:raw />
 		<div class="h-4" />
 		<KindSelect bind:kind />

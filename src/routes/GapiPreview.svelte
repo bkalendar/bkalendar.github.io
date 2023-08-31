@@ -1,11 +1,10 @@
 <script lang="ts">
-	import type { EventInput } from '$lib/types';
 	import { getDay, startOfDay } from 'date-fns';
 	import { COLORS } from '../lib/colors';
 
-	export let events: EventInput[];
+	export let events: gapi.client.calendar.EventInput[];
 
-	const getWeekday = (event: EventInput) => {
+	const getWeekday = (event: gapi.client.calendar.EventInput) => {
 		// FIXME: take event.start.timezone into account
 		// this:    0 -> 6, Sun -> Sar
 		let weekday: number = getDay(new Date(event.start.dateTime!));
@@ -14,7 +13,7 @@
 		return weekday;
 	};
 
-	const getHours = (event: EventInput) => {
+	const getHours = (event: gapi.client.calendar.EventInput) => {
 		// hours elapsed from start of day
 		const elapsed = (date: Date) => {
 			return (+date - +startOfDay(date)) / 1000 / 60 / 60;
@@ -33,7 +32,8 @@
 
 	const col = (weekday: number) => weekday - 1;
 	const row = (hour: number) => hour - 5;
-	const color = (event: EventInput) => COLORS.get(event.colorId ?? '8')!.background;
+	const color = (event: gapi.client.calendar.EventInput) =>
+		COLORS.get(event.colorId ?? '8')!.background;
 </script>
 
 <div

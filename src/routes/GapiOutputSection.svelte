@@ -55,9 +55,11 @@
 <GapiPreview {events} />
 <div class="h-4" />
 <div class="flex justify-center">
-	{#if mode == "random"}
-	<OkeeButton disabled={ready} variant="slate" on:click={() => seed++}>🎲 màu khác ik</OkeeButton>
-	<div class="w-4" />
+	{#if mode == 'random'}
+		<OkeeButton disabled={ready} variant="slate" on:click={() => seed++}>🎲 màu khác ik</OkeeButton>
+		<div class="w-4" />
 	{/if}
-	<OkeeButton disabled={ready} variant="navy" on:click={callGapi}>👌 okee</OkeeButton>
+	<OkeeButton disabled={ready} variant="navy" on:click={callGapi}>
+		{!ready ? '👌 okee' : '🏃‍♂️ đang thêm...'}
+	</OkeeButton>
 </div>
