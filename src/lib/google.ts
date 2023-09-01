@@ -6,37 +6,14 @@ const API_KEY: string = 'AIzaSyBB2fk24uJrAXx_Q7DVPD0XdzUZ6xaFbRI';
 const CLIENT_ID: string =
 	'1003739652458-kgklao4co5lrtffceqeq8ng2m7m1pde6.apps.googleusercontent.com';
 
-await Promise.all([initGapi(), initGsi()]);
+await initGapi();
 
-function initGapi() {
-	return new Promise<void>((resolve) => {
-		const script = document.createElement('script');
-		script.src = 'https://apis.google.com/js/api.js';
-		script.defer = true;
-		script.onload = () => {
-			gapi.load('client', async () => {
-				await gapi.client.init({
-					apiKey: API_KEY,
-					discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest']
-				});
-				script.onload = function () {};
-				resolve();
-			});
-		};
-		document.head.appendChild(script);
-	});
-}
-
-function initGsi() {
-	return new Promise<void>((resolve) => {
-		const script = document.createElement('script');
-		script.src = 'https://accounts.google.com/gsi/client';
-		script.defer = true;
-		script.onload = () => {
-			script.onload = function () {};
-			resolve();
-		};
-		document.head.appendChild(script);
+async function initGapi() {
+	gapi.load('client', async () => {
+		await gapi.client.init({
+			apiKey: API_KEY,
+			discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest']
+		});
 	});
 }
 
