@@ -29,9 +29,6 @@ devDependencies:
   date-fns:
     specifier: ^2.30.0
     version: 2.30.0
-  idb:
-    specifier: ^7.1.1
-    version: 7.1.1
   postcss:
     specifier: ^8.4.29
     version: 8.4.29
@@ -804,10 +801,6 @@ packages:
     engines: {node: '>= 0.4.0'}
     dependencies:
       function-bind: 1.1.1
-    dev: true
-
-  /idb@7.1.1:
-    resolution: {integrity: sha512-gchesWBzyvGHRO9W8tzUWFDycow5gwjvFKfyV9FF32Y7F50yZMp7mP+T2mJIWFx49zicqyC4uefHM17o6xKIVQ==}
     dev: true
 
   /import-fresh@3.3.0:

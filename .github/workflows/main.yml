@@ -12,6 +12,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  packages: read
 
 # Allow one concurrent deployment
 concurrency:
@@ -37,6 +38,9 @@ jobs:
         uses: pnpm/action-setup@v2.2.2
         with:
           version: latest
+
+      - name: Authenticate GitHub Packages
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
 
       - name: Setup pnpm
         run: pnpm install

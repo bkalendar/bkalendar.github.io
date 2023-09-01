@@ -20,7 +20,6 @@
 		"@types/gapi.calendar": "^3.0.6",
 		"autoprefixer": "^10.4.15",
 		"date-fns": "^2.30.0",
-		"idb": "^7.1.1",
 		"postcss": "^8.4.29",
 		"postcss-load-config": "^4.0.1",
 		"prettier": "^3.0.3",
