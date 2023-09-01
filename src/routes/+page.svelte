@@ -2,7 +2,7 @@
 	import BKalendar from './BKalendar.svelte';
 	import PasteArea from './PasteArea.svelte';
 	import KindSelect from './KindSelect.svelte';
-	import { parseLecturer, parseStudent, resolve } from '@bkalendar/core';
+	import { parseLecturer, parsePostgrad, parseStudent, resolve } from '@bkalendar/core';
 	import ErrorReport from './ErrorReport.svelte';
 	import OutputSelect from './OutputSelect.svelte';
 	import GapiOutputSection from './GapiOutputSection.svelte';
@@ -11,7 +11,7 @@
 	import Key from '$lib/Key.svelte';
 
 	let raw: string;
-	let kind: 'sinh viên' | 'giảng viên' = 'sinh viên';
+	let kind: 'sinh viên' | 'giảng viên' | 'sau đại học' = 'sinh viên';
 	let output: 'ical' | 'gapi' = 'gapi';
 
 	let error: unknown;
@@ -27,6 +27,9 @@
 				break;
 			case 'giảng viên':
 				parse = parseLecturer;
+				break;
+			case 'sau đại học':
+				parse = parsePostgrad;
 				break;
 		}
 		try {

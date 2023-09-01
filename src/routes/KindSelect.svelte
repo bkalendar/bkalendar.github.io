@@ -1,7 +1,7 @@
 <script lang="ts">
 	import H2 from '$lib/H2.svelte';
 
-	export let kind: 'sinh viên' | 'giảng viên';
+	export let kind: 'sinh viên' | 'giảng viên' | 'sau đại học';
 </script>
 
 <label>
@@ -12,5 +12,6 @@
 	>
 		<option value="sinh viên">sinh viên (mybk.hcmut.edu.vn)</option>
 		<option value="giảng viên">giảng viên (tkb.hcmut.edu.vn)</option>
+		<option value="sau đại học">sau đại học (grad.hcmut.edu.vn)</option>
 	</select>
 </label>
