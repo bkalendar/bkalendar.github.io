@@ -6,8 +6,8 @@ settings:
 
 devDependencies:
   '@bkalendar/core':
-    specifier: ^23.0.0
-    version: 23.0.0
+    specifier: ^23.1.0
+    version: 23.1.0
   '@fontsource/arimo':
     specifier: ^5.0.9
     version: 5.0.9
@@ -91,8 +91,8 @@ packages:
       regenerator-runtime: 0.14.0
     dev: true
 
-  /@bkalendar/core@23.0.0:
-    resolution: {integrity: sha512-k4A+ZMzPmqPQI6odAZKgspMElcRnqb/rr56sOniS4n89ogywLW2iKTfT3fgPmC3J/JPbwpw9X7QzKtSiLJwsrw==}
+  /@bkalendar/core@23.1.0:
+    resolution: {integrity: sha512-NIOAGPOfoh6LBvHpAaZV/XVukyXsj2UfRAa809QHl9ktY7nApOunMYDiohnZrIz9gJ2YJ8Um8KfYuwafkiL/wg==, tarball: https://npm.pkg.github.com/download/@bkalendar/core/23.1.0/196fa8cdb4d247a2fcee70e0328acb505b85e072}
     dev: true
 
   /@esbuild/android-arm64@0.18.20:
