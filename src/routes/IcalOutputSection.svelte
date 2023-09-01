@@ -4,12 +4,13 @@
 	import { formatIcal, type Timetable } from '@bkalendar/core';
 
 	export let timetable: Required<Timetable>;
+	export let name: string;
 
 	function download() {
 		const data = `data:text/calendar,${encodeURIComponent(formatIcal(timetable))}`;
 		const a = document.createElement('a');
 		a.href = data;
-		a.download = `HK${timetable.semester}`;
+		a.download = name;
 		a.click();
 		a.remove();
 	}

@@ -2,13 +2,20 @@
 	import BKalendar from './BKalendar.svelte';
 	import PasteArea from './PasteArea.svelte';
 	import KindSelect from './KindSelect.svelte';
-	import { parseLecturer, parsePostgrad, parseStudent, resolve } from '@bkalendar/core';
+	import {
+		parseLecturer,
+		parsePostgrad,
+		parseStudent,
+		resolve,
+		type Timetable
+	} from '@bkalendar/core';
 	import ErrorReport from './ErrorReport.svelte';
 	import OutputSelect from './OutputSelect.svelte';
 	import GapiOutputSection from './GapiOutputSection.svelte';
 	import IcalOutputSection from './IcalOutputSection.svelte';
 	import { fly } from 'svelte/transition';
 	import Key from '$lib/Key.svelte';
+	import NameInput from './NameInput.svelte';
 
 	let raw: string;
 	let kind: 'sinh viên' | 'giảng viên' | 'sau đại học' = 'sinh viên';
@@ -16,6 +23,9 @@
 
 	let error: unknown;
 	$: timetable = process(raw, kind);
+
+	let name: string;
+	$: if (timetable) name = calendarName(kind, timetable);
 
 	function process(r: typeof raw, k: typeof kind) {
 		if (!raw) return null;
@@ -40,6 +50,17 @@
 		} catch (e) {
 			error = e;
 			return null;
+		}
+	}
+
+	function calendarName(k: typeof kind, timetable: Required<Timetable>) {
+		switch (k) {
+			case 'sinh viên':
+				return `SV${timetable.semester}`;
+			case 'giảng viên':
+				return `GV${timetable.semester}`;
+			case 'sau đại học':
+				return `SDH${timetable.semester}`;
 		}
 	}
 </script>
@@ -69,13 +90,15 @@
 	</div>
 {:else}
 	<div in:fly={{ delay: 1000, x: 100 }}>
+		<NameInput bind:name />
+		<div class="h-4" />
 		<OutputSelect bind:output />
 		<div class="h-4" />
 		{#if timetable}
 			{#if output == 'gapi'}
-				<GapiOutputSection {timetable} />
+				<GapiOutputSection {name} {timetable} />
 			{:else}
-				<IcalOutputSection {timetable} />
+				<IcalOutputSection {name} {timetable} />
 			{/if}
 		{/if}
 	</div>

@@ -5,9 +5,9 @@
 	import RadioButton from '$lib/RadioButton.svelte';
 	import { randomColorIds } from '$lib/colors';
 	import OkeeButton from '$lib/OkeeButton.svelte';
-	import { page } from '$app/stores';
 
 	export let timetable: Required<Timetable>;
+	export let name: string;
 	let mode: 'mono' | 'random' = 'random';
 	let seed: number = 0;
 	let ready = false;
@@ -30,7 +30,7 @@
 		const { default: gapi } = await import('$lib/google');
 		try {
 			await gapi.auth();
-			const calendar = await gapi.createCalendar(`HK${timetable.semester}`);
+			const calendar = await gapi.createCalendar(name);
 			await gapi.addEventsToCalendar(events, calendar.id);
 			alert('Đã thêm lịch thành công');
 		} catch (e) {
