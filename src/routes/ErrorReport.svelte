@@ -9,6 +9,8 @@
 	} from '@bkalendar/core';
 
 	export let error: unknown;
+
+	$: console.error(error);
 </script>
 
 {#if error}
@@ -42,4 +44,6 @@
 		bạn chịu khó xóa bớt các dòng của các môn không nằm trong thời khóa biểu này ra khỏi đoạn copy
 		nha.
 	</p>
+{:else}
+	<p>{error.message}</p>
 {/if}
