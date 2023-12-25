@@ -8,7 +8,7 @@
 		UnresolvedError
 	} from '@bkalendar/core';
 
-	export let error: unknown;
+	export let error: Error;
 
 	$: console.error(error);
 </script>
@@ -44,6 +44,8 @@
 		bạn chịu khó xóa bớt các dòng của các môn không nằm trong thời khóa biểu này ra khỏi đoạn copy
 		nha.
 	</p>
+{:else if error instanceof UnresolvedError}
+	<p>thời khóa biểu của bạn hình như không có môn nào đi học hết á</p>
 {:else}
 	<p>{error.message}</p>
 {/if}
