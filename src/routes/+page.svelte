@@ -27,7 +27,7 @@
 	let name: string;
 
 	$: timetable = process(raw, kind);
-	$: if (!`${semester}`.match(/^\d+[123]$/)) {
+	$: if (semester !== undefined && !`${semester}`.match(/^\d+[123]$/)) {
 		error = new Error('mã học kỳ sai định dạng. ví dụ mã đúng: 231, 232, 233.');
 	} else {
 		error = null;
