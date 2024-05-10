@@ -67,6 +67,7 @@
 
 	function calendarName(k: typeof kind, timetable: Required<Timetable>) {
 		switch (k) {
+			case 'sinh viên 2024':
 			case 'sinh viên':
 				return `SV${timetable.semester}`;
 			case 'giảng viên':
