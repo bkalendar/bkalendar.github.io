@@ -6,6 +6,7 @@
 		parseLecturer,
 		parsePostgrad,
 		parseStudent,
+		parseStudent2024,
 		resolve,
 		type Timetable
 	} from '@bkalendar/core';
@@ -19,7 +20,7 @@
 	import OkeeButton from '$lib/OkeeButton.svelte';
 
 	let raw: string;
-	let kind: 'sinh viên' | 'giảng viên' | 'sau đại học' = 'sinh viên';
+	let kind: 'sinh viên 2024' | 'sinh viên' | 'giảng viên' | 'sau đại học' = 'sinh viên 2024';
 	let output: 'ical' | 'gapi' = 'gapi';
 	let step: 'import' | 'export' = 'import';
 	let semester: number | undefined = undefined;
@@ -38,6 +39,9 @@
 
 		let parse;
 		switch (k) {
+			case 'sinh viên 2024':
+				parse = parseStudent2024;
+				break;
 			case 'sinh viên':
 				parse = parseStudent;
 				break;
