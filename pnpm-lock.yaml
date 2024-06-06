@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@bkalendar/core':
-        specifier: ^23.3.0
-        version: 23.3.0
+        specifier: ^23.3.1
+        version: 23.3.1
       '@fontsource/arimo':
         specifier: ^5.0.17
         version: 5.0.17
@@ -83,8 +83,8 @@ packages:
     resolution: {integrity: sha512-mM8eg4yl5D6i3lu2QKPuPH4FArvJ8KhTofbE7jwMUv9KX5mBvwPAqnV3MlyBNqdp9RyRKP6Yck8TrfYrPvX3bg==}
     engines: {node: '>=6.9.0'}
 
-  '@bkalendar/core@23.3.0':
-    resolution: {integrity: sha512-zRfpAMKeLM33yQQpzHktMMDntLV8S83UK3K42jBzJ7YF6aEA+ezP4taszpz8/06nyfgNqLlUX08SFX6RcbYipw==, tarball: https://npm.pkg.github.com/download/@bkalendar/core/23.3.0/6f5999f4df71689778c04a9e8d979ac8b00cee9c}
+  '@bkalendar/core@23.3.1':
+    resolution: {integrity: sha512-AHdsA+GB6yLWTWJyLjtJ+1VDRSDYJSBhtLrgvTcSdFlcDGOCRMMuGZ9VruNuXLv5lU/I/QHtnghgurGFK5YGyA==, tarball: https://npm.pkg.github.com/download/@bkalendar/core/23.3.1/8e04c96e4abf5289c5a4f4de9a7581563594d1b9}
 
   '@esbuild/android-arm64@0.18.20':
     resolution: {integrity: sha512-Nz4rJcchGDtENV0eMKUNa6L12zz2zBDXuhj/Vjh18zGqB44Bi7MBMSXjgunJgjRhCmKOjnPuZp4Mb6OKqtMHLQ==}
@@ -981,7 +981,7 @@ snapshots:
     dependencies:
       regenerator-runtime: 0.14.0
 
-  '@bkalendar/core@23.3.0': {}
+  '@bkalendar/core@23.3.1': {}
 
   '@esbuild/android-arm64@0.18.20':
     optional: true
