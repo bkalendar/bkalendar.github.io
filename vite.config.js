@@ -3,7 +3,9 @@ import { sveltekit } from '@sveltejs/kit/vite';
 /** @type {import('vite').UserConfig} */
 const config = {
 	build: {
-		target: 'esnext'
+		target: 'esnext',
+		minify: false,
+		sourcemap: true
 	},
 	plugins: [sveltekit()]
 };
