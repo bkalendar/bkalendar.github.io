@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@bkalendar/core':
-        specifier: ^23.3.1
-        version: 23.3.1
+        specifier: npm:@jsr/bkalendar__core@^24.1.0
+        version: '@jsr/bkalendar__core@24.1.0'
       '@fontsource/arimo':
         specifier: ^5.0.17
         version: 5.0.17
@@ -82,9 +82,6 @@ packages:
   '@babel/runtime@7.23.2':
     resolution: {integrity: sha512-mM8eg4yl5D6i3lu2QKPuPH4FArvJ8KhTofbE7jwMUv9KX5mBvwPAqnV3MlyBNqdp9RyRKP6Yck8TrfYrPvX3bg==}
     engines: {node: '>=6.9.0'}
-
-  '@bkalendar/core@23.3.1':
-    resolution: {integrity: sha512-AHdsA+GB6yLWTWJyLjtJ+1VDRSDYJSBhtLrgvTcSdFlcDGOCRMMuGZ9VruNuXLv5lU/I/QHtnghgurGFK5YGyA==, tarball: https://npm.pkg.github.com/download/@bkalendar/core/23.3.1/8e04c96e4abf5289c5a4f4de9a7581563594d1b9}
 
   '@esbuild/android-arm64@0.18.20':
     resolution: {integrity: sha512-Nz4rJcchGDtENV0eMKUNa6L12zz2zBDXuhj/Vjh18zGqB44Bi7MBMSXjgunJgjRhCmKOjnPuZp4Mb6OKqtMHLQ==}
@@ -242,6 +239,12 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.20':
     resolution: {integrity: sha512-R8LcPeWZol2zR8mmH3JeKQ6QRCFb7XgUhV9ZlGhHLGyg4wpPiPZNQOOWhFZhxKw8u//yTbNGI42Bx/3paXEQ+Q==}
+
+  '@jsr/bkalendar__core@24.1.0':
+    resolution: {integrity: sha512-lxul36mZuep/mBXcgJ33QRnCGsFRqb0DJoSq1D6iJFINZAwcYgihA67cbTr381hCA98/BZdJR6SQgsjpY7Sguw==, tarball: https://npm.jsr.io/~/11/@jsr/bkalendar__core/24.1.0.tgz}
+
+  '@jsr/std__datetime@0.225.0':
+    resolution: {integrity: sha512-/asMipTFkB7sj5AXYanQmQjvrf82lYGX+hFIB2yU8ecWxXqyrfYHpwqg/OrxfKCgbsyosklMhV/QtrJ1z0e+Hg==, tarball: https://npm.jsr.io/~/11/@jsr/std__datetime/0.225.0.tgz}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -981,8 +984,6 @@ snapshots:
     dependencies:
       regenerator-runtime: 0.14.0
 
-  '@bkalendar/core@23.3.1': {}
-
   '@esbuild/android-arm64@0.18.20':
     optional: true
 
@@ -1069,6 +1070,12 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.4.15
+
+  '@jsr/bkalendar__core@24.1.0':
+    dependencies:
+      '@jsr/std__datetime': 0.225.0
+
+  '@jsr/std__datetime@0.225.0': {}
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
